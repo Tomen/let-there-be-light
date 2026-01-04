@@ -4,15 +4,18 @@
   "description": "Art-Net diagnostics toolkit for church lighting control",
   "type": "module",
   "scripts": {
-    "ping": "tsx src/1-connectivity-test.ts",
-    "sniff": "tsx src/2-artnet-sniffer.ts",
-    "discover": "tsx src/3-artnet-discovery.ts",
-    "channel": "tsx src/4-single-channel.ts",
-    "control": "tsx src/5-interactive-control.ts"
+    "ping": "tsx src/diagnostics/1-connectivity-test.ts",
+    "sniff": "tsx src/diagnostics/2-artnet-sniffer.ts",
+    "discover": "tsx src/diagnostics/3-artnet-discovery.ts",
+    "channel": "tsx src/diagnostics/4-single-channel.ts",
+    "control": "tsx src/diagnostics/5-interactive-control.ts",
+    "mcp": "tsx src/mcp-server.ts"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.1",
     "inquirer": "^9.2.12",
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@types/inquirer": "^9.0.7",

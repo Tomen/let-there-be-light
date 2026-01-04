@@ -27,13 +27,36 @@ Edit `config.yaml` to modify network settings.
 
 ## Key Files
 
+**Core:**
 - `src/artnet-protocol.ts` - Art-Net packet building/parsing
 - `src/config.ts` - Configuration loader
-- `src/1-connectivity-test.ts` - Ping test
-- `src/2-artnet-sniffer.ts` - Packet sniffer
-- `src/3-artnet-discovery.ts` - Device discovery
-- `src/4-single-channel.ts` - Single channel control
-- `src/5-interactive-control.ts` - Interactive CLI
+- `src/artnet-controller.ts` - ArtNetController class (shared state manager)
+- `src/mcp-server.ts` - MCP server entry point
+
+**Diagnostics (src/diagnostics/):**
+- `1-connectivity-test.ts` - Ping test
+- `2-artnet-sniffer.ts` - Packet sniffer
+- `3-artnet-discovery.ts` - Device discovery
+- `4-single-channel.ts` - Single channel control
+- `5-interactive-control.ts` - Interactive CLI
+
+## MCP Server
+
+Add to Claude Code:
+```bash
+claude mcp add artnet -- npx tsx src/mcp-server.ts
+```
+
+### MCP Tools
+
+| Tool | Description |
+|------|-------------|
+| `setChannel` | Set a single DMX channel (universe, channel, value) |
+| `setAll` | Set all 512 channels to same value |
+| `blackout` | Set all channels to 0 |
+| `startOutput` | Begin continuous Art-Net transmission |
+| `stopOutput` | Stop transmission (sends blackout first) |
+| `getStatus` | Get current DMX state and output status |
 
 ## Art-Net Protocol
 

@@ -10,14 +10,14 @@
  */
 
 import dgram from 'dgram';
-import { config } from './config.js';
+import { config } from '../config.js';
 import {
   createArtPoll,
   parsePacket,
   parseArtPollReply,
   OpCode,
   ArtPollReplyData,
-} from './artnet-protocol.js';
+} from '../artnet-protocol.js';
 
 // ANSI color codes
 const colors = {

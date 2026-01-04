@@ -10,7 +10,7 @@
 
 import { exec } from 'child_process';
 import { promisify } from 'util';
-import { config } from './config.js';
+import { config } from '../config.js';
 
 const execAsync = promisify(exec);
 

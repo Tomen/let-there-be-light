@@ -15,8 +15,8 @@
  */
 
 import dgram from 'dgram';
-import { config, refreshIntervalMs } from './config.js';
-import { createArtDmx, createDmxBuffer, formatUniverse } from './artnet-protocol.js';
+import { config, refreshIntervalMs } from '../config.js';
+import { createArtDmx, createDmxBuffer, formatUniverse } from '../artnet-protocol.js';
 
 // ANSI color codes
 const colors = {

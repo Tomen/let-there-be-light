@@ -19,8 +19,8 @@
 
 import dgram from 'dgram';
 import inquirer from 'inquirer';
-import { config, refreshIntervalMs } from './config.js';
-import { createArtDmx, createDmxBuffer, formatUniverse } from './artnet-protocol.js';
+import { config, refreshIntervalMs } from '../config.js';
+import { createArtDmx, createDmxBuffer, formatUniverse } from '../artnet-protocol.js';
 
 // ANSI color codes
 const colors = {
