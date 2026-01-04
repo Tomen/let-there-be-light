@@ -17,6 +17,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
 import { getController, shutdownController } from './artnet-controller.js';
+import { getFixtureStore, NAMED_COLORS } from './fixtures.js';
 
 const server = new McpServer({
   name: 'artnet',
@@ -166,6 +167,142 @@ server.tool(
 
     return {
       content: [{ type: 'text', text: lines.join('\n') }],
+    };
+  }
+);
+
+// Tool: listFixtures
+server.tool(
+  'listFixtures',
+  'List all fixtures and groups from fixtures.yaml',
+  {},
+  async () => {
+    try {
+      const fixtureStore = getFixtureStore();
+      fixtureStore.load();
+
+      const fixtures = fixtureStore.getAllFixtures();
+      const groupNames = fixtureStore.getGroupNames();
+
+      const lines: string[] = ['Fixtures:'];
+
+      if (fixtures.length === 0) {
+        lines.push('  No fixtures defined');
+      } else {
+        for (const fixture of fixtures) {
+          const channels = Object.keys(fixture.model.channels).join(', ');
+          lines.push(`  ${fixture.name} - ${fixture.model.brand} ${fixture.model.model}`);
+          lines.push(`    Universe ${fixture.universe}, Ch ${fixture.startChannel} (${channels})`);
+        }
+      }
+
+      lines.push('', 'Groups:');
+
+      if (groupNames.length === 0) {
+        lines.push('  No groups defined');
+      } else {
+        for (const name of groupNames) {
+          const group = fixtureStore.getGroup(name);
+          const fixtureNames = group.map((f) => f.name).join(', ');
+          lines.push(`  ${name} - ${group.length} fixtures: ${fixtureNames}`);
+        }
+      }
+
+      lines.push('', 'Available colors:');
+      lines.push(`  ${Object.keys(NAMED_COLORS).join(', ')}`);
+
+      return {
+        content: [{ type: 'text', text: lines.join('\n') }],
+      };
+    } catch (err) {
+      return {
+        content: [{ type: 'text', text: `Failed to load fixtures: ${err}` }],
+        isError: true,
+      };
+    }
+  }
+);
+
+// Tool: setFixtureColor
+server.tool(
+  'setFixtureColor',
+  'Set a fixture to a named color or RGB value',
+  {
+    fixture: z.string().describe('Fixture name'),
+    color: z.string().describe(`Color name (${Object.keys(NAMED_COLORS).join(', ')}) or "rgb(r,g,b)"`),
+  },
+  async ({ fixture, color }) => {
+    const controller = await getController();
+
+    // Parse rgb(r,g,b) format
+    const rgbMatch = color.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i);
+    const colorInput = rgbMatch
+      ? { r: parseInt(rgbMatch[1]), g: parseInt(rgbMatch[2]), b: parseInt(rgbMatch[3]) }
+      : color;
+
+    const result = controller.setFixtureColor(fixture, colorInput);
+    return {
+      content: [{ type: 'text', text: result.message }],
+      isError: !result.success,
+    };
+  }
+);
+
+// Tool: setGroupColor
+server.tool(
+  'setGroupColor',
+  'Set all fixtures in a group to a named color or RGB value',
+  {
+    group: z.string().describe('Group name'),
+    color: z.string().describe(`Color name (${Object.keys(NAMED_COLORS).join(', ')}) or "rgb(r,g,b)"`),
+  },
+  async ({ group, color }) => {
+    const controller = await getController();
+
+    // Parse rgb(r,g,b) format
+    const rgbMatch = color.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/i);
+    const colorInput = rgbMatch
+      ? { r: parseInt(rgbMatch[1]), g: parseInt(rgbMatch[2]), b: parseInt(rgbMatch[3]) }
+      : color;
+
+    const result = controller.setGroupColor(group, colorInput);
+    return {
+      content: [{ type: 'text', text: result.message }],
+      isError: !result.success,
+    };
+  }
+);
+
+// Tool: turnOffFixture
+server.tool(
+  'turnOffFixture',
+  'Turn off a fixture (set all channels to 0)',
+  {
+    fixture: z.string().describe('Fixture name'),
+  },
+  async ({ fixture }) => {
+    const controller = await getController();
+    const result = controller.turnOffFixture(fixture);
+    return {
+      content: [{ type: 'text', text: result.message }],
+      isError: !result.success,
+    };
+  }
+);
+
+// Tool: turnOffGroup
+server.tool(
+  'turnOffGroup',
+  'Turn off all fixtures in a group',
+  {
+    group: z.string().describe('Group name'),
+  },
+  async ({ group }) => {
+    const controller = await getController();
+    const result = controller.turnOffGroup(group);
+    return {
+      content: [{ type: 'text', text: result.message }],
+      isError: !result.success,
     };
   }
 );

@@ -8,6 +8,15 @@
 import dgram from 'dgram';
 import { config, refreshIntervalMs } from './config.js';
 import { createArtDmx, createDmxBuffer, formatUniverse } from './artnet-protocol.js';
+import {
+  getFixtureStore,
+  Fixture,
+  RGBWColor,
+  parseColor,
+  mapColorToChannels,
+  mapOffToChannels,
+  NAMED_COLORS,
+} from './fixtures.js';
 
 export interface UniverseStatus {
   universe: number;
@@ -95,14 +104,17 @@ export class ArtNetController {
   startOutput(): void {
     if (this._isOutputting) return;
 
-    // Ensure at least universe 0 exists
-    this.getDmxBuffer(0);
+    // NOTE: We do NOT pre-initialize any universes.
+    // Buffers are created on-demand when commands target fixtures.
+    // This prevents sending zeros to universes we're not actively controlling.
 
     this.outputInterval = setInterval(() => this.sendDmxOutput(), refreshIntervalMs);
     this._isOutputting = true;
 
-    // Send immediately
-    this.sendDmxOutput();
+    // Only send if we have active universes
+    if (this.dmxState.size > 0) {
+      this.sendDmxOutput();
+    }
   }
 
   /**
@@ -166,28 +178,155 @@ export class ArtNetController {
    */
   blackout(universes?: number[]): { success: boolean; message: string } {
     if (universes && universes.length > 0) {
-      // Blackout specific universes
+      // Blackout specific universes (only if they're already active)
       for (const universe of universes) {
-        const dmxBuffer = this.getDmxBuffer(universe);
-        dmxBuffer.fill(0);
+        if (this.dmxState.has(universe)) {
+          this.dmxState.get(universe)!.fill(0);
+        }
       }
       return {
         success: true,
         message: `Blackout on universe(s): ${universes.join(', ')}`,
       };
     } else {
-      // Blackout all active universes
+      // Blackout all active universes (only ones we're already controlling)
       for (const [, dmxBuffer] of this.dmxState) {
         dmxBuffer.fill(0);
       }
-      // Ensure universe 0 exists
-      this.getDmxBuffer(0).fill(0);
 
       return {
         success: true,
-        message: 'Blackout - all channels set to 0',
+        message: this.dmxState.size > 0
+          ? 'Blackout - all channels set to 0'
+          : 'Blackout - no active universes',
       };
     }
+  }
+
+  /**
+   * Set a fixture to a color
+   */
+  setFixtureColor(
+    fixtureName: string,
+    colorInput: string | RGBWColor
+  ): { success: boolean; message: string } {
+    const fixtureStore = getFixtureStore();
+    const fixture = fixtureStore.getFixture(fixtureName);
+
+    if (!fixture) {
+      return { success: false, message: `Unknown fixture: "${fixtureName}"` };
+    }
+
+    const color = parseColor(colorInput);
+    if (!color) {
+      return {
+        success: false,
+        message: `Unknown color: "${colorInput}". Available: ${Object.keys(NAMED_COLORS).join(', ')}`,
+      };
+    }
+
+    const channelValues = mapColorToChannels(fixture, color);
+    const dmxBuffer = this.getDmxBuffer(channelValues.universe);
+
+    for (const { channel, value } of channelValues.channels) {
+      dmxBuffer[channel - 1] = value;
+    }
+
+    const colorName =
+      typeof colorInput === 'string' ? colorInput : `rgb(${color.r},${color.g},${color.b})`;
+    return {
+      success: true,
+      message: `Set fixture "${fixtureName}" to ${colorName}`,
+    };
+  }
+
+  /**
+   * Set a group of fixtures to a color
+   */
+  setGroupColor(
+    groupName: string,
+    colorInput: string | RGBWColor
+  ): { success: boolean; message: string } {
+    const fixtureStore = getFixtureStore();
+    const fixtures = fixtureStore.getGroup(groupName);
+
+    if (fixtures.length === 0) {
+      return { success: false, message: `Unknown group: "${groupName}"` };
+    }
+
+    const color = parseColor(colorInput);
+    if (!color) {
+      return {
+        success: false,
+        message: `Unknown color: "${colorInput}". Available: ${Object.keys(NAMED_COLORS).join(', ')}`,
+      };
+    }
+
+    for (const fixture of fixtures) {
+      const channelValues = mapColorToChannels(fixture, color);
+      const dmxBuffer = this.getDmxBuffer(channelValues.universe);
+
+      for (const { channel, value } of channelValues.channels) {
+        dmxBuffer[channel - 1] = value;
+      }
+    }
+
+    const colorName =
+      typeof colorInput === 'string' ? colorInput : `rgb(${color.r},${color.g},${color.b})`;
+    return {
+      success: true,
+      message: `Set group "${groupName}" (${fixtures.length} fixtures) to ${colorName}`,
+    };
+  }
+
+  /**
+   * Turn off a fixture (all channels to 0)
+   */
+  turnOffFixture(fixtureName: string): { success: boolean; message: string } {
+    const fixtureStore = getFixtureStore();
+    const fixture = fixtureStore.getFixture(fixtureName);
+
+    if (!fixture) {
+      return { success: false, message: `Unknown fixture: "${fixtureName}"` };
+    }
+
+    const channelValues = mapOffToChannels(fixture);
+    const dmxBuffer = this.getDmxBuffer(channelValues.universe);
+
+    for (const { channel, value } of channelValues.channels) {
+      dmxBuffer[channel - 1] = value;
+    }
+
+    return {
+      success: true,
+      message: `Turned off fixture "${fixtureName}"`,
+    };
+  }
+
+  /**
+   * Turn off a group of fixtures
+   */
+  turnOffGroup(groupName: string): { success: boolean; message: string } {
+    const fixtureStore = getFixtureStore();
+    const fixtures = fixtureStore.getGroup(groupName);
+
+    if (fixtures.length === 0) {
+      return { success: false, message: `Unknown group: "${groupName}"` };
+    }
+
+    for (const fixture of fixtures) {
+      const channelValues = mapOffToChannels(fixture);
+      const dmxBuffer = this.getDmxBuffer(channelValues.universe);
+
+      for (const { channel, value } of channelValues.channels) {
+        dmxBuffer[channel - 1] = value;
+      }
+    }
+
+    return {
+      success: true,
+      message: `Turned off group "${groupName}" (${fixtures.length} fixtures)`,
+    };
   }
 
   /**

@@ -2,8 +2,7 @@
 /**
  * Tool 4: Single Channel Test
  *
- * Sends Art-Net DMX data to a specific universe/channel.
- * Continuously outputs at the configured refresh rate until Ctrl+C.
+ * Sends a single Art-Net DMX packet to a specific universe/channel.
  *
  * Usage: npm run channel -- --universe 0 --channel 1 --value 255
  *
@@ -15,7 +14,7 @@
  */
 
 import dgram from 'dgram';
-import { config, refreshIntervalMs } from '../config.js';
+import { config } from '../config.js';
 import { createArtDmx, createDmxBuffer, formatUniverse } from '../artnet-protocol.js';
 
 // ANSI color codes
@@ -139,11 +138,6 @@ function main(): void {
   log(`Channel:  ${colors.yellow}${args.channel}${colors.reset}`);
   log(`Value:    ${colors.yellow}${args.value}${colors.reset} (${Math.round((args.value / 255) * 100)}%)`);
   log(`Target:   ${colors.cyan}${args.target}:${config.artnet.port}${colors.reset}`);
-  log(`Refresh:  ${config.artnet.refreshRateHz} Hz (${refreshIntervalMs}ms interval)`);
-  console.log('');
-  log('Press Ctrl+C to stop', colors.gray);
-  console.log('');
-  log('─────────────────────────────────────────────', colors.cyan);
   console.log('');
 
   // Create UDP socket
@@ -165,61 +159,16 @@ function main(): void {
     const dmxBuffer = createDmxBuffer();
     dmxBuffer[args.channel - 1] = args.value; // DMX channels are 1-indexed
 
-    // Sequence counter (1-255, wraps around, 0 disables)
-    let sequence = 1;
+    // Send Art-Net packet
+    const artDmx = createArtDmx(args.universe, dmxBuffer, 1);
 
-    // Packet counter for display
-    let packetCount = 0;
-
-    // Send packets at refresh rate
-    const sendPacket = (): void => {
-      const artDmx = createArtDmx(args.universe, dmxBuffer, sequence);
-
-      socket.send(artDmx, config.artnet.port, args.target, (err) => {
-        if (err) {
-          log(`Send error: ${err.message}`, colors.red);
-        } else {
-          packetCount++;
-          // Update display every second
-          if (packetCount % config.artnet.refreshRateHz === 0) {
-            process.stdout.write(
-              `\r${colors.green}Sending: ${colors.reset}` +
-              `Universe ${formatUniverse(args.universe)} ` +
-              `Ch${args.channel}=${args.value} ` +
-              `${colors.gray}(${packetCount} packets, seq=${sequence})${colors.reset}  `
-            );
-          }
-        }
-      });
-
-      // Increment sequence (1-255)
-      sequence = sequence >= 255 ? 1 : sequence + 1;
-    };
-
-    // Start sending
-    log('Sending Art-Net DMX data...', colors.green);
-    console.log('');
-
-    // Send immediately, then at interval
-    sendPacket();
-    const intervalId = setInterval(sendPacket, refreshIntervalMs);
-
-    // Handle Ctrl+C gracefully
-    process.on('SIGINT', () => {
-      console.log('');
-      console.log('');
-      log('Stopping...', colors.yellow);
-
-      // Send blackout before exiting
-      dmxBuffer[args.channel - 1] = 0;
-      const blackoutPacket = createArtDmx(args.universe, dmxBuffer, sequence);
-      socket.send(blackoutPacket, config.artnet.port, args.target, () => {
-        log(`Sent ${packetCount} packets total`, colors.gray);
-        log('Channel set to 0 (blackout) on exit', colors.gray);
-        clearInterval(intervalId);
-        socket.close();
-        process.exit(0);
-      });
+    socket.send(artDmx, config.artnet.port, args.target, (err) => {
+      if (err) {
+        log(`Send error: ${err.message}`, colors.red);
+      } else {
+        log('Sent Art-Net DMX packet', colors.green);
+      }
+      socket.close();
     });
   });
 }

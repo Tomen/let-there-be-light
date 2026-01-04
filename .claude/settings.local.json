@@ -3,7 +3,14 @@
     "allow": [
       "Bash(npm install)",
       "Bash(npx tsc:*)",
-      "Bash(npm run ping:*)"
+      "Bash(npm run ping:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(npm install:*)",
+      "Bash(timeout 3 npm run mcp:*)",
+      "Bash(npm run sniff:*)",
+      "Bash(npm run generate:*)"
     ]
   }
 }

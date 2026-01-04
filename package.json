@@ -9,6 +9,10 @@
     "discover": "tsx src/diagnostics/3-artnet-discovery.ts",
     "channel": "tsx src/diagnostics/4-single-channel.ts",
     "control": "tsx src/diagnostics/5-interactive-control.ts",
+    "fixture": "tsx src/diagnostics/6-fixture-control.ts",
+    "flash": "tsx src/diagnostics/7-flash.ts",
+    "chase": "tsx src/diagnostics/8-chase-wave.ts",
+    "generate": "tsx src/generate-fixtures.ts",
     "mcp": "tsx src/mcp-server.ts"
   },
   "dependencies": {
