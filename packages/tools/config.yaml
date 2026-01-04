@@ -1,0 +1,24 @@
+# Art-Net Diagnostics Toolkit Configuration
+
+network:
+  # Your laptop's IP address on the Art-Net network
+  myIp: "2.0.0.10"
+
+  # GrandMA2 console IP addresses
+  grandma2Primary: "2.0.0.1"
+  grandma2Secondary: "2.0.0.2"
+
+  # Broadcast address for 2.0.0.0/8 network
+  broadcast: "2.255.255.255"
+
+  # Subnet mask
+  subnet: "255.0.0.0"
+
+artnet:
+  # Art-Net UDP port (standard is 6454)
+  port: 6454
+
+  # DMX refresh rate in Hz (how often to send DMX packets)
+  # 25 Hz = 40ms interval, good balance of responsiveness and network load
+  # Art-Net spec max is ~44 Hz
+  refreshRateHz: 25

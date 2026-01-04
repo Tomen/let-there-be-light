@@ -1,0 +1,75 @@
+- id: simple-pulse
+  name: Simple Pulse
+  revision: 1
+  nodes:
+    - id: time
+      type: Time
+      position:
+        x: 100
+        'y': 150
+      params: {}
+    - id: lfo
+      type: SineLFO
+      position:
+        x: 300
+        'y': 100
+      params:
+        frequency: 1
+        phase: 0
+    - id: color
+      type: ColorConstant
+      position:
+        x: 300
+        'y': 250
+      params:
+        r: 1
+        g: 0.2
+        b: 0
+    - id: scale
+      type: ScaleColor
+      position:
+        x: 500
+        'y': 175
+      params: {}
+    - id: group
+      type: SelectGroup
+      position:
+        x: 500
+        'y': 350
+      params:
+        groupId: all-wash
+    - id: bundle
+      type: MergeBundle
+      position:
+        x: 700
+        'y': 200
+      params: {}
+    - id: output
+      type: WriteAttributes
+      position:
+        x: 900
+        'y': 275
+      params:
+        priority: 0
+  edges:
+    - id: e1
+      from:
+        nodeId: lfo
+        port: value
+      to:
+        nodeId: scale
+        port: scale
+    - id: e2
+      from:
+        nodeId: color
+        port: color
+      to:
+        nodeId: scale
+        port: color
+    - id: e3
+      from:
+        nodeId: group
+        port: selection
+      to:
+        nodeId: output
+        port: selection

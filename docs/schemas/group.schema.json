@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://let-there-be-light/schemas/group.schema.json",
+  "title": "Group",
+  "description": "A named collection of fixtures",
+  "type": "object",
+  "required": ["id", "name", "fixtureIds", "revision"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name",
+      "minLength": 1
+    },
+    "fixtureIds": {
+      "type": "array",
+      "description": "List of fixture IDs in this group",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Version number for optimistic concurrency"
+    }
+  },
+  "additionalProperties": false
+}

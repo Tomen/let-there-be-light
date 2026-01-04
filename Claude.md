@@ -1,182 +1,143 @@
-# Claude.md - Art-Net Diagnostics Toolkit
+# Claude.md - Let There Be Light
 
 ## Project Overview
 
-This is an Art-Net diagnostics toolkit for controlling church lighting via a GrandMA2 console. It provides 7 progressive diagnostic tools to verify network connectivity and control DMX lighting fixtures.
+Graph-based lighting control system with Art-Net output for church lighting via GrandMA2. Structured as a pnpm monorepo.
+
+## Monorepo Structure
+
+```
+packages/
+  shared/     # Shared TypeScript types
+  server/     # Fastify REST API + WebSocket + Runtime Engine + Art-Net
+  client/     # React web client with graph editor
+  tools/      # Art-Net diagnostic tools and protocol
+  mcp/        # MCP server for Claude Code integration
+docs/         # Detailed documentation
+data/         # Show data (not in git)
+  fixture-models.yaml  # Shared across all shows
+  default/             # Default show
+  <show>/              # Additional shows
+```
+
+## Quick Start
+
+```bash
+pnpm install
+pnpm --filter @let-there-be-light/shared build   # Build types first
+pnpm --filter @let-there-be-light/server dev     # Start server
+pnpm --filter @let-there-be-light/client dev     # Start client
+```
+
+## Running Tests
+
+```bash
+pnpm --filter @let-there-be-light/shared test
+pnpm --filter @let-there-be-light/server test
+pnpm --filter @let-there-be-light/client test
+pnpm --filter @let-there-be-light/client test:integration:spawn
+```
+
+## URLs
+
+- **Server REST API:** http://localhost:3001/api
+- **Server WebSocket:** ws://localhost:3001/ws
+- **Client:** http://localhost:5173
+
+## Environment Variables (Server)
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `PORT` | 3001 | HTTP server port |
+| `HOST` | 0.0.0.0 | Bind address |
+| `DATA_DIR` | `<project>/data` | Root data directory |
+| `SHOW` | `default` | Active show subfolder |
+| `ARTNET_BROADCAST` | 2.255.255.255 | Art-Net broadcast address |
+| `ARTNET_ENABLED` | true | Set to "false" to disable DMX output |
+
+**Using shows:**
+```bash
+SHOW=sunday-service pnpm --filter @let-there-be-light/server dev
+```
 
 ## Network Configuration
 
-- **Network:** Isolated Art-Net network with subnet 255.0.0.0
 - **GrandMA2 Primary:** 2.0.0.1
 - **GrandMA2 Secondary:** 2.0.0.2
 - **Laptop IP:** 2.0.0.10
 - **Broadcast:** 2.255.255.255
 - **Art-Net Port:** UDP 6454
 
-Edit `config.yaml` to modify network settings.
-
-## Diagnostic Tools (Run in Order)
-
-| Command | Description |
-|---------|-------------|
-| `npm run ping` | Test network connectivity to GrandMA2 |
-| `npm run sniff` | Listen for Art-Net traffic (Ctrl+C to stop) |
-| `npm run discover` | Broadcast ArtPoll and find devices |
-| `npm run channel` | Control single DMX channel |
-| `npm run control` | Interactive DMX control CLI |
-| `npm run fixture` | Fixture and group control CLI |
-| `npm run flash` | Flash a group on/off at interval |
-
-## Key Files
-
-**Core:**
-- `src/artnet-protocol.ts` - Art-Net packet building/parsing
-- `src/config.ts` - Configuration loader
-- `src/artnet-controller.ts` - ArtNetController class (shared state manager)
-- `src/fixtures.ts` - Fixture and group definitions loader
-- `src/generate-fixtures.ts` - Fixture/group generator CLI
-- `src/mcp-server.ts` - MCP server entry point
-
-**Diagnostics (src/diagnostics/):**
-- `1-connectivity-test.ts` - Ping test
-- `2-artnet-sniffer.ts` - Packet sniffer
-- `3-artnet-discovery.ts` - Device discovery
-- `4-single-channel.ts` - Single channel control
-- `5-interactive-control.ts` - Interactive CLI
-- `6-fixture-control.ts` - Fixture/group control CLI
-- `7-flash.ts` - Flash group on/off
-
-## MCP Server
-
-Add to Claude Code:
-```bash
-claude mcp add artnet -- npx tsx src/mcp-server.ts
-```
-
-### MCP Tools
-
-| Tool | Description |
-|------|-------------|
-| `setChannel` | Set a single DMX channel (universe, channel, value) |
-| `setAll` | Set all 512 channels to same value |
-| `blackout` | Set all channels to 0 |
-| `startOutput` | Begin continuous Art-Net transmission |
-| `stopOutput` | Stop transmission (sends blackout first) |
-| `getStatus` | Get current DMX state and output status |
-| `listFixtures` | List all fixtures and groups from fixtures.yaml |
-| `setFixtureColor` | Set a fixture to a color (fixture, color) |
-| `setGroupColor` | Set all fixtures in a group to a color |
-| `turnOffFixture` | Turn off a fixture (all channels to 0) |
-| `turnOffGroup` | Turn off all fixtures in a group |
-
-## Art-Net Protocol
-
-- All packets start with "Art-Net\0" (8 bytes)
-- OpCodes: ArtPoll (0x2000), ArtPollReply (0x2100), ArtDmx (0x5000)
-- Uses native Node.js `dgram` for UDP - no external Art-Net libraries
-
-## Common Tasks
-
-### Test a specific channel
-```bash
-npm run channel -- --universe 0 --channel 1 --value 255
-```
-
-### Find which channels control fixtures
-```bash
-npm run control
-> chase 0
-```
-
-## Fixture Definitions
-
-Edit `fixtures.yaml` to define your lighting fixtures and groups.
-
-### Structure
-
-```yaml
-# Fixture models - reusable channel layouts
-models:
-  generic-rgbw:
-    brand: "Generic"
-    model: "RGBW Par"
-    channels:
-      red: 1
-      green: 2
-      blue: 3
-      white: 4
-
-# Fixtures in your venue
-fixtures:
-  - name: "front-left"
-    model: generic-rgbw
-    universe: 0
-    startChannel: 1
-
-# Named groups for easy control
-groups:
-  front:
-    - front-left
-    - front-right
-```
-
-### Available Colors
-
-`red`, `green`, `blue`, `white`, `warm`, `cool`, `yellow`, `cyan`, `magenta`, `purple`, `orange`, `pink`, `amber`, `off`
-
-### Fixture Control Commands
+## Diagnostic Tools
 
 ```bash
-# One-shot commands (no interactive mode)
-npm run fixture color pinspots-luster white
-npm run fixture off rgb-luster
-npm run fixture blackout
-
-# Interactive mode
-npm run fixture
-> list                    # Show fixtures and groups
-> color front red         # Set "front" group to red
-> rgb all 255 128 0       # Set "all" group to orange
-> off stage               # Turn off "stage" group
+pnpm run ping      # Test network connectivity
+pnpm run sniff     # Listen for Art-Net traffic
+pnpm run discover  # Find Art-Net devices
+pnpm run control   # Interactive DMX control
+pnpm run fixture   # Fixture and group control
 ```
 
-### Generating Fixtures
+## Architecture
 
-Use `npm run generate` to bulk-create and manage fixtures and groups:
-
-```bash
-# Create 20 RGBW fixtures named wash-1 through wash-20
-npm run generate fixtures generic-rgbw 0 20 1 wash
-
-# Create a group from all wash-* fixtures
-npm run generate group all-wash "wash-*"
-
-# Create a group from specific fixtures
-npm run generate group front-wash "wash-1,wash-2,wash-3,wash-4"
-
-# Remove fixtures (also removes from groups)
-npm run generate remove fixtures "wash-*"
-
-# Remove a group (keeps fixtures)
-npm run generate remove group all-wash
+```
+┌─────────────────────────────────────────────────────────┐
+│  React Client (packages/client)                         │
+│  - Patch, Inputs, Presets, Graphs, Control Room, Runtime│
+│  - Graph Editor (ReactFlow)                             │
+└─────────────────────────────────────────────────────────┘
+         │ HTTP REST + WebSocket
+         ▼
+┌─────────────────────────────────────┐
+│  Control Server (packages/server)   │
+│  - REST API (Fastify)               │
+│  - WebSocket gateway                │
+│  - YAML persistence (DataStore)     │
+│  - Graph compiler (DAG validation)  │
+│  - Runtime engine (60Hz tick loop)  │
+│  - Art-Net bridge (DMX output)      │
+└─────────────────────────────────────┘
+         │ UDP 6454 (Art-Net)
+         ▼
+┌─────────────────────────────────────┐
+│  GrandMA2 Console                   │
+└─────────────────────────────────────┘
 ```
 
-### Flash Mode
+## Detailed Documentation
 
-Flash a group on/off at a specified interval:
+For comprehensive documentation, see the `docs/` folder:
 
-```bash
-npm run flash <group> [interval] [color]
+- **API:** `docs/api/rest.md`, `docs/api/websocket.md`
+- **Packages:** `docs/packages/server.md`, `docs/packages/client.md`, `docs/packages/shared.md`
+- **Art-Net:** `docs/packages/tools.md` (protocol reference, troubleshooting)
+- **Reference:** `docs/reference/show-specification.md` (complete show file format), `docs/reference/nodes.md` (24 node types), `docs/reference/models.md`
+- **Guides:** `docs/guides/getting-started.md`, `docs/guides/creating-graphs.md`
+- **Schemas:** `docs/schemas/*.schema.json` (JSON Schema for validation)
 
-# Examples:
-npm run flash rgb-luster           # Every 3s, white
-npm run flash rgb-luster 1         # Every 1s, white
-npm run flash rgb-luster 0.5 blue  # Every 0.5s, blue
-```
+## Test Coverage
 
-## Troubleshooting
+| Package | Tests |
+|---------|-------|
+| shared | 23 |
+| server | 167 |
+| client (unit) | 89 |
+| client (integration) | 71 |
+| **Total** | **350** |
 
-1. If ping fails: Check laptop IP is 2.0.0.10 with subnet 255.0.0.0
-2. If no Art-Net traffic: Ensure GrandMA2 Art-Net output is enabled
-3. If discovery finds nothing: Some devices don't respond to ArtPoll - use sniffer instead
-4. If channel control doesn't work: Verify universe number matches GrandMA2 config
+## Development Status
+
+**Complete:**
+- Monorepo scaffolding (pnpm workspaces)
+- Shared types (domain, api, ws, nodes)
+- Fastify server with REST endpoints
+- YAML DataStore with optimistic concurrency
+- Graph compiler (DAG validation, type checking)
+- Runtime engine (60Hz, 24 node evaluators)
+- Art-Net bridge (DMX output)
+- React client with graph editor
+- Unit and integration tests
+
+**Future:**
+- Hot reload for YAML files
+- Production deployment

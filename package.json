@@ -1,31 +1,29 @@
 {
   "name": "let-there-be-light",
   "version": "1.0.0",
-  "description": "Art-Net diagnostics toolkit for church lighting control",
+  "description": "Graph-based lighting control system",
   "type": "module",
   "scripts": {
-    "ping": "tsx src/diagnostics/1-connectivity-test.ts",
-    "sniff": "tsx src/diagnostics/2-artnet-sniffer.ts",
-    "discover": "tsx src/diagnostics/3-artnet-discovery.ts",
-    "channel": "tsx src/diagnostics/4-single-channel.ts",
-    "control": "tsx src/diagnostics/5-interactive-control.ts",
-    "fixture": "tsx src/diagnostics/6-fixture-control.ts",
-    "flash": "tsx src/diagnostics/7-flash.ts",
-    "chase": "tsx src/diagnostics/8-chase-wave.ts",
-    "generate": "tsx src/generate-fixtures.ts",
-    "mcp": "tsx src/mcp-server.ts"
-  },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.25.1",
-    "inquirer": "^9.2.12",
-    "js-yaml": "^4.1.0",
-    "zod": "^4.3.5"
+    "dev": "pnpm --filter @let-there-be-light/server dev",
+    "build": "pnpm -r build",
+    "build:shared": "pnpm --filter @let-there-be-light/shared build",
+    "build:server": "pnpm --filter @let-there-be-light/server build",
+    "ping": "pnpm --filter @let-there-be-light/tools ping",
+    "sniff": "pnpm --filter @let-there-be-light/tools sniff",
+    "discover": "pnpm --filter @let-there-be-light/tools discover",
+    "channel": "pnpm --filter @let-there-be-light/tools channel",
+    "control": "pnpm --filter @let-there-be-light/tools control",
+    "fixture": "pnpm --filter @let-there-be-light/tools fixture",
+    "flash": "pnpm --filter @let-there-be-light/tools flash",
+    "chase": "pnpm --filter @let-there-be-light/tools chase",
+    "generate": "pnpm --filter @let-there-be-light/tools generate",
+    "mcp": "pnpm --filter @let-there-be-light/mcp mcp",
+    "gma2:shows": "pnpm --filter @let-there-be-light/gma2-parser shows",
+    "gma2:extract": "pnpm --filter @let-there-be-light/gma2-parser extract",
+    "gma2:inspect": "pnpm --filter @let-there-be-light/gma2-parser inspect",
+    "gma2:dump": "pnpm --filter @let-there-be-light/gma2-parser dump"
   },
   "devDependencies": {
-    "@types/inquirer": "^9.0.7",
-    "@types/js-yaml": "^4.0.9",
-    "@types/node": "^20.10.0",
-    "tsx": "^4.7.0",
     "typescript": "^5.3.0"
   }
 }

@@ -1,0 +1,46 @@
+{
+  "name": "@let-there-be-light/gma2-parser",
+  "version": "1.0.0",
+  "description": "GrandMA2 show file parser for Let There Be Light",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "shows": "tsx src/cli/list-shows.ts",
+    "extract": "tsx src/cli/extract.ts",
+    "inspect": "tsx src/cli/inspect.ts",
+    "dump": "tsx src/cli/dump.ts",
+    "fixtures": "tsx src/cli/fixtures.ts",
+    "search-dmx": "tsx src/cli/search-dmx.ts",
+    "find-patch": "tsx src/cli/find-patch.ts",
+    "search-types": "tsx src/cli/search-types.ts",
+    "deep-search": "tsx src/cli/deep-search.ts",
+    "search-output": "tsx src/cli/search-dmx-output.ts",
+    "analyze-patch": "tsx src/cli/analyze-patch.ts",
+    "find-patch-table": "tsx src/cli/find-patch-table.ts",
+    "search-patch-intel": "tsx src/cli/search-patch-intel.ts",
+    "search-patch-8bit": "tsx src/cli/search-patch-8bit.ts",
+    "compare-shows": "tsx src/cli/compare-shows.ts"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.10.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0",
+    "vitest": "^2.1.8"
+  }
+}

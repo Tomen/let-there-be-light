@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://let-there-be-light/schemas/inputs.schema.json",
+  "title": "Input",
+  "description": "A configurable fader or button for runtime control",
+  "type": "object",
+  "required": ["id", "name", "type", "revision"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier (auto-generated UUID)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name",
+      "minLength": 1
+    },
+    "type": {
+      "type": "string",
+      "enum": ["fader", "button"],
+      "description": "Input type"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Version number for optimistic concurrency"
+    }
+  },
+  "additionalProperties": false
+}

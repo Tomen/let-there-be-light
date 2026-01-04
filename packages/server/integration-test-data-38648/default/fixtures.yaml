@@ -1,0 +1,24 @@
+- id: front-left
+  name: Front Left
+  modelId: generic-rgbw
+  universe: 0
+  startChannel: 1
+  revision: 1
+- id: front-right
+  name: Front Right
+  modelId: generic-rgbw
+  universe: 0
+  startChannel: 5
+  revision: 1
+- id: back-left
+  name: Back Left
+  modelId: generic-rgbw
+  universe: 0
+  startChannel: 9
+  revision: 1
+- id: back-right
+  name: Back Right
+  modelId: generic-rgbw
+  universe: 0
+  startChannel: 13
+  revision: 1

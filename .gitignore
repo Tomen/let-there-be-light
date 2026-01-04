@@ -21,3 +21,16 @@ npm-debug.log*
 # Environment (if you add secrets later)
 .env
 .env.local
+
+# Show data (runtime data, not source)
+/data/
+*.show.gz
+
+# Integration test data
+**/integration-test-data*/
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Windows artifacts
+nul

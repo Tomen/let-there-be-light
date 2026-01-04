@@ -1,0 +1,8 @@
+- id: A
+  name: Fader A
+  type: fader
+  revision: 1
+- id: X
+  name: Button X
+  type: button
+  revision: 1

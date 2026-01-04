@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://let-there-be-light/schemas/preset.schema.json",
+  "title": "Preset",
+  "description": "A named attribute bundle for quick recall",
+  "type": "object",
+  "required": ["id", "name", "type", "attributes", "revision"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name",
+      "minLength": 1
+    },
+    "type": {
+      "type": "string",
+      "enum": ["color", "position", "beam", "full"],
+      "description": "Preset category"
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Attribute values",
+      "properties": {
+        "intensity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Dimmer value (0-1)"
+        },
+        "color": {
+          "type": "object",
+          "description": "RGB color",
+          "required": ["r", "g", "b"],
+          "properties": {
+            "r": { "type": "number", "minimum": 0, "maximum": 1 },
+            "g": { "type": "number", "minimum": 0, "maximum": 1 },
+            "b": { "type": "number", "minimum": 0, "maximum": 1 }
+          },
+          "additionalProperties": false
+        },
+        "pan": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1,
+          "description": "Pan position (-1 to 1)"
+        },
+        "tilt": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1,
+          "description": "Tilt position (-1 to 1)"
+        },
+        "zoom": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Zoom value (0-1)"
+        }
+      },
+      "additionalProperties": false
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Version number for optimistic concurrency"
+    }
+  },
+  "additionalProperties": false
+}

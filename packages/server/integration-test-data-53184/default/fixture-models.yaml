@@ -1,0 +1,39 @@
+- id: generic-rgbw
+  brand: Generic
+  model: RGBW Par
+  channels:
+    red: 1
+    green: 2
+    blue: 3
+    white: 4
+  revision: 1
+- id: generic-rgb
+  brand: Generic
+  model: RGB Par
+  channels:
+    red: 1
+    green: 2
+    blue: 3
+  revision: 1
+- id: generic-dimmer
+  brand: Generic
+  model: Dimmer
+  channels:
+    dimmer: 1
+  revision: 1
+- id: moving-head-spot
+  brand: Generic
+  model: Moving Head Spot
+  channels:
+    pan: 1
+    panFine: 2
+    tilt: 3
+    tiltFine: 4
+    dimmer: 5
+    shutter: 6
+    red: 7
+    green: 8
+    blue: 9
+    white: 10
+    zoom: 11
+  revision: 1

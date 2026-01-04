@@ -1,0 +1,1023 @@
+showName: hillsong
+extractedAt: '2026-01-04T22:58:35.969Z'
+fixtures:
+  - name: PAR
+    id: par
+    offset: '0x910e'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 15728640
+    dmxNeedsVerification: true
+  - name: Fresnel
+    id: fresnel
+    offset: '0xdf96'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 15728640
+    dmxNeedsVerification: true
+  - name: Leko
+    id: leko
+    offset: '0x12e74'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 15728640
+    dmxNeedsVerification: true
+  - name: Zoom Profile
+    id: zoom-profile
+    offset: '0x17d46'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 15728640
+    dmxNeedsVerification: true
+  - name: Blinder
+    id: blinder
+    offset: '0x1cbce'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 15728640
+    dmxNeedsVerification: true
+  - name: Moving 1
+    id: moving-1
+    offset: '0x27215'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 15728640
+    dmxNeedsVerification: true
+  - name: Moving 2
+    id: moving-2
+    offset: '0x2c0ba'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 15728640
+    dmxNeedsVerification: true
+  - name: Moving 3
+    id: moving-3
+    offset: '0x30f4d'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 15728640
+    dmxNeedsVerification: true
+  - name: Moving 4
+    id: moving-4
+    offset: '0x35de0'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 15728640
+    dmxNeedsVerification: true
+  - name: Scanner
+    id: scanner
+    offset: '0x3ac73'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 15728640
+    dmxNeedsVerification: true
+  - name: Strobe
+    id: strobe
+    offset: '0x3f224'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 15728640
+    dmxNeedsVerification: true
+  - name: Smoke
+    id: smoke
+    offset: '0x43fcd'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 15728640
+    dmxNeedsVerification: true
+  - name: STROBE
+    id: strobe
+    offset: '0x981e6b'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 0
+    dmxNeedsVerification: true
+  - name: STROBE2
+    id: strobe2
+    offset: '0x9823b2'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 0
+    dmxNeedsVerification: true
+  - name: Strobe2
+    id: strobe2
+    offset: '0x9823bd'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 0
+    dmxNeedsVerification: true
+  - name: STROBE3
+    id: strobe3
+    offset: '0x982559'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 0
+    dmxNeedsVerification: true
+  - name: Strobe3
+    id: strobe3
+    offset: '0x982564'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 0
+    dmxNeedsVerification: true
+  - name: STROBE4
+    id: strobe4
+    offset: '0x982702'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 0
+    dmxNeedsVerification: true
+  - name: Strobe4
+    id: strobe4
+    offset: '0x98270d'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 0
+    dmxNeedsVerification: true
+  - name: Wash Stage 10
+    id: wash-stage-10
+    offset: '0xbd1728'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 0
+    dmxNeedsVerification: true
+  - name: Wash Stage 20
+    id: wash-stage-20
+    offset: '0xbd1be8'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 0
+    dmxNeedsVerification: true
+  - name: Wash Stage 30
+    id: wash-stage-30
+    offset: '0xbd20a8'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 0
+    dmxNeedsVerification: true
+  - name: Wash Stage 40
+    id: wash-stage-40
+    offset: '0xbd2568'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 0
+    dmxNeedsVerification: true
+  - name: BLINDER
+    id: blinder
+    offset: '0xd04763'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 0
+    dmxNeedsVerification: true
+  - name: STROBE0
+    id: strobe0
+    offset: '0xea77dd'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 0
+    dmxNeedsVerification: true
+  - name: Strobe0
+    id: strobe0
+    offset: '0xf75dd6'
+    universe: 0
+    startChannel: 1
+    fixtureTypeId: 0
+    dmxNeedsVerification: true
+fixtureTypes:
+  - manufacturer: Robe
+    model: Robin 100 LEDBeam
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin Pointe
+    channelCount: 16
+  - manufacturer: Unknown
+    model: beam flattener
+    channelCount: 16
+  - manufacturer: Unknown
+    model: beam flattener&
+    channelCount: 16
+  - manufacturer: Martin
+    model: Beam macros
+    channelCount: 16
+  - manufacturer: Martin
+    model: Wash macros
+    channelCount: 16
+  - manufacturer: Martin
+    model: Spot macros
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin 600 LEDWash
+    channelCount: 16
+  - manufacturer: Martin
+    model: Mac 700 Profile
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin DLS
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash (2)
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Preset
+    channelCount: 16
+  - manufacturer: Elation
+    model: Rush MH 1 Profile
+    channelCount: 16
+  - manufacturer: Elation
+    model: Rush MH 6 Wash
+    channelCount: 16
+  - manufacturer: Elation
+    model: Rush MH 5 Profile
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin 10
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin 20
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin 3 Floor0
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin 3 Floor Mitte
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin 4 Floor0
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin 4 Floor Mitte
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin 50
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin 60
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin 7 Floor aussen0
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin 8 Floor aussen0
+    channelCount: 16
+  - manufacturer: Elation
+    model: Rush MH1 10
+    channelCount: 16
+  - manufacturer: Elation
+    model: Rush MH1 20
+    channelCount: 16
+  - manufacturer: Elation
+    model: Rush MH1 30
+    channelCount: 16
+  - manufacturer: Elation
+    model: Rush MH1 40
+    channelCount: 16
+  - manufacturer: Elation
+    model: Rush MH1 50
+    channelCount: 16
+  - manufacturer: Elation
+    model: Rush MH1 60
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot MH5 Stage 10
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot MH5 Stage 20
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot MH5 Stage 30
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot MH5 Stage 40
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot MH5 Partyraum 10
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot MH5 Partyraum 20
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot MH5 Partyraum 30
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot MH5 Partyraum 40
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot MH5 Partyraum 50
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot MH5 Partyraum 60
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash MHs
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF 10
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF 20
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF 30
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF 40
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF 50
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF 60
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage 10
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage 20
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage 30
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage 40
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam MHs
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF POS
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage POS
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot MHs POS
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot MHs Gobo Rot
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage auf Vorhaenge
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot DF
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Party
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF auf 45deg
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot MHs auf Vorh
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 weiss
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 cyan
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 Blau
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 Dunkelblau
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 UV
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 Magenta
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 Rot
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 Amber
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 Gelb
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 gruen
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 weiss
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 cyan
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 Blau
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 Dunkelblau
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 UV
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 Magenta
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 Rot
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 Amber
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 Gelb
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 gruen
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage Thin and Wide
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage Wide
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash neutral
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Saal
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Saal
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Saal vorne
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Saal mid/back
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Shutter Sin
+    channelCount: 16
+  - manufacturer: Elation
+    model: Rush Stage Tilt
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Roll
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Roll
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash circle symm 1pos#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash circle symm 1pos#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash circle symm 1pos#4
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash tilt symm 1#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash tilt symm 2#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash pan symm 1#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash pan symm 1#5
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash circle symm 2pos
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash circle symm1 all
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash pan symm 1
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Pan ran
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Strobe
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin circle symm1 2pos
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin circle symm1 2pos#2
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin Tilt symm 2
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin Tilt symm 2#2
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin DimSin#2
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin DimSin
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin Dim RAN
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin ChaseRAN
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin PulseDown
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin StrobeMAN
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin Blue Amber sy
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin Blue Magenta symm
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Dim SIN#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Dim SIN symm#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Dim RAN#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash ChaseWave#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash ChaseRAN#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash PulseDown#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot circle symm 1pos#7
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot circle symm 1pos#8
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot circle symm 1pos#9
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot tilt symm 1#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot tilt symm 2#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot pan symm 1#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot pan symm 1#4
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Pan ran#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Strobe MAN
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Dim >
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Dim symm <>
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Dim RAN
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot ChaseAlign
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Chase >
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Chase <>
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Chase Ran
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Chase <>#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam StrobeRAN
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Strobe MAN 2x
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot WHITE ChaseRan
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot WHITE ChaseAlign
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot WHITE Strobe MAN
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Dim SIN symm#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Dim RAN#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash ChaseWave#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash ChaseRAN#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash PulseDown#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot circle symm 1pos#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot circle symm 1pos#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot circle symm 1pos#4
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot tilt symm 1#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot pan symm 1#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot pan symm 1#5
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Dim >#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Dim symm <>#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Dim RAN#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Chase >#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Chase Ran#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam StrobeRAN#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Strobe MAN 2x#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot circle symm 1pos#5
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot circle symm 1pos#6
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot tilt symm 1#4
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot tilt symm 2#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot pan symm 1#6
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot pan symm 1#7
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Strobe MAN#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Dim >#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Dim symm <>#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Dim RAN#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot ChaseAlign#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Chase >#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Chase <>#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Chase Ran#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Chase <>#4
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Chase >#4
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam StrobeRAN#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Strobe MAN 2x#3
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Moving Wash Room
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin StrobeMAN#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash tilt symm 2#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Moving Heads Slow
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash tilt symm 2#4
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Geflaecht
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Keys0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Drums0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot fotos
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot DF 1..6 color
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot DF 1..6 weiss0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot DF 1..6 cyan0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot DF 1..6 Blau0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot DF 1..6 Dunkelblau0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot DF 1..6 UV0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot DF 1..6 Magenta0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot DF 1..6 Rot0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot DF 1..6 Amber0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot DF 1..6 Gelb0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot DF 1..6 gruen0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 color
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 weiss0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 cyan0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 Blau0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 Dunkelblau0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 UV0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 Magenta0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 Rot0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 Amber0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 Gelb0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage 1..4 gruen0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 color
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 weiss0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 cyan0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 Blau0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 Dunkelblau0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 UV0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 Magenta0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 Rot0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 Amber0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 Gelb0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Partyraum 1..6 gruen0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF 1..6 color
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF 1..6 weiss0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF 1..6 cyan0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF 1..6 Blau0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF 1..6 Dunkelblau0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF 1..6 UV0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF 1..6 Magenta0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF 1..6 Rot0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF 1..6 Amber0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF 1..6 Gelb0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF 1..6 gruen0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage 1..4 color
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage 1..4 weiss0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage 1..4 cyan0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage 1..4 Blau0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage 1..4 Dunkelblau0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage 1..4 UV0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage 1..4 Magenta0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage 1..4 Rot0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage 1..4 Amber0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage 1..4 Gelb0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage 1..4 gruen0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot DF party
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF  party
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage  party
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage  party
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot DF#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash DF#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage#2
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Defaults
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot auf Rob0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage Side 8tel0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage Side 16tel0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot on Guzi0
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Df col
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Stage col
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Spot Party col
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash Stage col
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash TF
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam  Focus
+    channelCount: 16
+  - manufacturer: Clay Paky
+    model: sharpy groups
+    channelCount: 16
+  - manufacturer: Clay Paky
+    model: SHARPY MAIN
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam CON
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash CON
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin CON
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam EXT
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Wash EXT
+    channelCount: 16
+  - manufacturer: Robe
+    model: Robin EXT
+    channelCount: 16
+  - manufacturer: Unknown
+    model: Beam Focus
+    channelCount: 16
+statistics:
+  fixtureCount: 26
+  fixtureTypeCount: 276
+  groupCount: 0
+  presetCount: 0
+notes:
+  - DMX addresses could not be automatically extracted from this show file.
+  - Please verify universe and startChannel values for each fixture.
+  - Fixture type mappings may need manual verification.

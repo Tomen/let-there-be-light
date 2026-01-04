@@ -1,0 +1,67 @@
+- name: Test
+  nodes:
+    - id: Fader-1767567304560
+      type: Fader
+      position:
+        x: -450
+        'y': 255
+      params:
+        faderId: A
+    - id: Button-1767570160498
+      type: Button
+      position:
+        x: -510
+        'y': 15
+      params:
+        buttonId: X
+    - id: WriteAttributes-1767570178782
+      type: WriteAttributes
+      position:
+        x: 105
+        'y': 105
+      params:
+        priority: 0
+    - id: SelectGroup-1767570184160
+      type: SelectGroup
+      position:
+        x: -195
+        'y': -90
+      params: {}
+    - id: MergeBundle-1767570501077
+      type: MergeBundle
+      position:
+        x: -90
+        'y': 195
+      params: {}
+    - id: PositionConstant-1767570515996
+      type: PositionConstant
+      position:
+        x: -300
+        'y': 105
+      params:
+        pan: 0
+        tilt: 0
+    - id: Chase-1767570565692
+      type: Chase
+      position:
+        x: -345
+        'y': -285
+      params:
+        width: 1
+  edges:
+    - id: xy-edge__SelectGroup-1767570184160selection-WriteAttributes-1767570178782selection
+      from:
+        nodeId: SelectGroup-1767570184160
+        port: selection
+      to:
+        nodeId: WriteAttributes-1767570178782
+        port: selection
+    - id: xy-edge__MergeBundle-1767570501077result-WriteAttributes-1767570178782bundle
+      from:
+        nodeId: MergeBundle-1767570501077
+        port: result
+      to:
+        nodeId: WriteAttributes-1767570178782
+        port: bundle
+  id: 33ea2f4d-6848-4936-94c0-98523be7750f
+  revision: 109

@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://let-there-be-light/schemas/graph.schema.json",
+  "title": "Graph",
+  "description": "A node-based effect definition",
+  "type": "object",
+  "required": ["id", "name", "nodes", "edges", "revision"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name",
+      "minLength": 1
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the graph runs at startup"
+    },
+    "nodes": {
+      "type": "array",
+      "description": "Processing nodes in the graph",
+      "items": {
+        "$ref": "#/definitions/GraphNode"
+      }
+    },
+    "edges": {
+      "type": "array",
+      "description": "Connections between node ports",
+      "items": {
+        "$ref": "#/definitions/GraphEdge"
+      }
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Version number for optimistic concurrency"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "GraphNode": {
+      "type": "object",
+      "required": ["id", "type", "position", "params"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique node ID within this graph"
+        },
+        "type": {
+          "type": "string",
+          "description": "Node type (e.g., Time, Fader, SineLFO, WriteAttributes)",
+          "enum": [
+            "Time", "Fader", "Button",
+            "SelectGroup", "SelectFixture", "PresetBundle",
+            "Add", "Multiply", "Clamp01", "MapRange", "Smooth",
+            "SineLFO", "TriangleLFO", "SawLFO", "Chase", "Flash",
+            "MixColor", "ScaleColor", "ColorConstant",
+            "OffsetPosition", "ScalePosition", "PositionConstant",
+            "MergeBundle", "ScaleBundle",
+            "WriteAttributes"
+          ]
+        },
+        "position": {
+          "type": "object",
+          "required": ["x", "y"],
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" }
+          },
+          "additionalProperties": false
+        },
+        "params": {
+          "type": "object",
+          "description": "Node-specific parameters"
+        }
+      },
+      "additionalProperties": false
+    },
+    "GraphEdge": {
+      "type": "object",
+      "required": ["id", "from", "to"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique edge ID within this graph"
+        },
+        "from": {
+          "type": "object",
+          "required": ["nodeId", "port"],
+          "properties": {
+            "nodeId": { "type": "string" },
+            "port": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "to": {
+          "type": "object",
+          "required": ["nodeId", "port"],
+          "properties": {
+            "nodeId": { "type": "string" },
+            "port": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

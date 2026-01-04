@@ -1,0 +1,20 @@
+- id: front
+  name: Front
+  fixtureIds:
+    - front-left
+    - front-right
+  revision: 1
+- id: back
+  name: Back
+  fixtureIds:
+    - back-left
+    - back-right
+  revision: 1
+- id: all-wash
+  name: All Wash
+  fixtureIds:
+    - front-left
+    - front-right
+    - back-left
+    - back-right
+  revision: 1

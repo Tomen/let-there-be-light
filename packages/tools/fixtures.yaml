@@ -1,0 +1,1082 @@
+models:
+  generic-rgb:
+    brand: Generic
+    model: RGB Par
+    channels:
+      red: 1
+      green: 2
+      blue: 3
+  generic-rgbw:
+    brand: Generic
+    model: RGBW Par
+    channels:
+      red: 1
+      green: 2
+      blue: 3
+      white: 4
+  generic-rgbd:
+    brand: Generic
+    model: RGB Par with Dimmer
+    channels:
+      dimmer: 1
+      red: 2
+      green: 3
+      blue: 4
+  generic-full:
+    brand: Generic
+    model: Full LED Par
+    channels:
+      dimmer: 1
+      red: 2
+      green: 3
+      blue: 4
+      white: 5
+      strobe: 6
+      mode: 7
+  dimmer-only:
+    brand: Generic
+    model: Dimmer
+    channels:
+      dimmer: 1
+fixtures:
+  - name: front-left
+    model: generic-rgbw
+    universe: 0
+    startChannel: 1
+  - name: front-right
+    model: generic-rgbw
+    universe: 0
+    startChannel: 5
+  - name: stage-left
+    model: generic-rgbw
+    universe: 0
+    startChannel: 9
+  - name: stage-right
+    model: generic-rgbw
+    universe: 0
+    startChannel: 13
+  - name: pinspot-luster-1
+    model: dimmer-only
+    universe: 1
+    startChannel: 1
+  - name: pinspot-luster-2
+    model: dimmer-only
+    universe: 1
+    startChannel: 2
+  - name: pinspot-luster-3
+    model: dimmer-only
+    universe: 1
+    startChannel: 3
+  - name: pinspot-luster-4
+    model: dimmer-only
+    universe: 1
+    startChannel: 4
+  - name: pinspot-luster-5
+    model: dimmer-only
+    universe: 1
+    startChannel: 5
+  - name: pinspot-luster-6
+    model: dimmer-only
+    universe: 1
+    startChannel: 6
+  - name: pinspot-luster-7
+    model: dimmer-only
+    universe: 1
+    startChannel: 7
+  - name: pinspot-luster-8
+    model: dimmer-only
+    universe: 1
+    startChannel: 8
+  - name: pinspot-luster-9
+    model: dimmer-only
+    universe: 1
+    startChannel: 9
+  - name: pinspot-luster-10
+    model: dimmer-only
+    universe: 1
+    startChannel: 10
+  - name: pinspot-luster-11
+    model: dimmer-only
+    universe: 1
+    startChannel: 11
+  - name: pinspot-luster-12
+    model: dimmer-only
+    universe: 1
+    startChannel: 12
+  - name: pinspot-luster-13
+    model: dimmer-only
+    universe: 1
+    startChannel: 13
+  - name: pinspot-luster-14
+    model: dimmer-only
+    universe: 1
+    startChannel: 14
+  - name: pinspot-luster-15
+    model: dimmer-only
+    universe: 1
+    startChannel: 15
+  - name: pinspot-luster-16
+    model: dimmer-only
+    universe: 1
+    startChannel: 16
+  - name: pinspot-luster-17
+    model: dimmer-only
+    universe: 1
+    startChannel: 17
+  - name: pinspot-luster-18
+    model: dimmer-only
+    universe: 1
+    startChannel: 18
+  - name: pinspot-luster-19
+    model: dimmer-only
+    universe: 1
+    startChannel: 19
+  - name: pinspot-luster-20
+    model: dimmer-only
+    universe: 1
+    startChannel: 20
+  - name: pinspot-luster-21
+    model: dimmer-only
+    universe: 1
+    startChannel: 21
+  - name: pinspot-luster-22
+    model: dimmer-only
+    universe: 1
+    startChannel: 22
+  - name: pinspot-luster-23
+    model: dimmer-only
+    universe: 1
+    startChannel: 23
+  - name: pinspot-luster-24
+    model: dimmer-only
+    universe: 1
+    startChannel: 24
+  - name: pinspot-luster-25
+    model: dimmer-only
+    universe: 1
+    startChannel: 25
+  - name: pinspot-luster-26
+    model: dimmer-only
+    universe: 1
+    startChannel: 26
+  - name: pinspot-luster-27
+    model: dimmer-only
+    universe: 1
+    startChannel: 27
+  - name: pinspot-luster-28
+    model: dimmer-only
+    universe: 1
+    startChannel: 28
+  - name: pinspot-luster-29
+    model: dimmer-only
+    universe: 1
+    startChannel: 29
+  - name: pinspot-luster-30
+    model: dimmer-only
+    universe: 1
+    startChannel: 30
+  - name: pinspot-luster-31
+    model: dimmer-only
+    universe: 1
+    startChannel: 31
+  - name: pinspot-luster-32
+    model: dimmer-only
+    universe: 1
+    startChannel: 32
+  - name: pinspot-luster-33
+    model: dimmer-only
+    universe: 1
+    startChannel: 33
+  - name: pinspot-luster-34
+    model: dimmer-only
+    universe: 1
+    startChannel: 34
+  - name: pinspot-luster-35
+    model: dimmer-only
+    universe: 1
+    startChannel: 35
+  - name: pinspot-luster-36
+    model: dimmer-only
+    universe: 1
+    startChannel: 36
+  - name: pinspot-luster-37
+    model: dimmer-only
+    universe: 1
+    startChannel: 37
+  - name: pinspot-luster-38
+    model: dimmer-only
+    universe: 1
+    startChannel: 38
+  - name: pinspot-luster-39
+    model: dimmer-only
+    universe: 1
+    startChannel: 39
+  - name: pinspot-luster-40
+    model: dimmer-only
+    universe: 1
+    startChannel: 40
+  - name: pinspot-luster-41
+    model: dimmer-only
+    universe: 1
+    startChannel: 41
+  - name: pinspot-luster-42
+    model: dimmer-only
+    universe: 1
+    startChannel: 42
+  - name: pinspot-luster-43
+    model: dimmer-only
+    universe: 1
+    startChannel: 43
+  - name: pinspot-luster-44
+    model: dimmer-only
+    universe: 1
+    startChannel: 44
+  - name: pinspot-luster-45
+    model: dimmer-only
+    universe: 1
+    startChannel: 45
+  - name: pinspot-luster-46
+    model: dimmer-only
+    universe: 1
+    startChannel: 46
+  - name: pinspot-luster-47
+    model: dimmer-only
+    universe: 1
+    startChannel: 47
+  - name: pinspot-luster-48
+    model: dimmer-only
+    universe: 1
+    startChannel: 48
+  - name: pinspot-luster-49
+    model: dimmer-only
+    universe: 1
+    startChannel: 49
+  - name: pinspot-luster-50
+    model: dimmer-only
+    universe: 1
+    startChannel: 50
+  - name: pinspot-luster-51
+    model: dimmer-only
+    universe: 1
+    startChannel: 51
+  - name: pinspot-luster-52
+    model: dimmer-only
+    universe: 1
+    startChannel: 52
+  - name: pinspot-luster-53
+    model: dimmer-only
+    universe: 1
+    startChannel: 53
+  - name: pinspot-luster-54
+    model: dimmer-only
+    universe: 1
+    startChannel: 54
+  - name: pinspot-luster-55
+    model: dimmer-only
+    universe: 1
+    startChannel: 55
+  - name: pinspot-luster-56
+    model: dimmer-only
+    universe: 1
+    startChannel: 56
+  - name: pinspot-luster-57
+    model: dimmer-only
+    universe: 1
+    startChannel: 57
+  - name: pinspot-luster-58
+    model: dimmer-only
+    universe: 1
+    startChannel: 58
+  - name: pinspot-luster-59
+    model: dimmer-only
+    universe: 1
+    startChannel: 59
+  - name: pinspot-luster-60
+    model: dimmer-only
+    universe: 1
+    startChannel: 60
+  - name: pinspot-luster-61
+    model: dimmer-only
+    universe: 1
+    startChannel: 61
+  - name: pinspot-luster-62
+    model: dimmer-only
+    universe: 1
+    startChannel: 62
+  - name: pinspot-luster-63
+    model: dimmer-only
+    universe: 1
+    startChannel: 63
+  - name: pinspot-luster-64
+    model: dimmer-only
+    universe: 1
+    startChannel: 64
+  - name: pinspot-luster-65
+    model: dimmer-only
+    universe: 1
+    startChannel: 65
+  - name: pinspot-luster-66
+    model: dimmer-only
+    universe: 1
+    startChannel: 66
+  - name: pinspot-luster-67
+    model: dimmer-only
+    universe: 1
+    startChannel: 67
+  - name: pinspot-luster-68
+    model: dimmer-only
+    universe: 1
+    startChannel: 68
+  - name: pinspot-luster-69
+    model: dimmer-only
+    universe: 1
+    startChannel: 69
+  - name: pinspot-luster-70
+    model: dimmer-only
+    universe: 1
+    startChannel: 70
+  - name: pinspot-luster-71
+    model: dimmer-only
+    universe: 1
+    startChannel: 71
+  - name: pinspot-luster-72
+    model: dimmer-only
+    universe: 1
+    startChannel: 72
+  - name: pinspot-luster-73
+    model: dimmer-only
+    universe: 1
+    startChannel: 73
+  - name: pinspot-luster-74
+    model: dimmer-only
+    universe: 1
+    startChannel: 74
+  - name: pinspot-luster-75
+    model: dimmer-only
+    universe: 1
+    startChannel: 75
+  - name: pinspot-luster-76
+    model: dimmer-only
+    universe: 1
+    startChannel: 76
+  - name: pinspot-luster-77
+    model: dimmer-only
+    universe: 1
+    startChannel: 77
+  - name: pinspot-luster-78
+    model: dimmer-only
+    universe: 1
+    startChannel: 78
+  - name: pinspot-luster-79
+    model: dimmer-only
+    universe: 1
+    startChannel: 79
+  - name: pinspot-luster-80
+    model: dimmer-only
+    universe: 1
+    startChannel: 80
+  - name: pinspot-luster-81
+    model: dimmer-only
+    universe: 1
+    startChannel: 81
+  - name: pinspot-luster-82
+    model: dimmer-only
+    universe: 1
+    startChannel: 82
+  - name: pinspot-luster-83
+    model: dimmer-only
+    universe: 1
+    startChannel: 83
+  - name: pinspot-luster-84
+    model: dimmer-only
+    universe: 1
+    startChannel: 84
+  - name: pinspot-luster-85
+    model: dimmer-only
+    universe: 1
+    startChannel: 85
+  - name: pinspot-luster-86
+    model: dimmer-only
+    universe: 1
+    startChannel: 86
+  - name: pinspot-luster-87
+    model: dimmer-only
+    universe: 1
+    startChannel: 87
+  - name: pinspot-luster-88
+    model: dimmer-only
+    universe: 1
+    startChannel: 88
+  - name: pinspot-luster-89
+    model: dimmer-only
+    universe: 1
+    startChannel: 89
+  - name: pinspot-luster-90
+    model: dimmer-only
+    universe: 1
+    startChannel: 90
+  - name: pinspot-luster-91
+    model: dimmer-only
+    universe: 1
+    startChannel: 91
+  - name: pinspot-luster-92
+    model: dimmer-only
+    universe: 1
+    startChannel: 92
+  - name: pinspot-luster-93
+    model: dimmer-only
+    universe: 1
+    startChannel: 93
+  - name: pinspot-luster-94
+    model: dimmer-only
+    universe: 1
+    startChannel: 94
+  - name: pinspot-luster-95
+    model: dimmer-only
+    universe: 1
+    startChannel: 95
+  - name: pinspot-luster-96
+    model: dimmer-only
+    universe: 1
+    startChannel: 96
+  - name: pinspot-luster-97
+    model: dimmer-only
+    universe: 1
+    startChannel: 97
+  - name: pinspot-luster-98
+    model: dimmer-only
+    universe: 1
+    startChannel: 98
+  - name: pinspot-luster-99
+    model: dimmer-only
+    universe: 1
+    startChannel: 99
+  - name: pinspot-luster-100
+    model: dimmer-only
+    universe: 1
+    startChannel: 100
+  - name: rgb-luster-1
+    model: generic-rgb
+    universe: 3
+    startChannel: 1
+  - name: rgb-luster-2
+    model: generic-rgb
+    universe: 3
+    startChannel: 4
+  - name: rgb-luster-3
+    model: generic-rgb
+    universe: 3
+    startChannel: 7
+  - name: rgb-luster-4
+    model: generic-rgb
+    universe: 3
+    startChannel: 10
+  - name: rgb-luster-5
+    model: generic-rgb
+    universe: 3
+    startChannel: 13
+  - name: rgb-luster-6
+    model: generic-rgb
+    universe: 3
+    startChannel: 16
+  - name: rgb-luster-7
+    model: generic-rgb
+    universe: 3
+    startChannel: 19
+  - name: rgb-luster-8
+    model: generic-rgb
+    universe: 3
+    startChannel: 22
+  - name: rgb-luster-9
+    model: generic-rgb
+    universe: 3
+    startChannel: 25
+  - name: rgb-luster-10
+    model: generic-rgb
+    universe: 3
+    startChannel: 28
+  - name: rgb-luster-11
+    model: generic-rgb
+    universe: 3
+    startChannel: 31
+  - name: rgb-luster-12
+    model: generic-rgb
+    universe: 3
+    startChannel: 34
+  - name: rgb-luster-13
+    model: generic-rgb
+    universe: 3
+    startChannel: 37
+  - name: rgb-luster-14
+    model: generic-rgb
+    universe: 3
+    startChannel: 40
+  - name: rgb-luster-15
+    model: generic-rgb
+    universe: 3
+    startChannel: 43
+  - name: rgb-luster-16
+    model: generic-rgb
+    universe: 3
+    startChannel: 46
+  - name: rgb-luster-17
+    model: generic-rgb
+    universe: 3
+    startChannel: 49
+  - name: rgb-luster-18
+    model: generic-rgb
+    universe: 3
+    startChannel: 52
+  - name: rgb-luster-19
+    model: generic-rgb
+    universe: 3
+    startChannel: 55
+  - name: rgb-luster-20
+    model: generic-rgb
+    universe: 3
+    startChannel: 58
+  - name: rgb-luster-21
+    model: generic-rgb
+    universe: 3
+    startChannel: 61
+  - name: rgb-luster-22
+    model: generic-rgb
+    universe: 3
+    startChannel: 64
+  - name: rgb-luster-23
+    model: generic-rgb
+    universe: 3
+    startChannel: 67
+  - name: rgb-luster-24
+    model: generic-rgb
+    universe: 3
+    startChannel: 70
+  - name: rgb-luster-25
+    model: generic-rgb
+    universe: 3
+    startChannel: 73
+  - name: rgb-luster-26
+    model: generic-rgb
+    universe: 3
+    startChannel: 76
+  - name: rgb-luster-27
+    model: generic-rgb
+    universe: 3
+    startChannel: 79
+  - name: rgb-luster-28
+    model: generic-rgb
+    universe: 3
+    startChannel: 82
+  - name: rgb-luster-29
+    model: generic-rgb
+    universe: 3
+    startChannel: 85
+  - name: rgb-luster-30
+    model: generic-rgb
+    universe: 3
+    startChannel: 88
+  - name: rgb-luster-31
+    model: generic-rgb
+    universe: 3
+    startChannel: 91
+  - name: rgb-luster-32
+    model: generic-rgb
+    universe: 3
+    startChannel: 94
+  - name: rgb-luster-33
+    model: generic-rgb
+    universe: 3
+    startChannel: 97
+  - name: rgb-luster-34
+    model: generic-rgb
+    universe: 3
+    startChannel: 100
+  - name: rgb-luster-35
+    model: generic-rgb
+    universe: 3
+    startChannel: 103
+  - name: rgb-luster-36
+    model: generic-rgb
+    universe: 3
+    startChannel: 106
+  - name: rgb-luster-37
+    model: generic-rgb
+    universe: 3
+    startChannel: 109
+  - name: rgb-luster-38
+    model: generic-rgb
+    universe: 3
+    startChannel: 112
+  - name: rgb-luster-39
+    model: generic-rgb
+    universe: 3
+    startChannel: 115
+  - name: rgb-luster-40
+    model: generic-rgb
+    universe: 3
+    startChannel: 118
+  - name: rgb-luster-41
+    model: generic-rgb
+    universe: 3
+    startChannel: 121
+  - name: rgb-luster-42
+    model: generic-rgb
+    universe: 3
+    startChannel: 124
+  - name: rgb-luster-43
+    model: generic-rgb
+    universe: 3
+    startChannel: 127
+  - name: rgb-luster-44
+    model: generic-rgb
+    universe: 3
+    startChannel: 130
+  - name: rgb-luster-45
+    model: generic-rgb
+    universe: 3
+    startChannel: 133
+  - name: rgb-luster-46
+    model: generic-rgb
+    universe: 3
+    startChannel: 136
+  - name: rgb-luster-47
+    model: generic-rgb
+    universe: 3
+    startChannel: 139
+  - name: rgb-luster-48
+    model: generic-rgb
+    universe: 3
+    startChannel: 142
+  - name: rgb-luster-49
+    model: generic-rgb
+    universe: 3
+    startChannel: 145
+  - name: rgb-luster-50
+    model: generic-rgb
+    universe: 3
+    startChannel: 148
+  - name: rgb-luster-51
+    model: generic-rgb
+    universe: 3
+    startChannel: 151
+  - name: rgb-luster-52
+    model: generic-rgb
+    universe: 3
+    startChannel: 154
+  - name: rgb-luster-53
+    model: generic-rgb
+    universe: 3
+    startChannel: 157
+  - name: rgb-luster-54
+    model: generic-rgb
+    universe: 3
+    startChannel: 160
+  - name: rgb-luster-55
+    model: generic-rgb
+    universe: 3
+    startChannel: 163
+  - name: rgb-luster-56
+    model: generic-rgb
+    universe: 3
+    startChannel: 166
+  - name: rgb-luster-57
+    model: generic-rgb
+    universe: 3
+    startChannel: 169
+  - name: rgb-luster-58
+    model: generic-rgb
+    universe: 3
+    startChannel: 172
+  - name: rgb-luster-59
+    model: generic-rgb
+    universe: 3
+    startChannel: 175
+  - name: rgb-luster-60
+    model: generic-rgb
+    universe: 3
+    startChannel: 178
+  - name: rgb-luster-61
+    model: generic-rgb
+    universe: 3
+    startChannel: 181
+  - name: rgb-luster-62
+    model: generic-rgb
+    universe: 3
+    startChannel: 184
+  - name: rgb-luster-63
+    model: generic-rgb
+    universe: 3
+    startChannel: 187
+  - name: rgb-luster-64
+    model: generic-rgb
+    universe: 3
+    startChannel: 190
+  - name: rgb-luster-65
+    model: generic-rgb
+    universe: 3
+    startChannel: 193
+  - name: rgb-luster-66
+    model: generic-rgb
+    universe: 3
+    startChannel: 196
+  - name: rgb-luster-67
+    model: generic-rgb
+    universe: 3
+    startChannel: 199
+  - name: rgb-luster-68
+    model: generic-rgb
+    universe: 3
+    startChannel: 202
+  - name: rgb-luster-69
+    model: generic-rgb
+    universe: 3
+    startChannel: 205
+  - name: rgb-luster-70
+    model: generic-rgb
+    universe: 3
+    startChannel: 208
+  - name: rgb-luster-71
+    model: generic-rgb
+    universe: 3
+    startChannel: 211
+  - name: rgb-luster-72
+    model: generic-rgb
+    universe: 3
+    startChannel: 214
+  - name: rgb-luster-73
+    model: generic-rgb
+    universe: 3
+    startChannel: 217
+  - name: rgb-luster-74
+    model: generic-rgb
+    universe: 3
+    startChannel: 220
+  - name: rgb-luster-75
+    model: generic-rgb
+    universe: 3
+    startChannel: 223
+  - name: rgb-luster-76
+    model: generic-rgb
+    universe: 3
+    startChannel: 226
+  - name: rgb-luster-77
+    model: generic-rgb
+    universe: 3
+    startChannel: 229
+  - name: rgb-luster-78
+    model: generic-rgb
+    universe: 3
+    startChannel: 232
+  - name: rgb-luster-79
+    model: generic-rgb
+    universe: 3
+    startChannel: 235
+  - name: rgb-luster-80
+    model: generic-rgb
+    universe: 3
+    startChannel: 238
+  - name: rgb-luster-81
+    model: generic-rgb
+    universe: 3
+    startChannel: 241
+  - name: rgb-luster-82
+    model: generic-rgb
+    universe: 3
+    startChannel: 244
+  - name: rgb-luster-83
+    model: generic-rgb
+    universe: 3
+    startChannel: 247
+  - name: rgb-luster-84
+    model: generic-rgb
+    universe: 3
+    startChannel: 250
+  - name: rgb-luster-85
+    model: generic-rgb
+    universe: 3
+    startChannel: 253
+  - name: rgb-luster-86
+    model: generic-rgb
+    universe: 3
+    startChannel: 256
+  - name: rgb-luster-87
+    model: generic-rgb
+    universe: 3
+    startChannel: 259
+  - name: rgb-luster-88
+    model: generic-rgb
+    universe: 3
+    startChannel: 262
+  - name: rgb-luster-89
+    model: generic-rgb
+    universe: 3
+    startChannel: 265
+  - name: rgb-luster-90
+    model: generic-rgb
+    universe: 3
+    startChannel: 268
+  - name: rgb-luster-91
+    model: generic-rgb
+    universe: 3
+    startChannel: 271
+  - name: rgb-luster-92
+    model: generic-rgb
+    universe: 3
+    startChannel: 274
+  - name: rgb-luster-93
+    model: generic-rgb
+    universe: 3
+    startChannel: 277
+  - name: rgb-luster-94
+    model: generic-rgb
+    universe: 3
+    startChannel: 280
+  - name: rgb-luster-95
+    model: generic-rgb
+    universe: 3
+    startChannel: 283
+  - name: rgb-luster-96
+    model: generic-rgb
+    universe: 3
+    startChannel: 286
+  - name: rgb-luster-97
+    model: generic-rgb
+    universe: 3
+    startChannel: 289
+  - name: rgb-luster-98
+    model: generic-rgb
+    universe: 3
+    startChannel: 292
+  - name: rgb-luster-99
+    model: generic-rgb
+    universe: 3
+    startChannel: 295
+  - name: rgb-luster-100
+    model: generic-rgb
+    universe: 3
+    startChannel: 298
+groups:
+  front:
+    - front-left
+    - front-right
+  stage:
+    - stage-left
+    - stage-right
+  all:
+    - front-left
+    - front-right
+    - stage-left
+    - stage-right
+  pinspots-luster:
+    - pinspot-luster-1
+    - pinspot-luster-2
+    - pinspot-luster-3
+    - pinspot-luster-4
+    - pinspot-luster-5
+    - pinspot-luster-6
+    - pinspot-luster-7
+    - pinspot-luster-8
+    - pinspot-luster-9
+    - pinspot-luster-10
+    - pinspot-luster-11
+    - pinspot-luster-12
+    - pinspot-luster-13
+    - pinspot-luster-14
+    - pinspot-luster-15
+    - pinspot-luster-16
+    - pinspot-luster-17
+    - pinspot-luster-18
+    - pinspot-luster-19
+    - pinspot-luster-20
+    - pinspot-luster-21
+    - pinspot-luster-22
+    - pinspot-luster-23
+    - pinspot-luster-24
+    - pinspot-luster-25
+    - pinspot-luster-26
+    - pinspot-luster-27
+    - pinspot-luster-28
+    - pinspot-luster-29
+    - pinspot-luster-30
+    - pinspot-luster-31
+    - pinspot-luster-32
+    - pinspot-luster-33
+    - pinspot-luster-34
+    - pinspot-luster-35
+    - pinspot-luster-36
+    - pinspot-luster-37
+    - pinspot-luster-38
+    - pinspot-luster-39
+    - pinspot-luster-40
+    - pinspot-luster-41
+    - pinspot-luster-42
+    - pinspot-luster-43
+    - pinspot-luster-44
+    - pinspot-luster-45
+    - pinspot-luster-46
+    - pinspot-luster-47
+    - pinspot-luster-48
+    - pinspot-luster-49
+    - pinspot-luster-50
+    - pinspot-luster-51
+    - pinspot-luster-52
+    - pinspot-luster-53
+    - pinspot-luster-54
+    - pinspot-luster-55
+    - pinspot-luster-56
+    - pinspot-luster-57
+    - pinspot-luster-58
+    - pinspot-luster-59
+    - pinspot-luster-60
+    - pinspot-luster-61
+    - pinspot-luster-62
+    - pinspot-luster-63
+    - pinspot-luster-64
+    - pinspot-luster-65
+    - pinspot-luster-66
+    - pinspot-luster-67
+    - pinspot-luster-68
+    - pinspot-luster-69
+    - pinspot-luster-70
+    - pinspot-luster-71
+    - pinspot-luster-72
+    - pinspot-luster-73
+    - pinspot-luster-74
+    - pinspot-luster-75
+    - pinspot-luster-76
+    - pinspot-luster-77
+    - pinspot-luster-78
+    - pinspot-luster-79
+    - pinspot-luster-80
+    - pinspot-luster-81
+    - pinspot-luster-82
+    - pinspot-luster-83
+    - pinspot-luster-84
+    - pinspot-luster-85
+    - pinspot-luster-86
+    - pinspot-luster-87
+    - pinspot-luster-88
+    - pinspot-luster-89
+    - pinspot-luster-90
+    - pinspot-luster-91
+    - pinspot-luster-92
+    - pinspot-luster-93
+    - pinspot-luster-94
+    - pinspot-luster-95
+    - pinspot-luster-96
+    - pinspot-luster-97
+    - pinspot-luster-98
+    - pinspot-luster-99
+    - pinspot-luster-100
+  rgb-luster:
+    - rgb-luster-1
+    - rgb-luster-2
+    - rgb-luster-3
+    - rgb-luster-4
+    - rgb-luster-5
+    - rgb-luster-6
+    - rgb-luster-7
+    - rgb-luster-8
+    - rgb-luster-9
+    - rgb-luster-10
+    - rgb-luster-11
+    - rgb-luster-12
+    - rgb-luster-13
+    - rgb-luster-14
+    - rgb-luster-15
+    - rgb-luster-16
+    - rgb-luster-17
+    - rgb-luster-18
+    - rgb-luster-19
+    - rgb-luster-20
+    - rgb-luster-21
+    - rgb-luster-22
+    - rgb-luster-23
+    - rgb-luster-24
+    - rgb-luster-25
+    - rgb-luster-26
+    - rgb-luster-27
+    - rgb-luster-28
+    - rgb-luster-29
+    - rgb-luster-30
+    - rgb-luster-31
+    - rgb-luster-32
+    - rgb-luster-33
+    - rgb-luster-34
+    - rgb-luster-35
+    - rgb-luster-36
+    - rgb-luster-37
+    - rgb-luster-38
+    - rgb-luster-39
+    - rgb-luster-40
+    - rgb-luster-41
+    - rgb-luster-42
+    - rgb-luster-43
+    - rgb-luster-44
+    - rgb-luster-45
+    - rgb-luster-46
+    - rgb-luster-47
+    - rgb-luster-48
+    - rgb-luster-49
+    - rgb-luster-50
+    - rgb-luster-51
+    - rgb-luster-52
+    - rgb-luster-53
+    - rgb-luster-54
+    - rgb-luster-55
+    - rgb-luster-56
+    - rgb-luster-57
+    - rgb-luster-58
+    - rgb-luster-59
+    - rgb-luster-60
+    - rgb-luster-61
+    - rgb-luster-62
+    - rgb-luster-63
+    - rgb-luster-64
+    - rgb-luster-65
+    - rgb-luster-66
+    - rgb-luster-67
+    - rgb-luster-68
+    - rgb-luster-69
+    - rgb-luster-70
+    - rgb-luster-71
+    - rgb-luster-72
+    - rgb-luster-73
+    - rgb-luster-74
+    - rgb-luster-75
+    - rgb-luster-76
+    - rgb-luster-77
+    - rgb-luster-78
+    - rgb-luster-79
+    - rgb-luster-80
+    - rgb-luster-81
+    - rgb-luster-82
+    - rgb-luster-83
+    - rgb-luster-84
+    - rgb-luster-85
+    - rgb-luster-86
+    - rgb-luster-87
+    - rgb-luster-88
+    - rgb-luster-89
+    - rgb-luster-90
+    - rgb-luster-91
+    - rgb-luster-92
+    - rgb-luster-93
+    - rgb-luster-94
+    - rgb-luster-95
+    - rgb-luster-96
+    - rgb-luster-97
+    - rgb-luster-98
+    - rgb-luster-99
+    - rgb-luster-100
+  pinspots-1-10:
+    - pinspot-luster-1
+    - pinspot-luster-2
+    - pinspot-luster-3
+    - pinspot-luster-4
+    - pinspot-luster-5
+    - pinspot-luster-6
+    - pinspot-luster-7
+    - pinspot-luster-8
+    - pinspot-luster-9
+    - pinspot-luster-10

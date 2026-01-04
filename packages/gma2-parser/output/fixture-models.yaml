@@ -1,0 +1,1656 @@
+- id: robe-robin-100-ledbeam
+  brand: Robe
+  model: Robin 100 LEDBeam
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-pointe
+  brand: Robe
+  model: Robin Pointe
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-flattener
+  brand: Unknown
+  model: beam flattener
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-flattener
+  brand: Unknown
+  model: beam flattener&
+  channels:
+    dimmer: 1
+  revision: 1
+- id: martin-beam-macros
+  brand: Martin
+  model: Beam macros
+  channels:
+    dimmer: 1
+  revision: 1
+- id: martin-wash-macros
+  brand: Martin
+  model: Wash macros
+  channels:
+    dimmer: 1
+  revision: 1
+- id: martin-spot-macros
+  brand: Martin
+  model: Spot macros
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-600-ledwash
+  brand: Robe
+  model: Robin 600 LEDWash
+  channels:
+    dimmer: 1
+  revision: 1
+- id: martin-mac-700-profile
+  brand: Martin
+  model: Mac 700 Profile
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-dls
+  brand: Robe
+  model: Robin DLS
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-2
+  brand: Unknown
+  model: Wash (2)
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-preset
+  brand: Unknown
+  model: Beam Preset
+  channels:
+    dimmer: 1
+  revision: 1
+- id: elation-rush-mh-1-profile
+  brand: Elation
+  model: Rush MH 1 Profile
+  channels:
+    dimmer: 1
+  revision: 1
+- id: elation-rush-mh-6-wash
+  brand: Elation
+  model: Rush MH 6 Wash
+  channels:
+    dimmer: 1
+  revision: 1
+- id: elation-rush-mh-5-profile
+  brand: Elation
+  model: Rush MH 5 Profile
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-10
+  brand: Robe
+  model: Robin 10
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-20
+  brand: Robe
+  model: Robin 20
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-3-floor0
+  brand: Robe
+  model: Robin 3 Floor0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-3-floor-mitte
+  brand: Robe
+  model: Robin 3 Floor Mitte
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-4-floor0
+  brand: Robe
+  model: Robin 4 Floor0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-4-floor-mitte
+  brand: Robe
+  model: Robin 4 Floor Mitte
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-50
+  brand: Robe
+  model: Robin 50
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-60
+  brand: Robe
+  model: Robin 60
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-7-floor-aussen0
+  brand: Robe
+  model: Robin 7 Floor aussen0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-8-floor-aussen0
+  brand: Robe
+  model: Robin 8 Floor aussen0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: elation-rush-mh1-10
+  brand: Elation
+  model: Rush MH1 10
+  channels:
+    dimmer: 1
+  revision: 1
+- id: elation-rush-mh1-20
+  brand: Elation
+  model: Rush MH1 20
+  channels:
+    dimmer: 1
+  revision: 1
+- id: elation-rush-mh1-30
+  brand: Elation
+  model: Rush MH1 30
+  channels:
+    dimmer: 1
+  revision: 1
+- id: elation-rush-mh1-40
+  brand: Elation
+  model: Rush MH1 40
+  channels:
+    dimmer: 1
+  revision: 1
+- id: elation-rush-mh1-50
+  brand: Elation
+  model: Rush MH1 50
+  channels:
+    dimmer: 1
+  revision: 1
+- id: elation-rush-mh1-60
+  brand: Elation
+  model: Rush MH1 60
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-mh5-stage-10
+  brand: Unknown
+  model: Spot MH5 Stage 10
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-mh5-stage-20
+  brand: Unknown
+  model: Spot MH5 Stage 20
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-mh5-stage-30
+  brand: Unknown
+  model: Spot MH5 Stage 30
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-mh5-stage-40
+  brand: Unknown
+  model: Spot MH5 Stage 40
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-mh5-partyraum-10
+  brand: Unknown
+  model: Spot MH5 Partyraum 10
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-mh5-partyraum-20
+  brand: Unknown
+  model: Spot MH5 Partyraum 20
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-mh5-partyraum-30
+  brand: Unknown
+  model: Spot MH5 Partyraum 30
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-mh5-partyraum-40
+  brand: Unknown
+  model: Spot MH5 Partyraum 40
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-mh5-partyraum-50
+  brand: Unknown
+  model: Spot MH5 Partyraum 50
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-mh5-partyraum-60
+  brand: Unknown
+  model: Spot MH5 Partyraum 60
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-mhs
+  brand: Unknown
+  model: Wash MHs
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-10
+  brand: Unknown
+  model: Wash DF 10
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-20
+  brand: Unknown
+  model: Wash DF 20
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-30
+  brand: Unknown
+  model: Wash DF 30
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-40
+  brand: Unknown
+  model: Wash DF 40
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-50
+  brand: Unknown
+  model: Wash DF 50
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-60
+  brand: Unknown
+  model: Wash DF 60
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-10
+  brand: Unknown
+  model: Wash Stage 10
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-20
+  brand: Unknown
+  model: Wash Stage 20
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-30
+  brand: Unknown
+  model: Wash Stage 30
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-40
+  brand: Unknown
+  model: Wash Stage 40
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-mhs
+  brand: Unknown
+  model: Beam MHs
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-pos
+  brand: Unknown
+  model: Wash DF POS
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-pos
+  brand: Unknown
+  model: Wash Stage POS
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-mhs-pos
+  brand: Unknown
+  model: Spot MHs POS
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-mhs-gobo-rot
+  brand: Unknown
+  model: Spot MHs Gobo Rot
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-auf-vorhaenge
+  brand: Unknown
+  model: Wash Stage auf Vorhaenge
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-df
+  brand: Unknown
+  model: Spot DF
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage
+  brand: Unknown
+  model: Spot Stage
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-party
+  brand: Unknown
+  model: Spot Party
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df
+  brand: Unknown
+  model: Wash DF
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage
+  brand: Unknown
+  model: Wash Stage
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-auf-45deg
+  brand: Unknown
+  model: Wash DF auf 45deg
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-mhs-auf-vorh
+  brand: Unknown
+  model: Spot MHs auf Vorh
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-weiss
+  brand: Unknown
+  model: Spot Stage 1..4 weiss
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-cyan
+  brand: Unknown
+  model: Spot Stage 1..4 cyan
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-blau
+  brand: Unknown
+  model: Spot Stage 1..4 Blau
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-dunkelblau
+  brand: Unknown
+  model: Spot Stage 1..4 Dunkelblau
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-uv
+  brand: Unknown
+  model: Spot Stage 1..4 UV
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-magenta
+  brand: Unknown
+  model: Spot Stage 1..4 Magenta
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-rot
+  brand: Unknown
+  model: Spot Stage 1..4 Rot
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-amber
+  brand: Unknown
+  model: Spot Stage 1..4 Amber
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-gelb
+  brand: Unknown
+  model: Spot Stage 1..4 Gelb
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-gruen
+  brand: Unknown
+  model: Spot Stage 1..4 gruen
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-weiss
+  brand: Unknown
+  model: Spot Partyraum 1..6 weiss
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-cyan
+  brand: Unknown
+  model: Spot Partyraum 1..6 cyan
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-blau
+  brand: Unknown
+  model: Spot Partyraum 1..6 Blau
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-dunkelblau
+  brand: Unknown
+  model: Spot Partyraum 1..6 Dunkelblau
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-uv
+  brand: Unknown
+  model: Spot Partyraum 1..6 UV
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-magenta
+  brand: Unknown
+  model: Spot Partyraum 1..6 Magenta
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-rot
+  brand: Unknown
+  model: Spot Partyraum 1..6 Rot
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-amber
+  brand: Unknown
+  model: Spot Partyraum 1..6 Amber
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-gelb
+  brand: Unknown
+  model: Spot Partyraum 1..6 Gelb
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-gruen
+  brand: Unknown
+  model: Spot Partyraum 1..6 gruen
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-thin-and-wide
+  brand: Unknown
+  model: Wash Stage Thin and Wide
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-wide
+  brand: Unknown
+  model: Wash Stage Wide
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-neutral
+  brand: Unknown
+  model: Wash neutral
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-saal
+  brand: Unknown
+  model: Wash Saal
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-saal
+  brand: Unknown
+  model: Spot Saal
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-saal-vorne
+  brand: Unknown
+  model: Wash Saal vorne
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-saal-midback
+  brand: Unknown
+  model: Wash Saal mid/back
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-shutter-sin
+  brand: Unknown
+  model: Beam Shutter Sin
+  channels:
+    dimmer: 1
+  revision: 1
+- id: elation-rush-stage-tilt
+  brand: Elation
+  model: Rush Stage Tilt
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-roll
+  brand: Unknown
+  model: Wash Roll
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-roll
+  brand: Unknown
+  model: Spot Roll
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-circle-symm-1pos2
+  brand: Unknown
+  model: Wash circle symm 1pos#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-circle-symm-1pos3
+  brand: Unknown
+  model: Wash circle symm 1pos#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-circle-symm-1pos4
+  brand: Unknown
+  model: Wash circle symm 1pos#4
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-tilt-symm-13
+  brand: Unknown
+  model: Wash tilt symm 1#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-tilt-symm-23
+  brand: Unknown
+  model: Wash tilt symm 2#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-pan-symm-12
+  brand: Unknown
+  model: Wash pan symm 1#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-pan-symm-15
+  brand: Unknown
+  model: Wash pan symm 1#5
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-circle-symm-2pos
+  brand: Unknown
+  model: Wash circle symm 2pos
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-circle-symm1-all
+  brand: Unknown
+  model: Wash circle symm1 all
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-pan-symm-1
+  brand: Unknown
+  model: Wash pan symm 1
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-pan-ran
+  brand: Unknown
+  model: Wash Pan ran
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-strobe
+  brand: Unknown
+  model: Wash Strobe
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-circle-symm1-2pos
+  brand: Robe
+  model: Robin circle symm1 2pos
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-circle-symm1-2pos2
+  brand: Robe
+  model: Robin circle symm1 2pos#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-tilt-symm-2
+  brand: Robe
+  model: Robin Tilt symm 2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-tilt-symm-22
+  brand: Robe
+  model: Robin Tilt symm 2#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-dimsin2
+  brand: Robe
+  model: Robin DimSin#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-dimsin
+  brand: Robe
+  model: Robin DimSin
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-dim-ran
+  brand: Robe
+  model: Robin Dim RAN
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-chaseran
+  brand: Robe
+  model: Robin ChaseRAN
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-pulsedown
+  brand: Robe
+  model: Robin PulseDown
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-strobeman
+  brand: Robe
+  model: Robin StrobeMAN
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-blue-amber-sy
+  brand: Robe
+  model: Robin Blue Amber sy
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-blue-magenta-symm
+  brand: Robe
+  model: Robin Blue Magenta symm
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-dim-sin2
+  brand: Unknown
+  model: Wash Dim SIN#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-dim-sin-symm2
+  brand: Unknown
+  model: Wash Dim SIN symm#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-dim-ran2
+  brand: Unknown
+  model: Wash Dim RAN#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-chasewave2
+  brand: Unknown
+  model: Wash ChaseWave#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-chaseran2
+  brand: Unknown
+  model: Wash ChaseRAN#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-pulsedown2
+  brand: Unknown
+  model: Wash PulseDown#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-circle-symm-1pos7
+  brand: Unknown
+  model: Spot circle symm 1pos#7
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-circle-symm-1pos8
+  brand: Unknown
+  model: Spot circle symm 1pos#8
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-circle-symm-1pos9
+  brand: Unknown
+  model: Spot circle symm 1pos#9
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-tilt-symm-12
+  brand: Unknown
+  model: Spot tilt symm 1#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-tilt-symm-22
+  brand: Unknown
+  model: Spot tilt symm 2#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-pan-symm-13
+  brand: Unknown
+  model: Spot pan symm 1#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-pan-symm-14
+  brand: Unknown
+  model: Spot pan symm 1#4
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-pan-ran2
+  brand: Unknown
+  model: Spot Pan ran#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-strobe-man
+  brand: Unknown
+  model: Beam Strobe MAN
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-dim
+  brand: Unknown
+  model: Beam Dim >
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-dim-symm
+  brand: Unknown
+  model: Beam Dim symm <>
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-dim-ran
+  brand: Unknown
+  model: Beam Dim RAN
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-chasealign
+  brand: Unknown
+  model: Spot ChaseAlign
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-chase
+  brand: Unknown
+  model: Beam Chase >
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-chase
+  brand: Unknown
+  model: Beam Chase <>
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-chase-ran
+  brand: Unknown
+  model: Beam Chase Ran
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-chase-2
+  brand: Unknown
+  model: Beam Chase <>#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-stroberan
+  brand: Unknown
+  model: Beam StrobeRAN
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-strobe-man-2x
+  brand: Unknown
+  model: Beam Strobe MAN 2x
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-white-chaseran
+  brand: Unknown
+  model: Spot WHITE ChaseRan
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-white-chasealign
+  brand: Unknown
+  model: Spot WHITE ChaseAlign
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-white-strobe-man
+  brand: Unknown
+  model: Spot WHITE Strobe MAN
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-dim-sin-symm3
+  brand: Unknown
+  model: Wash Dim SIN symm#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-dim-ran3
+  brand: Unknown
+  model: Wash Dim RAN#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-chasewave3
+  brand: Unknown
+  model: Wash ChaseWave#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-chaseran3
+  brand: Unknown
+  model: Wash ChaseRAN#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-pulsedown3
+  brand: Unknown
+  model: Wash PulseDown#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-circle-symm-1pos2
+  brand: Unknown
+  model: Spot circle symm 1pos#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-circle-symm-1pos3
+  brand: Unknown
+  model: Spot circle symm 1pos#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-circle-symm-1pos4
+  brand: Unknown
+  model: Spot circle symm 1pos#4
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-tilt-symm-13
+  brand: Unknown
+  model: Spot tilt symm 1#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-pan-symm-12
+  brand: Unknown
+  model: Spot pan symm 1#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-pan-symm-15
+  brand: Unknown
+  model: Spot pan symm 1#5
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-dim-2
+  brand: Unknown
+  model: Beam Dim >#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-dim-symm-2
+  brand: Unknown
+  model: Beam Dim symm <>#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-dim-ran2
+  brand: Unknown
+  model: Beam Dim RAN#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-chase-3
+  brand: Unknown
+  model: Beam Chase >#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-chase-ran2
+  brand: Unknown
+  model: Beam Chase Ran#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-stroberan2
+  brand: Unknown
+  model: Beam StrobeRAN#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-strobe-man-2x2
+  brand: Unknown
+  model: Beam Strobe MAN 2x#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-circle-symm-1pos5
+  brand: Unknown
+  model: Spot circle symm 1pos#5
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-circle-symm-1pos6
+  brand: Unknown
+  model: Spot circle symm 1pos#6
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-tilt-symm-14
+  brand: Unknown
+  model: Spot tilt symm 1#4
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-tilt-symm-23
+  brand: Unknown
+  model: Spot tilt symm 2#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-pan-symm-16
+  brand: Unknown
+  model: Spot pan symm 1#6
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-pan-symm-17
+  brand: Unknown
+  model: Spot pan symm 1#7
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-strobe-man2
+  brand: Unknown
+  model: Beam Strobe MAN#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-dim-3
+  brand: Unknown
+  model: Beam Dim >#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-dim-symm-3
+  brand: Unknown
+  model: Beam Dim symm <>#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-dim-ran3
+  brand: Unknown
+  model: Beam Dim RAN#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-chasealign2
+  brand: Unknown
+  model: Spot ChaseAlign#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-chase-2
+  brand: Unknown
+  model: Beam Chase >#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-chase-3
+  brand: Unknown
+  model: Beam Chase <>#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-chase-ran3
+  brand: Unknown
+  model: Beam Chase Ran#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-chase-4
+  brand: Unknown
+  model: Beam Chase <>#4
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-chase-4
+  brand: Unknown
+  model: Beam Chase >#4
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-stroberan3
+  brand: Unknown
+  model: Beam StrobeRAN#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-strobe-man-2x3
+  brand: Unknown
+  model: Beam Strobe MAN 2x#3
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-moving-wash-room
+  brand: Unknown
+  model: Moving Wash Room
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-strobeman2
+  brand: Robe
+  model: Robin StrobeMAN#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-tilt-symm-22
+  brand: Unknown
+  model: Wash tilt symm 2#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-moving-heads-slow
+  brand: Unknown
+  model: Moving Heads Slow
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-tilt-symm-24
+  brand: Unknown
+  model: Wash tilt symm 2#4
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-geflaecht
+  brand: Unknown
+  model: Wash Geflaecht
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-keys0
+  brand: Unknown
+  model: Spot Keys0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-drums0
+  brand: Unknown
+  model: Spot Drums0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-fotos
+  brand: Unknown
+  model: Spot fotos
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-df-16-color
+  brand: Unknown
+  model: Spot DF 1..6 color
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-df-16-weiss0
+  brand: Unknown
+  model: Spot DF 1..6 weiss0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-df-16-cyan0
+  brand: Unknown
+  model: Spot DF 1..6 cyan0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-df-16-blau0
+  brand: Unknown
+  model: Spot DF 1..6 Blau0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-df-16-dunkelblau0
+  brand: Unknown
+  model: Spot DF 1..6 Dunkelblau0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-df-16-uv0
+  brand: Unknown
+  model: Spot DF 1..6 UV0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-df-16-magenta0
+  brand: Unknown
+  model: Spot DF 1..6 Magenta0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-df-16-rot0
+  brand: Unknown
+  model: Spot DF 1..6 Rot0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-df-16-amber0
+  brand: Unknown
+  model: Spot DF 1..6 Amber0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-df-16-gelb0
+  brand: Unknown
+  model: Spot DF 1..6 Gelb0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-df-16-gruen0
+  brand: Unknown
+  model: Spot DF 1..6 gruen0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-color
+  brand: Unknown
+  model: Spot Stage 1..4 color
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-weiss0
+  brand: Unknown
+  model: Spot Stage 1..4 weiss0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-cyan0
+  brand: Unknown
+  model: Spot Stage 1..4 cyan0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-blau0
+  brand: Unknown
+  model: Spot Stage 1..4 Blau0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-dunkelblau0
+  brand: Unknown
+  model: Spot Stage 1..4 Dunkelblau0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-uv0
+  brand: Unknown
+  model: Spot Stage 1..4 UV0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-magenta0
+  brand: Unknown
+  model: Spot Stage 1..4 Magenta0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-rot0
+  brand: Unknown
+  model: Spot Stage 1..4 Rot0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-amber0
+  brand: Unknown
+  model: Spot Stage 1..4 Amber0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-gelb0
+  brand: Unknown
+  model: Spot Stage 1..4 Gelb0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-14-gruen0
+  brand: Unknown
+  model: Spot Stage 1..4 gruen0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-color
+  brand: Unknown
+  model: Spot Partyraum 1..6 color
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-weiss0
+  brand: Unknown
+  model: Spot Partyraum 1..6 weiss0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-cyan0
+  brand: Unknown
+  model: Spot Partyraum 1..6 cyan0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-blau0
+  brand: Unknown
+  model: Spot Partyraum 1..6 Blau0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-dunkelblau0
+  brand: Unknown
+  model: Spot Partyraum 1..6 Dunkelblau0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-uv0
+  brand: Unknown
+  model: Spot Partyraum 1..6 UV0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-magenta0
+  brand: Unknown
+  model: Spot Partyraum 1..6 Magenta0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-rot0
+  brand: Unknown
+  model: Spot Partyraum 1..6 Rot0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-amber0
+  brand: Unknown
+  model: Spot Partyraum 1..6 Amber0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-gelb0
+  brand: Unknown
+  model: Spot Partyraum 1..6 Gelb0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-partyraum-16-gruen0
+  brand: Unknown
+  model: Spot Partyraum 1..6 gruen0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-16-color
+  brand: Unknown
+  model: Wash DF 1..6 color
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-16-weiss0
+  brand: Unknown
+  model: Wash DF 1..6 weiss0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-16-cyan0
+  brand: Unknown
+  model: Wash DF 1..6 cyan0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-16-blau0
+  brand: Unknown
+  model: Wash DF 1..6 Blau0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-16-dunkelblau0
+  brand: Unknown
+  model: Wash DF 1..6 Dunkelblau0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-16-uv0
+  brand: Unknown
+  model: Wash DF 1..6 UV0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-16-magenta0
+  brand: Unknown
+  model: Wash DF 1..6 Magenta0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-16-rot0
+  brand: Unknown
+  model: Wash DF 1..6 Rot0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-16-amber0
+  brand: Unknown
+  model: Wash DF 1..6 Amber0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-16-gelb0
+  brand: Unknown
+  model: Wash DF 1..6 Gelb0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-16-gruen0
+  brand: Unknown
+  model: Wash DF 1..6 gruen0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-14-color
+  brand: Unknown
+  model: Wash Stage 1..4 color
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-14-weiss0
+  brand: Unknown
+  model: Wash Stage 1..4 weiss0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-14-cyan0
+  brand: Unknown
+  model: Wash Stage 1..4 cyan0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-14-blau0
+  brand: Unknown
+  model: Wash Stage 1..4 Blau0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-14-dunkelblau0
+  brand: Unknown
+  model: Wash Stage 1..4 Dunkelblau0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-14-uv0
+  brand: Unknown
+  model: Wash Stage 1..4 UV0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-14-magenta0
+  brand: Unknown
+  model: Wash Stage 1..4 Magenta0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-14-rot0
+  brand: Unknown
+  model: Wash Stage 1..4 Rot0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-14-amber0
+  brand: Unknown
+  model: Wash Stage 1..4 Amber0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-14-gelb0
+  brand: Unknown
+  model: Wash Stage 1..4 Gelb0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-14-gruen0
+  brand: Unknown
+  model: Wash Stage 1..4 gruen0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-df-party
+  brand: Unknown
+  model: Spot DF party
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df-party
+  brand: Unknown
+  model: Wash DF  party
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-party
+  brand: Unknown
+  model: Wash Stage  party
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-party
+  brand: Unknown
+  model: Spot Stage  party
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-df2
+  brand: Unknown
+  model: Spot DF#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-df2
+  brand: Unknown
+  model: Wash DF#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage2
+  brand: Unknown
+  model: Wash Stage#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage2
+  brand: Unknown
+  model: Spot Stage#2
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-defaults
+  brand: Unknown
+  model: Spot Defaults
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-auf-rob0
+  brand: Unknown
+  model: Spot auf Rob0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-side-8tel0
+  brand: Unknown
+  model: Wash Stage Side 8tel0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-side-16tel0
+  brand: Unknown
+  model: Wash Stage Side 16tel0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-on-guzi0
+  brand: Unknown
+  model: Spot on Guzi0
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-df-col
+  brand: Unknown
+  model: Spot Df col
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-stage-col
+  brand: Unknown
+  model: Spot Stage col
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-spot-party-col
+  brand: Unknown
+  model: Spot Party col
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-stage-col
+  brand: Unknown
+  model: Wash Stage col
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-tf
+  brand: Unknown
+  model: Wash TF
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-focus
+  brand: Unknown
+  model: Beam  Focus
+  channels:
+    dimmer: 1
+  revision: 1
+- id: clay-paky-sharpy-groups
+  brand: Clay Paky
+  model: sharpy groups
+  channels:
+    dimmer: 1
+  revision: 1
+- id: clay-paky-sharpy-main
+  brand: Clay Paky
+  model: SHARPY MAIN
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-con
+  brand: Unknown
+  model: Beam CON
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-con
+  brand: Unknown
+  model: Wash CON
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-con
+  brand: Robe
+  model: Robin CON
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-ext
+  brand: Unknown
+  model: Beam EXT
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-wash-ext
+  brand: Unknown
+  model: Wash EXT
+  channels:
+    dimmer: 1
+  revision: 1
+- id: robe-robin-ext
+  brand: Robe
+  model: Robin EXT
+  channels:
+    dimmer: 1
+  revision: 1
+- id: unknown-beam-focus
+  brand: Unknown
+  model: Beam Focus
+  channels:
+    dimmer: 1
+  revision: 1

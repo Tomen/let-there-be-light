@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://let-there-be-light/schemas/fixture.schema.json",
+  "title": "Fixture",
+  "description": "A patched fixture instance at a specific DMX address",
+  "type": "object",
+  "required": ["id", "name", "modelId", "universe", "startChannel", "revision"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name",
+      "minLength": 1
+    },
+    "modelId": {
+      "type": "string",
+      "description": "Reference to a fixture model ID"
+    },
+    "universe": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 32767,
+      "description": "Art-Net universe number"
+    },
+    "startChannel": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 512,
+      "description": "First DMX channel (1-512)"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Version number for optimistic concurrency"
+    }
+  },
+  "additionalProperties": false
+}

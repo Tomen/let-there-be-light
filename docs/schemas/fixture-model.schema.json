@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://let-there-be-light/schemas/fixture-model.schema.json",
+  "title": "Fixture Model",
+  "description": "Reusable template defining a fixture's channel layout",
+  "type": "object",
+  "required": ["id", "brand", "model", "channels"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the model",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "brand": {
+      "type": "string",
+      "description": "Manufacturer name"
+    },
+    "model": {
+      "type": "string",
+      "description": "Model name"
+    },
+    "channels": {
+      "type": "object",
+      "description": "Channel name to relative offset mapping (1-based)",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 512
+      },
+      "minProperties": 1
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Version number for optimistic concurrency"
+    }
+  },
+  "additionalProperties": false
+}
