@@ -6,11 +6,14 @@ This document describes the findings from reverse-engineering GrandMA2 `.show.gz
 
 **Current Status**:
 - ✅ File structure understood
-- ✅ Fixture names extracted (13 fixtures in sample)
+- ✅ Show index structure decoded (multiple shows per file)
+- ✅ Fixture TYPES extracted (12 types: PAR, Moving 1-4, etc.)
 - ✅ Fixture type library located (276 types)
 - ✅ Group structure located (394 groups found)
 - ✅ Port/DMX output structure located
-- ❌ DMX addresses - NOT stored inline with fixtures (may require patch session)
+- ✅ 3-channel address table found (0xc00c89)
+- ✅ Fixture-to-index mapping table found (0x27d0)
+- ⏳ DMX patch table - partial structures found, full table unclear
 - ⏳ Group memberships - structure found, fixture references unclear
 - ⏳ Presets - names found but values not extracted
 
@@ -31,6 +34,24 @@ This document describes the findings from reverse-engineering GrandMA2 `.show.gz
 | Decompressed Size | 48.69 MB |
 | MA Version | 3.9.60 |
 | Timestamp | 2015-02-24 |
+| Shows in File | 20+ (including multiple Hillsong versions) |
+
+## Shows Contained in File
+
+The file contains multiple shows spanning 2014-2025:
+
+| Show Name | Name Offset | Offset1 | Offset2 |
+|-----------|-------------|---------|---------|
+| palais berg v1.7 | 0x2011 | 0xef4f | 0xb42fd |
+| palais berg v2.0 | 0x20b9 | 0xbb54 | 0xb4334 |
+| hillsong wien basic april 2022 | 0x21bc | 0x10a46 | 0xb4542 |
+| hillsong wien std 1.0 | 0x221e | 0x98e7 | 0xb457b |
+| hillsong wien (tommys version) | 0x22d0 | 0xb891 | 0xb487d |
+| hillsong wien - 2025-03 | 0x2332 | 0x6ec9 | 0xb4964 |
+| hillsong wien - 2025-05 | 0x238d | 0x704f | 0xb49a3 |
+| hillsong backup 2025-07 | 0x23e8 | 0x9529 | 0xb49e9 |
+| hillsong live | 0x2443 | 0x8ad9 | 0xb49f0 |
+| hillsong_september14 | 0x2494 | 0xb8f0 | 0xb4a21 |
 
 ## File Structure Map
 
@@ -38,24 +59,176 @@ This document describes the findings from reverse-engineering GrandMA2 `.show.gz
 Offset Range        Content
 ─────────────────────────────────────────────────────
 0x00000000-0x00002000   Header, version info
-0x00002000-0x00003000   Show index, metadata, paths
+0x00002000-0x00002800   Show index (names, offsets, metadata)
 0x00002550             "hillsong_september14" show name
 0x00002620             "C:/ProgramData/MA Lighting..." path
-0x00008000-0x00009000   Network/output configuration
+0x000027d0             Fixture index → type mapping table
+0x00007f00-0x00008500   Patch records (64 00 18 00 header)
 0x00008a0a             "MA_FOHSWITCH" node
 0x00008abf             Port 1-13 DMX output config
 0x00008cea             Group01-Group06 (empty slots)
-0x00009000-0x00050000   Fixture instances
+0x00009000-0x00050000   Fixture type instances
 0x00050000-0x00500000   Show-specific data (cues, effects, macros)
 0x00970000-0x00A00000   Fixture type library (channel definitions)
 0x00A00000-0x00D00000   More fixture types, presets
+0x00c00c89             3-channel address table
 0x00D00000-0x02000000   User groups, sequences, executors
 0x02000000+             Additional data, backups
 ```
 
-## Port/DMX Output Structure
+## Show Index Structure (0x2000)
 
-### Location
+Each show entry follows this 28-byte record format:
+
+```
+Offset  Size  Field              Notes
+──────────────────────────────────────────────────────
+-20     2     Record type        0x03 0x00 or 0x41 0x3c
+-18     2     Flags              0x09 0x03
+-14     4     Zeros              Padding
+-10     4     Offset1            Points to show-specific data (~30-70 KB)
+-6      4     Offset2            Points to shared data (~720 KB)
+-2      4     Name length        Length of show name string
+0       N     Show name          Null-terminated ASCII
+N       ...   Padding            Align to next record
+```
+
+### Show Index Record Example
+
+```
+hillsong wien basic april 2022 @ 0x21bc:
+  Before: 03 00 09 03 00 00 00 00 46 0a 01 00 42 45 0b 00 1e 00 00 00
+          |        |              |          |          |
+          |        |              |          |          Name len (30)
+          |        |              |          Offset2 (0x0b4542)
+          |        |              Offset1 (0x010a46)
+          |        Marker (09 03 00 00 00 00)
+          Type (03 00)
+```
+
+## Fixture Index Mapping Table (0x27d0)
+
+8-byte records mapping sequential indices to fixture type IDs:
+
+```
+Offset     u32 Index    u32 Type ID
+────────────────────────────────────
+0x27d0     1            86 (0x56)
+0x27d8     2            87 (0x57)
+0x27e0     3            88 (0x58)
+0x27e8     4            89 (0x59)
+0x27f0     5            90 (0x5a)
+...
+```
+
+Pattern: Sequential indices 1, 2, 3... mapped to fixture type IDs 86, 87, 88...
+
+These appear to be internal fixture type references, not DMX addresses.
+
+## Patch Record Structure (0x7f00-0x8500)
+
+28-byte records with consistent header:
+
+```
+Offset  Size  Field        Value           Notes
+────────────────────────────────────────────────────
+0       2     Constant     0x0064 (100)    Always 100
+2       2     Constant     0x0018 (24)     Always 24
+4       6     Padding      0x000000000000  Zeros
+10      4     Universe     0, 1, or 2      0-indexed (0=U1, 2=U3)
+14      4     Index        1, 2, 3...      Incrementing per universe
+18      10    Padding      0x00...         Zeros
+```
+
+### Observed Entries
+
+| Universe | Count | Index Range | Notes |
+|----------|-------|-------------|-------|
+| 0 (U1) | 5 | 0 | Only zeros found |
+| 1 (U2) | 3 | 0 | Only zeros found |
+| 2 (U3) | 53 | 1-9 | Sequential with gaps |
+
+**Note**: This appears to be a partial patch table. Full patch data may be elsewhere or in newer shows.
+
+## 3-Channel Address Table (0xc00c89)
+
+18-byte records containing 3-channel fixture DMX assignments:
+
+```
+Hex dump:
+0x00c00c89  01 00 0c 00 0d 00 02 00 0c 00 04 00 03 00 0e 00 0f 00
+
+Record structure (9 × u16):
+  Field 0: DMX address (1, 4, 7, 10... 3-channel spacing)
+  Field 1-8: Additional channel/attribute references
+```
+
+### Address Pattern Analysis
+
+```
+Record 0: DMX addr=1,  fields=[1, 12, 13, 2, 12, 4, 3, 14, 15]
+Record 1: DMX addr=4,  fields=[4, 14, 6, 5, 16, 17, 6, 16, 8]
+Record 2: DMX addr=7,  fields=[7, 18, 19, 8, 18, 10, 9, 20, 21]
+Record 3: DMX addr=10, fields=[10, 20, 12, 11, 22, 23, 12, 22, 14]
+...
+```
+
+**Key Finding**: Field 0 contains the expected 3-channel DMX address sequence (1, 4, 7, 10, 13...).
+This matches the user's intel about Universe 3 having 3-channel fixtures.
+
+Valid consecutive records: 7 (addresses 1-19)
+Then pattern breaks with gaps/jumps.
+
+## Fixture Type Records
+
+The file contains 12 fixture TYPES (not patched instances):
+
+| Type Name | Marker Offset | Notes |
+|-----------|---------------|-------|
+| PAR | 0x90f2 | Generic conventional |
+| Fresnel | 0xdf7a | Conventional |
+| Leko | 0x12e58 | Conventional |
+| Zoom Profile | 0x17d2a | Conventional |
+| Blinder | 0x1cbb2 | Effect |
+| Moving 1 | 0x271f9 | Moving light |
+| Moving 2 | 0x2c09e | Moving light |
+| Moving 3 | 0x30f31 | Moving light |
+| Moving 4 | 0x35dc4 | Moving light |
+| Scanner | 0x3ac57 | Moving light |
+| Strobe | 0x3f208 | Effect |
+| Smoke | 0x43fb1 | Atmospheric |
+
+**Important**: These are fixture TYPES (templates), not the ~200 patched fixture instances.
+The actual patched fixtures (100 on U1, 100 on U3) are stored in a separate patch section.
+
+### Fixture Marker Pattern
+
+Fixture records are identified by marker `0x3eb98358` at offset -28 from name:
+
+```
+-28     4     MARKER              0x3eb98358 (LE: 3e b9 83 58)
+-24     4     Reserved            0x00000000
+-20     4     Unknown             0x5c010000
+-16     4     Reserved            0x00000000
+-12     8     Hash/UUID           Varies per fixture
+-4      4     Name length         e.g., 0x00000008
+ 0      N     Fixture name        "Moving 1"
+```
+
+## User Intel About DMX Configuration
+
+Per user input, the expected configuration for newer shows (2025):
+
+| Universe | Fixture Count | Channels Each | Address Pattern |
+|----------|---------------|---------------|-----------------|
+| 1 (U1) | ~100 | 1 | 1, 2, 3, 4, 5... |
+| 3 (U3) | ~100 | 3 | 1, 4, 7, 10, 13... |
+
+**Hypothesis**: Fixture IDs may encode universe+channel:
+- Universe 3, Channel 1 → Fixture ID 2001 (if universe 0-indexed: 2*1000 + 1)
+- This pattern was NOT found in exhaustive searches
+
+## Port/DMX Output Structure
 
 Port configuration starts at 0x8abf with 13 DMX output ports.
 
@@ -71,16 +244,6 @@ N+8     4     Flags          0x80 0x00 0x08  Mode flags
 N+12    16    Reserved       0x00...         Padding
 N+28    4     Value          0x01 0xff       Configuration
 ```
-
-Ports 1-9 have 6-char names, Ports 10-13 have 7-char names.
-
-### Observed Values
-
-| Port | Type | Flags |
-|------|------|-------|
-| Port 1-9 | 0x17 | 0x80 0x00 0x08 |
-| Port 10-12 | 0x17 | 0x80 0x01 0x08 |
-| Port 13 | 0x17 | 0x80 0x00 0x08 |
 
 ## Group Structure
 
@@ -104,141 +267,7 @@ Group IDs increment by 100: Group01=100, Group02=200, etc.
 
 ### User Groups (0xbc0000+)
 
-User-defined groups with fixture members:
-
-| Group Name | Offset | Member Count |
-|------------|--------|--------------|
-| Wash MHs | 0xbcfa68 | 4 |
-| Wash DF 10 | 0xbcfab8 | - |
-| All Robin100 weiss | 0xd123b9 | 4 |
-
-### Group Membership Format (Hypothesis)
-
-Group membership may use UTF-16LE encoded fixture addresses:
-- "500.3" = Fixture 500, subfixture 3 (GrandMA2 notation)
-- Wide strings observed at 0xd12410: `35 00 30 00 30 00 2e 00 33 00` = "500.3"
-
-## Fixture Record Structure
-
-### Marker Pattern
-
-Fixture records are preceded by the marker `0x3eb98358` at offset -28 from name.
-
-### Complete Layout Analysis
-
-Based on analyzing PAR, Fresnel, Leko, Moving 1-4:
-
-```
-Offset   Size  Field                    Example Value       Notes
-────────────────────────────────────────────────────────────────────
--48      4     Type marker              0x00000123 (291)    Consistent
--44      4     Next fixture pointer     0x0002c08a          Linked list
--40      4     Reserved                 0x00000000
--36      4     Fixture index + flags    0x10000002          High byte = ID
--32      4     Reserved                 0x00000000
--28      4     FIXTURE MARKER           0x5883b93e          Reversed bytes
--24      4     Reserved                 0x00000000
--20      4     Unknown                  0x5c010000
--16      4     Reserved                 0x00000000
--12      8     Hash/UUID                varies
--4       4     Name length              0x00000008
- 0       N     Fixture name             "Moving 1"
-+N       4     Type reference           0x00000001
-+N+4     8     Values                   0x00f00000 x2
-+N+12    4     Unknown                  0x00000040
-+N+16    ...   Attribute defaults       0x0000ff00 x N
-```
-
-### Fixture Index Encoding (at -36 / -32)
-
-| Fixture | Index Field | Decoded |
-|---------|-------------|---------|
-| PAR | 0x34100002 | Index 52, Type 0x100002 |
-| Fresnel | 0x32100002 | Index 50, Type 0x100002 |
-| Leko | 0x30100002 | Index 48, Type 0x100002 |
-| Zoom Profile | 0x1c100002 | Index 28, Type 0x100002 |
-| Blinder | 0x14000002 | Index 20, Type 0x000002 |
-| 2Lite | 0x12000002 | Index 18, Type 0x000002 |
-| Moving 1 | 0x10000002 | Index 16, Type 0x000002 |
-| Moving 2 | 0x0e000002 | Index 14, Type 0x000002 |
-| Moving 3 | 0x0c000002 | Index 12, Type 0x000002 |
-| Moving 4 | 0x0a000002 | Index 10, Type 0x000002 |
-| Strobe | 0x06000002 | Index 6, Type 0x000002 |
-
-Two fixture categories observed:
-- **Conventional (0x100002)**: PAR, Fresnel, Leko, Zoom Profile
-- **Moving lights (0x000002)**: Blinder, 2Lite, Moving 1-4, Strobe
-
-### Extracted Fixtures
-
-| Name | Offset | Index |
-|------|--------|-------|
-| PAR | 0x9110 | 52 |
-| Fresnel | 0xdf9e | 50 |
-| Leko | 0x12e7c | 48 |
-| Zoom Profile | 0x17d4e | 28 |
-| Blinder | 0x1cbd6 | 20 |
-| 2Lite | 0x21c16 | 18 |
-| Moving 1 | 0x2721d | 16 |
-| Moving 2 | 0x2c0c2 | 14 |
-| Moving 3 | 0x30f55 | 12 |
-| Moving 4 | 0x35de8 | 10 |
-| Moving 5 | 0x3ac7b | 8 |
-| Moving 6 | 0x3fb0e | 6 |
-| Strobe | 0x449a1 | - |
-
-## DMX Address Investigation
-
-### Key Finding
-
-**DMX addresses are NOT stored inline with fixture instance records.**
-
-The fixture records contain:
-- Fixture name
-- Fixture index/ID
-- Type reference
-- Attribute defaults
-- Link to next fixture
-
-But NO universe or DMX address fields.
-
-### Possible Explanations
-
-1. **Not patched**: The show file may not have DMX addresses assigned
-2. **Separate patch table**: Addresses stored in a different section
-3. **Session-based**: Patch stored in session data, not show file
-4. **Output mapping**: Addresses defined at output/port level
-
-### Search Results
-
-Exhaustive searches performed:
-- No "Patch" or "DMXAddress" strings found in show data area
-- No consistent fixture ID → address patterns found
-- Port records contain hardware config, not fixture addresses
-
-## Fixture Type Library
-
-### Location
-
-Fixture type definitions start at approximately 0x974000.
-
-### Sample Entry: Robin 100 LEDBeam (0x990329)
-
-```
-Offset  Content
-───────────────────────────────────
-0       "Robin 100 LEDBeam" (17 chars)
-+21     "R1LEDBm1" (8 chars, short name)
-+33     "Robe" (4 chars, manufacturer)
-+41     "Robe" (4 chars, repeated)
-+49     "Mode 1" (6 chars, DMX mode name)
-+59     Configuration data
-+N      "Automated import from MA Lighting..."
-```
-
-### Extracted Types (276 total)
-
-Includes: Generic Dimmer, Robin 100 LEDBeam, MAC 2000 Wash, Clay Paky Sharpy, etc.
+User-defined groups with fixture members.
 
 ## CLI Tools Reference
 
@@ -248,19 +277,31 @@ Includes: Generic Dimmer, Robin 100 LEDBeam, MAC 2000 Wash, Clay Paky Sharpy, et
 | `pnpm extract <file>` | Extract fixtures to YAML |
 | `pnpm dump <file> <offset> <len>` | Hex dump at offset |
 | `pnpm fixtures <file> analyze` | Analyze fixture records |
-| `pnpm fixtures <file> list` | List fixtures with details |
 | `pnpm search-types <file>` | Search fixture type names |
-| `pnpm deep-search <file> [mode]` | Search DMX/groups/presets |
-| `pnpm find-patch-table <file>` | Search for patch patterns |
+| `pnpm search-patch-intel <file>` | Search for known DMX patterns |
+| `pnpm search-patch-8bit <file>` | Search 8-bit address patterns |
+| `pnpm compare-shows <file>` | Compare two shows for differences |
+| `pnpm follow-show-offsets <file>` | Follow show index pointers |
+| `pnpm analyze-show-index <file>` | Analyze show index structure |
+| `pnpm find-dmx-pattern <file>` | Search for DMX patterns |
+| `pnpm analyze-0x8000 <file>` | Analyze patch region |
+| `pnpm extract-patch-table <file>` | Extract patch records |
+| `pnpm decode-3ch-table <file>` | Decode 3-channel table |
+| `pnpm search-fixture-ids <file>` | Search for fixture ID patterns |
+| `pnpm analyze-fixture-dmx <file>` | Analyze fixture DMX encoding |
+| `pnpm find-fixtures-by-name <file>` | Find fixtures by name patterns |
 
 ## Extraction Status
 
 | Data Type | Status | Notes |
 |-----------|--------|-------|
-| Fixture names | ✅ Extracted | 13 fixtures found |
-| Fixture types | ✅ Extracted | 276 types in library |
-| Fixture indices | ✅ Extracted | Linked list structure |
-| DMX addresses | ❌ Not found | Not stored with fixtures |
+| Show index | ✅ Extracted | 20+ shows with offsets |
+| Fixture types | ✅ Extracted | 12 types found |
+| Fixture library | ✅ Extracted | 276 types in library |
+| 3-ch address table | ✅ Found | At 0xc00c89, partial data |
+| Patch records | ⏳ Partial | 61 records found, incomplete |
+| Fixture-index map | ✅ Found | At 0x27d0 |
+| DMX addresses | ⏳ Partial | Structure found, full table unclear |
 | Group names | ✅ Extracted | 394 groups found |
 | Group memberships | ⏳ Partial | UTF-16 fixture refs found |
 | Color presets | ⏳ Partial | Names found |
@@ -274,6 +315,7 @@ Includes: Generic Dimmer, Robin 100 LEDBeam, MAC 2000 Wash, Clay Paky Sharpy, et
 All multi-byte values are little-endian:
 - `08 00 00 00` = 8 (name length)
 - `23 01 00 00` = 0x123 = 291
+- `3e b9 83 58` = 0x5883b93e (fixture marker)
 
 ### String Encoding
 
@@ -285,30 +327,33 @@ Two formats observed:
 
 Data appears to be 4-byte aligned.
 
-### Embedded Content
-
-- PNG images with ICC profiles (thumbnails, icons)
-- IEND markers indicate image boundaries
-- Photoshop CS6 metadata embedded
-
 ## Conclusions
 
-1. **Show files store fixture definitions but may not include DMX patch data**
-   - Fixtures are defined with names, types, and indices
-   - DMX addresses appear to be stored elsewhere (possibly session files)
+1. **Show files contain multiple shows with separate data sections**
+   - Each show has two offset pointers (offset1 ~30-70KB, offset2 ~720KB)
+   - Shows can be compared to find patch differences
 
-2. **Groups reference fixtures using GrandMA2's decimal notation**
-   - "500.3" format in UTF-16LE encoding
-   - Fixture indices map to these addresses
+2. **Fixture TYPES vs patched fixtures are stored separately**
+   - Types = templates (12 found)
+   - Patched fixtures = instances (~200 expected, stored elsewhere)
 
-3. **The file format is a complex nested structure**
-   - Multiple data sections with different encodings
-   - Linked list navigation between records
-   - Pointers to related data throughout
+3. **3-channel address table confirms expected pattern**
+   - Addresses 1, 4, 7, 10... found at 0xc00c89
+   - Matches user intel about Universe 3 configuration
+
+4. **Patch data appears fragmented**
+   - 61 patch-like records found
+   - Full 100+100 fixture patch not yet located in contiguous table
+
+5. **Fixture IDs may use special encoding**
+   - User suggests: Universe 3, Channel 1 → ID 2001
+   - This specific pattern not found in exhaustive searches
 
 ## Future Investigation
 
-1. Compare multiple show files to find patch data
-2. Analyze GrandMA2 session files (.session)
-3. Look for "Stage" or output layer configuration
-4. Check if newer MA versions store data differently
+1. **Compare 2022 vs 2025 shows** to isolate patch changes
+2. **Search for the 1-channel sequential table** (1, 2, 3, 4...)
+3. **Decode the full 18-byte 3-channel record structure**
+4. **Find the fixture ID → (universe, address) mapping**
+5. **Investigate offset1 and offset2 pointers per show**
+6. **Look for "Patch" section header or marker**

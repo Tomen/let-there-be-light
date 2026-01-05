@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   useFaders,
   useButtons,
@@ -112,17 +112,19 @@ function EditInputDialog({ input, onClose }: EditInputDialogProps) {
   const updateInput = useUpdateInput()
   const [name, setName] = useState(input?.name ?? '')
 
+  // Reset name when a different input is selected
+  useEffect(() => {
+    if (input) {
+      setName(input.name)
+    }
+  }, [input?.id])
+
   const handleSave = () => {
     if (!input || !name.trim()) return
     updateInput.mutate(
       { id: input.id, data: { name: name.trim() }, revision: input.revision },
       { onSuccess: onClose }
     )
-  }
-
-  // Reset name when input changes
-  if (input && name !== input.name && !updateInput.isPending) {
-    setName(input.name)
   }
 
   return (

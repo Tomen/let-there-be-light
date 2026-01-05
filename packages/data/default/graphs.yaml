@@ -3,15 +3,15 @@
     - id: Fader-1767567304560
       type: Fader
       position:
-        x: -450
-        'y': 255
+        x: -615
+        'y': 90
       params:
         faderId: A
     - id: Button-1767570160498
       type: Button
       position:
-        x: -510
-        'y': 15
+        x: -600
+        'y': -75
       params:
         buttonId: X
     - id: WriteAttributes-1767570178782
@@ -48,6 +48,12 @@
         'y': -285
       params:
         width: 1
+    - id: PresetBundle-1767570955656
+      type: PresetBundle
+      position:
+        x: -495
+        'y': 300
+      params: {}
   edges:
     - id: xy-edge__SelectGroup-1767570184160selection-WriteAttributes-1767570178782selection
       from:
@@ -64,4 +70,4 @@
         nodeId: WriteAttributes-1767570178782
         port: bundle
   id: 33ea2f4d-6848-4936-94c0-98523be7750f
-  revision: 109
+  revision: 113

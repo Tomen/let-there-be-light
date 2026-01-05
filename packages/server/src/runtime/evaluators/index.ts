@@ -9,7 +9,7 @@ import { evaluateTime, evaluateFader, evaluateButton } from './inputs.js';
 import { evaluateSelectGroup, evaluateSelectFixture, evaluatePresetBundle } from './selection.js';
 import { evaluateAdd, evaluateMultiply, evaluateClamp01, evaluateMapRange, evaluateSmooth } from './math.js';
 import { evaluateSineLFO, evaluateTriangleLFO, evaluateSawLFO, evaluateChase, evaluateFlash } from './effects.js';
-import { evaluateMixColor, evaluateScaleColor, evaluateColorConstant } from './color.js';
+import { evaluateMixColor, evaluateScaleColor, evaluateColorConstant, evaluateColorToBundle } from './color.js';
 import { evaluateOffsetPosition, evaluateScalePosition, evaluatePositionConstant } from './position.js';
 import { evaluateMergeBundle, evaluateScaleBundle } from './bundle.js';
 import { evaluateWriteAttributes, getWriteOutput } from './output.js';
@@ -50,6 +50,7 @@ export const NODE_EVALUATORS: Record<NodeType, NodeEvaluator> = {
   MixColor: evaluateMixColor,
   ScaleColor: evaluateScaleColor,
   ColorConstant: evaluateColorConstant,
+  ColorToBundle: evaluateColorToBundle,
 
   // Position
   OffsetPosition: evaluateOffsetPosition,

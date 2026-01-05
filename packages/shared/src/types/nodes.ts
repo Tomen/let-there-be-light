@@ -53,6 +53,7 @@ export type NodeType =
   | 'MixColor'
   | 'ScaleColor'
   | 'ColorConstant'
+  | 'ColorToBundle'
   // Position ops
   | 'OffsetPosition'
   | 'ScalePosition'
@@ -354,6 +355,18 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
       g: { type: 'number', default: 1, min: 0, max: 1, label: 'Green' },
       b: { type: 'number', default: 1, min: 0, max: 1, label: 'Blue' },
     },
+  },
+  ColorToBundle: {
+    type: 'ColorToBundle',
+    category: 'color',
+    label: 'Color to Bundle',
+    inputs: {
+      color: { type: 'Color', label: 'Color' },
+    },
+    outputs: {
+      bundle: { type: 'Bundle', label: 'Bundle' },
+    },
+    params: {},
   },
 
   // ============================================

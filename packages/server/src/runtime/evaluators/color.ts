@@ -1,6 +1,6 @@
 import type { GraphNode } from '@let-there-be-light/shared';
 import type { EvaluatorContext, RuntimeValue, NodeEvaluator } from './types.js';
-import { color, asColor, asScalar } from './types.js';
+import { color, bundle, asColor, asScalar } from './types.js';
 
 /**
  * MixColor node - linear interpolation between two colors
@@ -54,4 +54,16 @@ export const evaluateColorConstant: NodeEvaluator = (
   const b = (node.params.b as number) ?? 1;
 
   return { color: color(r, g, b) };
+};
+
+/**
+ * ColorToBundle node - converts a Color to a Bundle with color attribute
+ */
+export const evaluateColorToBundle: NodeEvaluator = (
+  node: GraphNode,
+  ctx: EvaluatorContext
+): Record<string, RuntimeValue> => {
+  const colorInput = asColor(ctx.getInput(node.id, 'color'), { r: 1, g: 1, b: 1 });
+
+  return { bundle: bundle({ color: colorInput }) };
 };
