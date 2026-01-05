@@ -266,7 +266,7 @@ describe('compileGraph', () => {
       expect(result.ok).toBe(true);
     });
 
-    it('should reject MixColor without required inputs', () => {
+    it('should accept MixColor without connections (has defaults)', () => {
       const graph = createGraph(
         'test',
         [createNode('mix1', 'MixColor')],
@@ -275,8 +275,8 @@ describe('compileGraph', () => {
 
       const result = compileGraph(graph);
 
-      expect(result.ok).toBe(false);
-      expect(result.errors.some((e) => e.code === 'MISSING_CONNECTION')).toBe(true);
+      // MixColor has defaults for all inputs, so it compiles successfully
+      expect(result.ok).toBe(true);
     });
   });
 
@@ -295,9 +295,10 @@ describe('compileGraph', () => {
     });
 
     it('should reject invalid param types', () => {
+      // Use Fader with invalid faderId type (number instead of string)
       const graph = createGraph(
         'test',
-        [createNode('sine1', 'SineLFO', { frequency: 'invalid' })],
+        [createNode('fader1', 'Fader', { faderId: 123 })],
         []
       );
 
@@ -372,20 +373,6 @@ describe('extractDependencies', () => {
     expect(deps.buttonIds).toContain('strobe');
   });
 
-  it('should extract preset dependencies', () => {
-    const graph = createGraph(
-      'test',
-      [
-        createNode('p1', 'PresetBundle', { presetId: 'warm' }),
-      ],
-      []
-    );
-
-    const deps = extractDependencies(graph);
-
-    expect(deps.presetIds).toContain('warm');
-  });
-
   it('should extract group dependencies', () => {
     const graph = createGraph(
       'test',
@@ -443,7 +430,6 @@ describe('extractDependencies', () => {
 
     expect(deps.faderIds).toHaveLength(0);
     expect(deps.buttonIds).toHaveLength(0);
-    expect(deps.presetIds).toHaveLength(0);
     expect(deps.groupIds).toHaveLength(0);
     expect(deps.fixtureIds).toHaveLength(0);
   });

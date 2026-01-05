@@ -77,21 +77,6 @@ Selects a single fixture.
 
 ---
 
-## Preset Nodes
-
-### PresetBundle
-Outputs a preset's attribute bundle.
-
-| Params | Type | Description |
-|--------|------|-------------|
-| presetId | string | Preset ID |
-
-| Outputs | Type | Description |
-|---------|------|-------------|
-| bundle | Bundle | Preset attributes |
-
----
-
 ## Math Nodes
 
 ### Add

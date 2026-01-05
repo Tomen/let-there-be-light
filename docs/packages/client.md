@@ -36,7 +36,6 @@ src/
 │   ├── client.ts         # Base fetch wrapper
 │   ├── fixtures.ts       # Fixture hooks
 │   ├── groups.ts         # Group hooks
-│   ├── presets.ts        # Preset hooks
 │   └── graphs.ts         # Graph hooks
 ├── ws/                   # WebSocket client
 │   └── connection.ts     # WebSocketClient class
@@ -47,7 +46,6 @@ src/
 │   └── ui/               # shadcn/ui components
 ├── pages/                # Route components
 │   ├── Patch/            # Fixture/Group management
-│   ├── Presets/          # Color/Position/Beam presets
 │   ├── Graphs/           # Graph list
 │   ├── GraphEditor/      # Node-based graph editor
 │   └── Runtime/          # Live control & preview
@@ -66,7 +64,6 @@ src/
 | Path | Component | Description |
 |------|-----------|-------------|
 | `/patch` | PatchPage | Fixture and group CRUD |
-| `/presets` | PresetsPage | Color/Position/Beam preset management |
 | `/graphs` | GraphsPage | Graph list and creation |
 | `/graphs/:graphId` | GraphEditorPage | Node-based graph editor |
 | `/runtime` | RuntimePage | Live faders, buttons, and preview |
@@ -90,13 +87,6 @@ useGroup(id)
 useCreateGroup()
 useUpdateGroup()
 useDeleteGroup()
-
-// Presets
-usePresets(type?)       // Filter by 'color' | 'position' | 'beam'
-usePreset(id)
-useCreatePreset()
-useUpdatePreset()
-useDeletePreset()
 
 // Graphs
 useGraphs()
@@ -291,7 +281,6 @@ The graph editor at `/graphs/:graphId` provides a visual node-based interface fo
 Organized into categories:
 - **Input**: Time, Fader, Button
 - **Selection**: SelectGroup, SelectFixture
-- **Preset**: PresetBundle
 - **Math**: Add, Multiply, Clamp01, MapRange, Smooth
 - **Effect**: SineLFO, TriangleLFO, SawLFO, Chase, Flash
 - **Color**: MixColor, ScaleColor, ColorConstant

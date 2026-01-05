@@ -41,9 +41,6 @@ curl -X POST http://localhost:3001/api/fixtures \
   -H "Content-Type: application/json" \
   -d '{"name":"Test","modelId":"generic-rgbw","universe":0,"startChannel":100}'
 
-# List presets
-curl http://localhost:3001/api/presets
-
 # Get a specific graph
 curl http://localhost:3001/api/graphs/simple-pulse
 ```
@@ -97,12 +94,6 @@ The server seeds default data on first run:
 - `front` - Front fixtures
 - `back` - Back fixtures
 - `all-wash` - All wash fixtures
-
-**Presets:**
-- Colors: red, green, blue, white, warm, cool, amber, cyan, magenta, yellow
-- Positions: center, audience, stage-left, stage-right
-- Beam: wide, narrow, medium
-- Full: blackout, full-on
 
 **Graphs:**
 - `simple-pulse` - Example sine wave color effect

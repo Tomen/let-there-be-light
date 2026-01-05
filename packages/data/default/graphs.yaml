@@ -3,15 +3,15 @@
     - id: Fader-1767567304560
       type: Fader
       position:
-        x: -615
-        'y': 90
+        x: -675
+        'y': 120
       params:
         faderId: A
     - id: Button-1767570160498
       type: Button
       position:
-        x: -600
-        'y': -75
+        x: -855
+        'y': 15
       params:
         buttonId: X
     - id: WriteAttributes-1767570178782
@@ -26,12 +26,6 @@
       position:
         x: -195
         'y': -90
-      params: {}
-    - id: MergeBundle-1767570501077
-      type: MergeBundle
-      position:
-        x: -90
-        'y': 195
       params: {}
     - id: PositionConstant-1767570515996
       type: PositionConstant
@@ -48,11 +42,46 @@
         'y': -285
       params:
         width: 1
-    - id: PresetBundle-1767570955656
-      type: PresetBundle
+    - id: ColorToBundle-1767571323452
+      type: ColorToBundle
       position:
-        x: -495
-        'y': 300
+        x: -420
+        'y': -90
+      params: {}
+    - id: ColorConstant-1767571342304
+      type: ColorConstant
+      position:
+        x: -645
+        'y': -210
+      params:
+        r: 0.42
+        g: 0
+        b: 0
+    - id: MixColor-1767571365483
+      type: MixColor
+      position:
+        x: -255
+        'y': 405
+      params: {}
+    - id: MixColor-1767571367293
+      type: MixColor
+      position:
+        x: -375
+        'y': -420
+      params: {}
+    - id: PositionConstant-1767571814244
+      type: PositionConstant
+      position:
+        x: -510
+        'y': 30
+      params:
+        pan: 0.54
+        tilt: -0.6
+    - id: Time-1767573556683
+      type: Time
+      position:
+        x: -615
+        'y': -600
       params: {}
   edges:
     - id: xy-edge__SelectGroup-1767570184160selection-WriteAttributes-1767570178782selection
@@ -62,12 +91,19 @@
       to:
         nodeId: WriteAttributes-1767570178782
         port: selection
-    - id: xy-edge__MergeBundle-1767570501077result-WriteAttributes-1767570178782bundle
+    - id: xy-edge__ColorConstant-1767571342304color-ColorToBundle-1767571323452color
       from:
-        nodeId: MergeBundle-1767570501077
-        port: result
+        nodeId: ColorConstant-1767571342304
+        port: color
+      to:
+        nodeId: ColorToBundle-1767571323452
+        port: color
+    - id: xy-edge__ColorToBundle-1767571323452bundle-WriteAttributes-1767570178782bundle
+      from:
+        nodeId: ColorToBundle-1767571323452
+        port: bundle
       to:
         nodeId: WriteAttributes-1767570178782
         port: bundle
   id: 33ea2f4d-6848-4936-94c0-98523be7750f
-  revision: 113
+  revision: 136

@@ -4,7 +4,7 @@ This document defines the complete structure and format of show files for Let Th
 
 ## Overview
 
-A **show** is a complete lighting configuration containing fixtures, groups, presets, and effect graphs. Shows are stored as YAML files in the data directory.
+A **show** is a complete lighting configuration containing fixtures, groups, and effect graphs. Shows are stored as YAML files in the data directory.
 
 ## Directory Structure
 
@@ -14,13 +14,11 @@ data/
   default/                # Show: "default"
     fixtures.yaml
     groups.yaml
-    presets.yaml
     inputs.yaml
     graphs.yaml
   sunday-service/         # Show: "sunday-service"
     fixtures.yaml
     groups.yaml
-    presets.yaml
     inputs.yaml
     graphs.yaml
 ```
@@ -196,92 +194,6 @@ Named collections of fixtures for batch control.
 
 ---
 
-### presets.yaml
-
-Saved attribute values for quick recall.
-
-**Schema:** [preset.schema.json](../schemas/preset.schema.json)
-
-#### Fields
-
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `id` | string | Yes | Unique identifier |
-| `name` | string | Yes | Display name |
-| `type` | string | Yes | One of: `color`, `position`, `beam`, `full` |
-| `attributes` | object | Yes | Attribute values |
-| `revision` | integer | Yes | Version for concurrency |
-
-#### Preset Types
-
-| Type | Typical Attributes |
-|------|-------------------|
-| `color` | `color` (RGB) |
-| `position` | `pan`, `tilt` |
-| `beam` | `intensity`, `zoom` |
-| `full` | Any combination |
-
-#### Attribute Values
-
-| Attribute | Type | Range | Description |
-|-----------|------|-------|-------------|
-| `intensity` | number | 0-1 | Dimmer level |
-| `color` | object | - | RGB color |
-| `color.r` | number | 0-1 | Red |
-| `color.g` | number | 0-1 | Green |
-| `color.b` | number | 0-1 | Blue |
-| `pan` | number | -1 to 1 | Horizontal position |
-| `tilt` | number | -1 to 1 | Vertical position |
-| `zoom` | number | 0-1 | Beam width |
-
-#### Example
-
-```yaml
-# Color presets
-- id: red
-  name: Red
-  type: color
-  attributes:
-    color: { r: 1, g: 0, b: 0 }
-  revision: 1
-
-- id: warm-white
-  name: Warm White
-  type: color
-  attributes:
-    color: { r: 1, g: 0.8, b: 0.6 }
-  revision: 1
-
-# Position presets
-- id: center
-  name: Center Stage
-  type: position
-  attributes:
-    pan: 0
-    tilt: -0.2
-  revision: 1
-
-# Beam presets
-- id: full-open
-  name: Full Open
-  type: beam
-  attributes:
-    intensity: 1
-    zoom: 0.5
-  revision: 1
-
-# Full presets
-- id: warm-wash
-  name: Warm Wash
-  type: full
-  attributes:
-    intensity: 0.8
-    color: { r: 1, g: 0.8, b: 0.6 }
-  revision: 1
-```
-
----
-
 ### inputs.yaml
 
 Configurable faders and buttons for runtime control.
@@ -384,7 +296,7 @@ Node-based effect definitions evaluated at 60Hz.
 | Category | Nodes |
 |----------|-------|
 | Input | `Time`, `Fader`, `Button` |
-| Selection | `SelectGroup`, `SelectFixture`, `PresetBundle` |
+| Selection | `SelectGroup`, `SelectFixture` |
 | Math | `Add`, `Multiply`, `Clamp01`, `MapRange`, `Smooth` |
 | Effect | `SineLFO`, `TriangleLFO`, `SawLFO`, `Chase`, `Flash` |
 | Color | `MixColor`, `ScaleColor`, `ColorConstant` |
@@ -418,14 +330,16 @@ See [Node Types Reference](./nodes.md) for complete documentation.
       params:
         groupId: front
 
-    - id: preset
-      type: PresetBundle
+    - id: color
+      type: ColorConstant
       position: { x: 300, y: 200 }
       params:
-        presetId: red
+        r: 1
+        g: 0
+        b: 0
 
     - id: scale
-      type: ScaleBundle
+      type: ScaleColor
       position: { x: 500, y: 150 }
       params: {}
 
@@ -445,8 +359,8 @@ See [Node Types Reference](./nodes.md) for complete documentation.
       to: { nodeId: scale, port: scale }
 
     - id: e3
-      from: { nodeId: preset, port: bundle }
-      to: { nodeId: scale, port: bundle }
+      from: { nodeId: color, port: color }
+      to: { nodeId: scale, port: color }
 
     - id: e4
       from: { nodeId: group, port: selection }
@@ -471,15 +385,13 @@ fixtures.yaml ─────────────► groups.yaml
         │                          │
         │                          ▼
         │                    graphs.yaml ◄──── inputs.yaml
-        ▼                          │
-                                   ▼
-                             presets.yaml
+        ▼
 ```
 
 **Dependencies:**
 - Fixtures reference fixture models
 - Groups reference fixtures
-- Graphs reference groups, fixtures, presets, and inputs (via node params)
+- Graphs reference groups, fixtures, and inputs (via node params)
 - Inputs are referenced by Fader and Button nodes in graphs
 
 ---
@@ -498,7 +410,7 @@ fixtures.yaml ─────────────► groups.yaml
 |--------|------------|-------------|
 | Fixture | FixtureModel | Validated on create/update |
 | Group | Fixture | Fixtures removed from group if deleted |
-| Graph | Group, Fixture, Preset, Input | Validated at compile time |
+| Graph | Group, Fixture, Input | Validated at compile time |
 | Input | (none) | Deletion blocked if used by any graph |
 
 ### Value Constraints
@@ -521,7 +433,6 @@ Formal JSON Schema files for validation:
 - [fixture-model.schema.json](../schemas/fixture-model.schema.json)
 - [fixture.schema.json](../schemas/fixture.schema.json)
 - [group.schema.json](../schemas/group.schema.json)
-- [preset.schema.json](../schemas/preset.schema.json)
 - [inputs.schema.json](../schemas/inputs.schema.json)
 - [graph.schema.json](../schemas/graph.schema.json)
 

@@ -165,43 +165,45 @@ describe('getRequiredInputs', () => {
     expect(required).toContain('bundle');
   });
 
-  it('should return a and b for Add', () => {
+  it('should return empty for Add (has defaults)', () => {
     const required = getRequiredInputs('Add');
 
-    expect(required).toContain('a');
-    expect(required).toContain('b');
+    // Add inputs have defaults, so nothing is required
+    expect(required).toHaveLength(0);
   });
 
-  it('should return a and b for Multiply', () => {
+  it('should return empty for Multiply (has defaults)', () => {
     const required = getRequiredInputs('Multiply');
 
-    expect(required).toContain('a');
-    expect(required).toContain('b');
+    // Multiply inputs have defaults, so nothing is required
+    expect(required).toHaveLength(0);
   });
 
-  it('should return a, b, mix for MixColor', () => {
+  it('should return empty for MixColor (has defaults)', () => {
     const required = getRequiredInputs('MixColor');
 
-    expect(required).toContain('a');
-    expect(required).toContain('b');
-    expect(required).toContain('mix');
+    // MixColor inputs have defaults, so nothing is required
+    expect(required).toHaveLength(0);
   });
 
-  it('should return color for ScaleColor', () => {
+  it('should return empty for ScaleColor (has defaults)', () => {
     const required = getRequiredInputs('ScaleColor');
 
-    expect(required).toContain('color');
+    // ScaleColor inputs have defaults, so nothing is required
+    expect(required).toHaveLength(0);
   });
 
-  it('should return position for ScalePosition', () => {
+  it('should return empty for ScalePosition (has defaults)', () => {
     const required = getRequiredInputs('ScalePosition');
 
-    expect(required).toContain('position');
+    // ScalePosition inputs have defaults, so nothing is required
+    expect(required).toHaveLength(0);
   });
 
-  it('should return bundle for ScaleBundle', () => {
+  it('should return bundle for ScaleBundle (non-connectable type)', () => {
     const required = getRequiredInputs('ScaleBundle');
 
+    // Bundle is a non-connectable type, so it's always required
     expect(required).toContain('bundle');
   });
 
@@ -271,23 +273,13 @@ describe('validateNodeParams', () => {
     expect(result.error).toContain('fixtureId');
   });
 
-  it('should require presetId for PresetBundle node', () => {
-    const node = createNode('preset1', 'PresetBundle', {});
+  it('should require groupId for SelectGroup node', () => {
+    const node = createNode('group1', 'SelectGroup', {});
 
     const result = validateNodeParams(node);
 
     expect(result.valid).toBe(false);
-    expect(result.error).toContain('presetId');
-  });
-
-  it('should validate param type is number', () => {
-    const node = createNode('sine1', 'SineLFO', { frequency: 'not-a-number' });
-
-    const result = validateNodeParams(node);
-
-    expect(result.valid).toBe(false);
-    expect(result.error).toContain('frequency');
-    expect(result.error).toContain('number');
+    expect(result.error).toContain('groupId');
   });
 
   it('should validate param type is string', () => {
@@ -300,33 +292,9 @@ describe('validateNodeParams', () => {
     expect(result.error).toContain('string');
   });
 
-  it('should validate param range (min)', () => {
-    // Clamp01 has no configurable params, use MapRange which has outMin/outMax
-    // Actually looking at nodes.ts, most params don't have explicit ranges
-    // Let's use ColorConstant which has r, g, b with min: 0, max: 1
-    const node = createNode('color1', 'ColorConstant', { r: -0.5 });
-
-    const result = validateNodeParams(node);
-
-    expect(result.valid).toBe(false);
-    expect(result.error).toContain('>= 0');
-  });
-
-  it('should validate param range (max)', () => {
-    const node = createNode('color1', 'ColorConstant', { r: 1.5 });
-
-    const result = validateNodeParams(node);
-
-    expect(result.valid).toBe(false);
-    expect(result.error).toContain('<= 1');
-  });
-
-  it('should accept valid ColorConstant params', () => {
-    const node = createNode('color1', 'ColorConstant', {
-      r: 1.0,
-      g: 0.5,
-      b: 0.0,
-    });
+  it('should accept valid ColorConstant (no params required)', () => {
+    // ColorConstant now has r, g, b as inputs with defaults, no params
+    const node = createNode('color1', 'ColorConstant', {});
 
     const result = validateNodeParams(node);
 

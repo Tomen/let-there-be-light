@@ -10,6 +10,7 @@ import { NodePalette } from './NodePalette'
 import { GraphCanvas } from './GraphCanvas'
 import { NodeInspector } from './NodeInspector'
 import { CompileErrorPanel } from './CompileErrorPanel'
+import { showInfo, showSuccess, showError } from '@/stores/status'
 
 export default function GraphEditorPage() {
   const { graphId } = useParams<{ graphId: string }>()
@@ -112,7 +113,8 @@ export default function GraphEditorPage() {
       setIsDirty(false)
     } catch (err) {
       console.error('Failed to save graph:', err)
-      // TODO: Show toast notification
+      const message = err instanceof Error ? err.message : 'Failed to save graph'
+      showError(message)
     }
   }, [graph, graphId, localNodes, localEdges, updateGraph, refetch])
 
@@ -144,11 +146,28 @@ export default function GraphEditorPage() {
       await handleSave()
     }
 
+    showInfo('Compiling graph...')
+
     try {
       const result = await compileGraph.mutateAsync(graphId)
+
+      if (!result) {
+        showError('Server returned empty response')
+        return
+      }
+
       setCompileResult(result)
+
+      if (result.ok) {
+        showSuccess('Graph compiled successfully')
+      } else {
+        const count = result.errors.length
+        showError(`Compilation failed with ${count} error${count !== 1 ? 's' : ''}`)
+      }
     } catch (err) {
       console.error('Failed to compile graph:', err)
+      const message = err instanceof Error ? err.message : 'Failed to compile graph'
+      showError(message)
     }
   }, [graphId, isDirty, handleSave, compileGraph])
 
@@ -177,7 +196,7 @@ export default function GraphEditorPage() {
 
   return (
     <ReactFlowProvider>
-      <div className="flex h-[calc(100vh-6rem)] flex-col">
+      <div className="flex h-full flex-col">
         {/* Header */}
         <div className="flex items-center justify-between border-b p-2">
           <div className="flex items-center gap-2">
@@ -243,6 +262,7 @@ export default function GraphEditorPage() {
           {/* Node Inspector */}
           <NodeInspector
             node={selectedNode}
+            edges={localEdges}
             onParamChange={handleParamChange}
           />
         </div>

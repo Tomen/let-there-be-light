@@ -3,14 +3,12 @@ import { existsSync, readdirSync, statSync } from 'node:fs';
 import type { Show } from '@let-there-be-light/shared';
 import { FixtureStore, getFixtureStore, resetFixtureStore } from './fixtures.js';
 import { GroupStore, getGroupStore, resetGroupStore } from './groups.js';
-import { PresetStore, getPresetStore, resetPresetStore } from './presets.js';
 import { GraphStore, getGraphStore, resetGraphStore } from './graphs.js';
 import { InputStore, getInputStore, resetInputStore } from './inputs.js';
 
 export { YamlDataStore, NotFoundError, ConflictError, ValidationError } from './base.js';
 export { FixtureStore, getFixtureStore, resetFixtureStore } from './fixtures.js';
 export { GroupStore, getGroupStore, resetGroupStore } from './groups.js';
-export { PresetStore, getPresetStore, resetPresetStore } from './presets.js';
 export { GraphStore, getGraphStore, resetGraphStore } from './graphs.js';
 export { InputStore, getInputStore, resetInputStore } from './inputs.js';
 
@@ -42,7 +40,6 @@ export function getShowInfo(): { show: string; dataDir: string; dataRoot: string
 export interface DataStores {
   fixtures: FixtureStore;
   groups: GroupStore;
-  presets: PresetStore;
   graphs: GraphStore;
   inputs: InputStore;
 }
@@ -52,7 +49,7 @@ let stores: DataStores | null = null;
 
 /**
  * Initialize all data stores
- * @param showDir - Per-show data directory (fixtures, groups, presets, graphs)
+ * @param showDir - Per-show data directory (fixtures, groups, graphs)
  * @param modelsPath - Shared fixture models path
  */
 export function initializeStores(
@@ -65,11 +62,10 @@ export function initializeStores(
 
   const fixtures = getFixtureStore(showDir, modelsPath);
   const groups = getGroupStore(showDir, fixtures);
-  const presets = getPresetStore(showDir);
   const graphs = getGraphStore(showDir);
   const inputs = getInputStore(showDir);
 
-  stores = { fixtures, groups, presets, graphs, inputs };
+  stores = { fixtures, groups, graphs, inputs };
   return stores;
 }
 
@@ -90,7 +86,6 @@ export function resetStores(): void {
   // Reset individual store singletons
   resetFixtureStore();
   resetGroupStore();
-  resetPresetStore();
   resetGraphStore();
   resetInputStore();
   // Clear the combined stores reference

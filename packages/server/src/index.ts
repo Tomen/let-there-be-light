@@ -5,7 +5,6 @@ import websocket from '@fastify/websocket';
 import { initializeStores, getShowInfo } from './datastore/index.js';
 import { fixtureRoutes } from './routes/fixtures.js';
 import { groupRoutes } from './routes/groups.js';
-import { presetRoutes } from './routes/presets.js';
 import { graphRoutes } from './routes/graphs.js';
 import { inputRoutes } from './routes/inputs.js';
 import { showRoutes } from './routes/shows.js';
@@ -28,7 +27,7 @@ const app = Fastify({
 async function start() {
   // Initialize data stores (creates YAML files if they don't exist)
   const stores = initializeStores();
-  console.log(`Data stores initialized: ${stores.fixtures.count()} fixtures, ${stores.groups.count()} groups, ${stores.presets.count()} presets, ${stores.graphs.count()} graphs, ${stores.inputs.count()} inputs`);
+  console.log(`Data stores initialized: ${stores.fixtures.count()} fixtures, ${stores.groups.count()} groups, ${stores.graphs.count()} graphs, ${stores.inputs.count()} inputs`);
 
   // Initialize Art-Net bridge for DMX output
   const artnetBroadcast = process.env.ARTNET_BROADCAST || '2.255.255.255';
@@ -76,7 +75,6 @@ async function start() {
   // Register REST routes
   await app.register(fixtureRoutes, { prefix: '/api/fixtures' });
   await app.register(groupRoutes, { prefix: '/api/groups' });
-  await app.register(presetRoutes, { prefix: '/api/presets' });
   await app.register(graphRoutes, { prefix: '/api/graphs' });
   await app.register(inputRoutes, { prefix: '/api/inputs' });
   await app.register(showRoutes, { prefix: '/api/shows' });
@@ -114,12 +112,6 @@ Endpoints:
   GET    /api/groups/:id      - Get group
   PUT    /api/groups/:id      - Update group
   DELETE /api/groups/:id      - Delete group
-
-  GET    /api/presets         - List presets
-  POST   /api/presets         - Create preset
-  GET    /api/presets/:id     - Get preset
-  PUT    /api/presets/:id     - Update preset
-  DELETE /api/presets/:id     - Delete preset
 
   GET    /api/graphs          - List graphs
   POST   /api/graphs          - Create graph

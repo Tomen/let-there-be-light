@@ -9,6 +9,12 @@ import type {
 } from '@let-there-be-light/shared'
 import { wsClient } from '@/ws/connection'
 import { queryClient } from '@/lib/queryClient'
+import {
+  showSuccess,
+  showError,
+  getPendingToggle,
+  setPendingToggle,
+} from './status'
 
 interface RuntimeState {
   // Connection status
@@ -46,13 +52,27 @@ export const useRuntimeStore = create<RuntimeState>((set, get) => {
   // Set up WebSocket message handler
   wsClient.onMessage((message: ServerMessage) => {
     switch (message.type) {
-      case 'runtime/status':
+      case 'runtime/status': {
+        // Check for pending toggle confirmation
+        const pendingToggle = getPendingToggle()
+        if (pendingToggle) {
+          const instance = message.instances.find(
+            (i) => i.graphId === pendingToggle.graphId
+          )
+          if (instance && instance.enabled === pendingToggle.targetEnabled) {
+            const action = pendingToggle.targetEnabled ? 'on' : 'off'
+            showSuccess(`${pendingToggle.graphName} turned ${action}`)
+            setPendingToggle(null)
+          }
+        }
+
         set({
           tickHz: message.tickHz,
           currentTime: message.t,
           instances: message.instances,
         })
         break
+      }
 
       case 'frame/full':
         set({ fixtureValues: message.fixtures })
@@ -85,6 +105,7 @@ export const useRuntimeStore = create<RuntimeState>((set, get) => {
 
       case 'error':
         console.error('WebSocket error:', message.message, message.code)
+        showError(message.message)
         break
 
       case 'show/changed':

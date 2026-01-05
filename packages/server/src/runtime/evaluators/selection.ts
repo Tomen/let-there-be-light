@@ -1,6 +1,6 @@
 import type { GraphNode } from '@let-there-be-light/shared';
 import type { EvaluatorContext, RuntimeValue, NodeEvaluator } from './types.js';
-import { selection, bundle } from './types.js';
+import { selection } from './types.js';
 import { getStores } from '../../datastore/index.js';
 
 /**
@@ -30,22 +30,4 @@ export const evaluateSelectFixture: NodeEvaluator = (
 ): Record<string, RuntimeValue> => {
   const fixtureId = node.params.fixtureId as string;
   return { selection: selection([fixtureId]) };
-};
-
-/**
- * PresetBundle node - outputs attribute bundle from a preset
- */
-export const evaluatePresetBundle: NodeEvaluator = (
-  node: GraphNode,
-  ctx: EvaluatorContext
-): Record<string, RuntimeValue> => {
-  const presetId = node.params.presetId as string;
-  const { presets } = getStores();
-  const preset = presets.getById(presetId);
-
-  if (!preset) {
-    return { bundle: bundle({}) };
-  }
-
-  return { bundle: bundle(preset.attributes) };
 };

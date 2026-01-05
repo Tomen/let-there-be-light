@@ -2,9 +2,9 @@ import { Link, Outlet, useLocation } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import { useRuntimeStore } from '@/stores/runtime'
 import { ShowSelector } from '@/components/ShowSelector'
+import { StatusBar } from '@/components/StatusBar'
 import {
   Lightbulb,
-  Palette,
   GitBranch,
   SlidersHorizontal,
   Play,
@@ -16,7 +16,6 @@ import {
 const navigation = [
   { name: 'Patch', href: '/patch', icon: Lightbulb },
   { name: 'Inputs', href: '/inputs', icon: Sliders },
-  { name: 'Presets', href: '/presets', icon: Palette },
   { name: 'Graphs', href: '/graphs', icon: GitBranch },
   { name: 'Control Room', href: '/control-room', icon: SlidersHorizontal },
   { name: 'Runtime', href: '/runtime', icon: Play },
@@ -27,9 +26,9 @@ export function Layout() {
   const isConnected = useRuntimeStore((s) => s.isConnected)
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="flex h-screen flex-col bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="flex h-14 items-center px-4">
           <div className="flex items-center gap-2 font-semibold">
             <Lightbulb className="h-5 w-5" />
@@ -77,9 +76,12 @@ export function Layout() {
       </header>
 
       {/* Main content */}
-      <main className="p-4">
+      <main className="flex-1 overflow-auto p-4">
         <Outlet />
       </main>
+
+      {/* Status Bar */}
+      <StatusBar />
     </div>
   )
 }

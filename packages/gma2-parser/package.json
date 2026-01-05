@@ -16,21 +16,26 @@
     "dev": "tsc --watch",
     "test": "vitest run",
     "test:watch": "vitest",
-    "shows": "tsx src/cli/list-shows.ts",
-    "extract": "tsx src/cli/extract.ts",
-    "inspect": "tsx src/cli/inspect.ts",
+
     "dump": "tsx src/cli/dump.ts",
+    "shows": "tsx src/cli/list-shows.ts",
+    "inspect": "tsx src/cli/inspect.ts",
+    "extract": "tsx src/cli/extract.ts",
+
     "fixtures": "tsx src/cli/fixtures.ts",
-    "search-dmx": "tsx src/cli/search-dmx.ts",
-    "find-patch": "tsx src/cli/find-patch.ts",
     "search-types": "tsx src/cli/search-types.ts",
-    "deep-search": "tsx src/cli/deep-search.ts",
-    "search-output": "tsx src/cli/search-dmx-output.ts",
-    "analyze-patch": "tsx src/cli/analyze-patch.ts",
-    "find-patch-table": "tsx src/cli/find-patch-table.ts",
-    "search-patch-intel": "tsx src/cli/search-patch-intel.ts",
-    "search-patch-8bit": "tsx src/cli/search-patch-8bit.ts",
-    "compare-shows": "tsx src/cli/compare-shows.ts"
+    "find-fixtures-by-name": "tsx src/cli/find-fixtures-by-name.ts",
+    "analyze-fixture-dmx": "tsx src/cli/analyze-fixture-dmx.ts",
+    "analyze-patched-fixtures": "tsx src/cli/analyze-patched-fixtures.ts",
+
+    "compare-shows": "tsx src/cli/compare-shows.ts",
+    "analyze-show-index": "tsx src/cli/analyze-show-index.ts",
+    "follow-show-offsets": "tsx src/cli/follow-show-offsets.ts",
+
+    "extract-full-patch": "tsx src/cli/extract-full-patch.ts",
+    "decode-3ch-table": "tsx src/cli/decode-3ch-table.ts",
+    "analyze-0x8000": "tsx src/cli/analyze-0x8000.ts",
+    "search-294": "tsx src/cli/search-294-records.ts"
   },
   "dependencies": {
     "js-yaml": "^4.1.0",

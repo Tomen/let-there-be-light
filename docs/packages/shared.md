@@ -30,7 +30,7 @@ import { NODE_DEFINITIONS, getNodeDefinition } from '@let-there-be-light/shared'
 ## Exports
 
 ### Domain Types (`types/domain.ts`)
-- `Fixture`, `FixtureModel`, `Group`, `Preset`, `Graph`
+- `Fixture`, `FixtureModel`, `Group`, `Graph`
 - `GraphNode`, `GraphEdge`
 - `AttributeBundle`, `RGBColor`, `Position`
 - `InputState`, `Frame`, `FrameDelta`

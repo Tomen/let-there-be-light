@@ -6,7 +6,7 @@ export * from './types.js';
 
 // Import evaluators
 import { evaluateTime, evaluateFader, evaluateButton } from './inputs.js';
-import { evaluateSelectGroup, evaluateSelectFixture, evaluatePresetBundle } from './selection.js';
+import { evaluateSelectGroup, evaluateSelectFixture } from './selection.js';
 import { evaluateAdd, evaluateMultiply, evaluateClamp01, evaluateMapRange, evaluateSmooth } from './math.js';
 import { evaluateSineLFO, evaluateTriangleLFO, evaluateSawLFO, evaluateChase, evaluateFlash } from './effects.js';
 import { evaluateMixColor, evaluateScaleColor, evaluateColorConstant, evaluateColorToBundle } from './color.js';
@@ -28,9 +28,6 @@ export const NODE_EVALUATORS: Record<NodeType, NodeEvaluator> = {
   // Selection
   SelectGroup: evaluateSelectGroup,
   SelectFixture: evaluateSelectFixture,
-
-  // Presets
-  PresetBundle: evaluatePresetBundle,
 
   // Math/Shaping
   Add: evaluateAdd,

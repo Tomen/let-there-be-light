@@ -15,8 +15,6 @@ describe('NODE_DEFINITIONS', () => {
       'Time', 'Fader', 'Button',
       // Selection
       'SelectGroup', 'SelectFixture',
-      // Presets
-      'PresetBundle',
       // Math
       'Add', 'Multiply', 'Clamp01', 'MapRange', 'Smooth',
       // Effects
@@ -88,19 +86,21 @@ describe('NODE_DEFINITIONS', () => {
   });
 
   describe('SineLFO node', () => {
-    it('should have frequency and phase params', () => {
+    it('should have frequency and phase inputs with defaults', () => {
       const def = NODE_DEFINITIONS.SineLFO;
 
-      expect(def.params.frequency).toBeDefined();
-      expect(def.params.frequency.default).toBe(1);
-      expect(def.params.phase).toBeDefined();
+      expect(def.inputs.frequency).toBeDefined();
+      expect(def.inputs.frequency.default).toBe(1);
+      expect(def.inputs.phase).toBeDefined();
+      expect(def.inputs.phase.default).toBe(0);
     });
 
-    it('should have optional speed input', () => {
+    it('should have speed input with default', () => {
       const def = NODE_DEFINITIONS.SineLFO;
 
       expect(def.inputs.speed).toBeDefined();
       expect(def.inputs.speed.type).toBe('Scalar');
+      expect(def.inputs.speed.default).toBe(1);
     });
   });
 
@@ -134,11 +134,11 @@ describe('NODE_DEFINITIONS', () => {
       expect(Object.keys(def.outputs)).toHaveLength(0);
     });
 
-    it('should have priority param', () => {
+    it('should have priority input with default', () => {
       const def = NODE_DEFINITIONS.WriteAttributes;
 
-      expect(def.params.priority).toBeDefined();
-      expect(def.params.priority.default).toBe(0);
+      expect(def.inputs.priority).toBeDefined();
+      expect(def.inputs.priority.default).toBe(0);
     });
   });
 });
@@ -180,7 +180,6 @@ describe('getCategories', () => {
 
     expect(categories).toContain('input');
     expect(categories).toContain('selection');
-    expect(categories).toContain('preset');
     expect(categories).toContain('math');
     expect(categories).toContain('effect');
     expect(categories).toContain('color');

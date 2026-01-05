@@ -6,7 +6,6 @@ import { lazy, Suspense } from 'react'
 
 const PatchPage = lazy(() => import('@/pages/Patch'))
 const InputsPage = lazy(() => import('@/pages/Inputs'))
-const PresetsPage = lazy(() => import('@/pages/Presets'))
 const GraphsPage = lazy(() => import('@/pages/Graphs'))
 const GraphEditorPage = lazy(() => import('@/pages/GraphEditor'))
 const ControlRoomPage = lazy(() => import('@/pages/ControlRoom'))
@@ -46,14 +45,6 @@ export const router = createBrowserRouter([
         element: (
           <LazyPage>
             <InputsPage />
-          </LazyPage>
-        ),
-      },
-      {
-        path: 'presets',
-        element: (
-          <LazyPage>
-            <PresetsPage />
           </LazyPage>
         ),
       },

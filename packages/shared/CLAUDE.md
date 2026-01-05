@@ -5,7 +5,7 @@ Shared TypeScript types for the lighting control system.
 ## Purpose
 
 This package defines all TypeScript types used by both the server and client:
-- Domain models (Fixture, Group, Preset, Graph)
+- Domain models (Fixture, Group, Graph)
 - API request/response types
 - WebSocket message protocols
 - Graph node definitions

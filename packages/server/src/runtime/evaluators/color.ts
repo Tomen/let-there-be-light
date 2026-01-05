@@ -1,6 +1,6 @@
 import type { GraphNode } from '@let-there-be-light/shared';
 import type { EvaluatorContext, RuntimeValue, NodeEvaluator } from './types.js';
-import { color, bundle, asColor, asScalar } from './types.js';
+import { color, bundle, getScalarInput, getColorInput } from './types.js';
 
 /**
  * MixColor node - linear interpolation between two colors
@@ -9,9 +9,9 @@ export const evaluateMixColor: NodeEvaluator = (
   node: GraphNode,
   ctx: EvaluatorContext
 ): Record<string, RuntimeValue> => {
-  const a = asColor(ctx.getInput(node.id, 'a'), { r: 0, g: 0, b: 0 });
-  const b = asColor(ctx.getInput(node.id, 'b'), { r: 1, g: 1, b: 1 });
-  const mix = asScalar(ctx.getInput(node.id, 'mix'), 0.5);
+  const a = getColorInput(node, ctx, 'a', { r: 0, g: 0, b: 0 });
+  const b = getColorInput(node, ctx, 'b', { r: 1, g: 1, b: 1 });
+  const mix = getScalarInput(node, ctx, 'mix', 0.5);
 
   // Linear interpolation
   const result = {
@@ -30,8 +30,8 @@ export const evaluateScaleColor: NodeEvaluator = (
   node: GraphNode,
   ctx: EvaluatorContext
 ): Record<string, RuntimeValue> => {
-  const colorInput = asColor(ctx.getInput(node.id, 'color'), { r: 1, g: 1, b: 1 });
-  const scale = asScalar(ctx.getInput(node.id, 'scale'), 1);
+  const colorInput = getColorInput(node, ctx, 'color', { r: 1, g: 1, b: 1 });
+  const scale = getScalarInput(node, ctx, 'scale', 1);
 
   const result = {
     r: Math.max(0, Math.min(1, colorInput.r * scale)),
@@ -49,9 +49,9 @@ export const evaluateColorConstant: NodeEvaluator = (
   node: GraphNode,
   ctx: EvaluatorContext
 ): Record<string, RuntimeValue> => {
-  const r = (node.params.r as number) ?? 1;
-  const g = (node.params.g as number) ?? 1;
-  const b = (node.params.b as number) ?? 1;
+  const r = getScalarInput(node, ctx, 'r', 1);
+  const g = getScalarInput(node, ctx, 'g', 1);
+  const b = getScalarInput(node, ctx, 'b', 1);
 
   return { color: color(r, g, b) };
 };
@@ -63,7 +63,7 @@ export const evaluateColorToBundle: NodeEvaluator = (
   node: GraphNode,
   ctx: EvaluatorContext
 ): Record<string, RuntimeValue> => {
-  const colorInput = asColor(ctx.getInput(node.id, 'color'), { r: 1, g: 1, b: 1 });
+  const colorInput = getColorInput(node, ctx, 'color', { r: 1, g: 1, b: 1 });
 
   return { bundle: bundle({ color: colorInput }) };
 };

@@ -29,14 +29,12 @@ describe('Show Management', () => {
     mkdirSync(join(TEST_DATA_ROOT, 'default'));
     writeFileSync(join(TEST_DATA_ROOT, 'default', 'fixtures.yaml'), '[]');
     writeFileSync(join(TEST_DATA_ROOT, 'default', 'groups.yaml'), '[]');
-    writeFileSync(join(TEST_DATA_ROOT, 'default', 'presets.yaml'), '[]');
     writeFileSync(join(TEST_DATA_ROOT, 'default', 'graphs.yaml'), '[]');
 
     // Create another show directory
     mkdirSync(join(TEST_DATA_ROOT, 'sunday-service'));
     writeFileSync(join(TEST_DATA_ROOT, 'sunday-service', 'fixtures.yaml'), '[]');
     writeFileSync(join(TEST_DATA_ROOT, 'sunday-service', 'groups.yaml'), '[]');
-    writeFileSync(join(TEST_DATA_ROOT, 'sunday-service', 'presets.yaml'), '[]');
     writeFileSync(join(TEST_DATA_ROOT, 'sunday-service', 'graphs.yaml'), '[]');
 
     // Reset stores before each test

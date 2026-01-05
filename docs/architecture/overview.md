@@ -45,7 +45,7 @@
 
 ### @let-there-be-light/shared
 Shared TypeScript types used by both client and server:
-- Domain types (Fixture, Group, Preset, Graph)
+- Domain types (Fixture, Group, Graph)
 - API types (requests, responses, errors)
 - WebSocket message types
 - Node definitions for the graph system
@@ -76,7 +76,6 @@ MCP server for Claude Code integration:
 - **Fixture**: A physical lighting unit patched at a DMX address
 - **FixtureModel**: Reusable template defining channel layout
 - **Group**: Named collection of fixtures
-- **Preset**: Saved attribute values (color, position, beam)
 - **Graph**: Node-based effect/control flow
 
 ### Graph System

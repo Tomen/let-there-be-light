@@ -173,3 +173,80 @@ export function asSelection(rv: RuntimeValue | null): Set<string> {
   if (rv.type === 'Selection') return rv.value;
   return new Set();
 }
+
+// ============================================
+// Unified Input/Param Helpers
+// These check connected inputs first, then fall back to node.params
+// ============================================
+
+/**
+ * Get scalar value from input or param fallback
+ * Checks: connected input → node.params[inputName] → fallback
+ */
+export function getScalarInput(
+  node: GraphNode,
+  ctx: EvaluatorContext,
+  inputName: string,
+  fallback: number
+): number {
+  const inputValue = ctx.getInput(node.id, inputName);
+  if (inputValue !== null) {
+    return asScalar(inputValue, fallback);
+  }
+  const paramValue = node.params[inputName];
+  return typeof paramValue === 'number' ? paramValue : fallback;
+}
+
+/**
+ * Get bool value from input or param fallback
+ * Checks: connected input → node.params[inputName] → fallback
+ */
+export function getBoolInput(
+  node: GraphNode,
+  ctx: EvaluatorContext,
+  inputName: string,
+  fallback: boolean
+): boolean {
+  const inputValue = ctx.getInput(node.id, inputName);
+  if (inputValue !== null) {
+    return asBool(inputValue, fallback);
+  }
+  const paramValue = node.params[inputName];
+  return typeof paramValue === 'boolean' ? paramValue : fallback;
+}
+
+/**
+ * Get color value from input or param fallback
+ * Checks: connected input → node.params[inputName] → fallback
+ */
+export function getColorInput(
+  node: GraphNode,
+  ctx: EvaluatorContext,
+  inputName: string,
+  fallback: { r: number; g: number; b: number }
+): { r: number; g: number; b: number } {
+  const inputValue = ctx.getInput(node.id, inputName);
+  if (inputValue !== null) {
+    return asColor(inputValue, fallback);
+  }
+  const paramValue = node.params[inputName] as { r: number; g: number; b: number } | undefined;
+  return paramValue && typeof paramValue.r === 'number' ? paramValue : fallback;
+}
+
+/**
+ * Get position value from input or param fallback
+ * Checks: connected input → node.params[inputName] → fallback
+ */
+export function getPositionInput(
+  node: GraphNode,
+  ctx: EvaluatorContext,
+  inputName: string,
+  fallback: { pan: number; tilt: number }
+): { pan: number; tilt: number } {
+  const inputValue = ctx.getInput(node.id, inputName);
+  if (inputValue !== null) {
+    return asPosition(inputValue, fallback);
+  }
+  const paramValue = node.params[inputName] as { pan: number; tilt: number } | undefined;
+  return paramValue && typeof paramValue.pan === 'number' ? paramValue : fallback;
+}

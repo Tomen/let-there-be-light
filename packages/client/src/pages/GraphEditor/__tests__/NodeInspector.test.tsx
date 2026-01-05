@@ -33,7 +33,7 @@ describe('NodeInspector', () => {
   })
 
   it('shows empty state when no node selected', () => {
-    render(<NodeInspector node={null} onParamChange={vi.fn()} />, {
+    render(<NodeInspector node={null} edges={[]} onParamChange={vi.fn()} />, {
       wrapper: createWrapper(),
     })
 
@@ -48,7 +48,7 @@ describe('NodeInspector', () => {
       params: { faderId: 'A' },
     }
 
-    render(<NodeInspector node={node} onParamChange={vi.fn()} />, {
+    render(<NodeInspector node={node} edges={[]} onParamChange={vi.fn()} />, {
       wrapper: createWrapper(),
     })
 
@@ -64,7 +64,7 @@ describe('NodeInspector', () => {
       params: {},
     }
 
-    render(<NodeInspector node={node} onParamChange={vi.fn()} />, {
+    render(<NodeInspector node={node} edges={[]} onParamChange={vi.fn()} />, {
       wrapper: createWrapper(),
     })
 
@@ -83,7 +83,7 @@ describe('NodeInspector', () => {
       params: { faderId: 'A' },
     }
 
-    render(<NodeInspector node={node} onParamChange={vi.fn()} />, {
+    render(<NodeInspector node={node} edges={[]} onParamChange={vi.fn()} />, {
       wrapper: createWrapper(),
     })
 
@@ -100,7 +100,7 @@ describe('NodeInspector', () => {
       params: {},
     }
 
-    render(<NodeInspector node={node} onParamChange={vi.fn()} />, {
+    render(<NodeInspector node={node} edges={[]} onParamChange={vi.fn()} />, {
       wrapper: createWrapper(),
     })
 

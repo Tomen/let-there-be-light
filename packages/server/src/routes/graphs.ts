@@ -74,7 +74,7 @@ export const graphRoutes: FastifyPluginAsync = async (app) => {
     try {
       const graph = graphs.getByIdOrThrow(req.params.id);
       const result = compileGraph(graph);
-      return result;
+      return { data: result };
     } catch (err) {
       if (err instanceof NotFoundError) {
         return reply.code(404).send({ error: err.message, code: 'NOT_FOUND' });

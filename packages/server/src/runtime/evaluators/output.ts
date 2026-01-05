@@ -1,6 +1,6 @@
 import type { GraphNode } from '@let-there-be-light/shared';
 import type { EvaluatorContext, RuntimeValue, NodeEvaluator } from './types.js';
-import { asSelection, asBundle } from './types.js';
+import { asSelection, asBundle, getScalarInput } from './types.js';
 
 /**
  * Output from WriteAttributes node
@@ -38,7 +38,7 @@ export function getWriteOutput(
 ): WriteOutput {
   const selection = asSelection(ctx.getInput(node.id, 'selection'));
   const bundle = asBundle(ctx.getInput(node.id, 'bundle'), {});
-  const priority = (node.params.priority as number) ?? 0;
+  const priority = getScalarInput(node, ctx, 'priority', 0);
 
   return { selection, bundle, priority };
 }

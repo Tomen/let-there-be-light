@@ -1,6 +1,6 @@
 import type { GraphNode } from '@let-there-be-light/shared';
 import type { EvaluatorContext, RuntimeValue, NodeEvaluator } from './types.js';
-import { scalar, asScalar } from './types.js';
+import { scalar, getScalarInput } from './types.js';
 
 /**
  * Add node - adds two scalar values
@@ -9,8 +9,8 @@ export const evaluateAdd: NodeEvaluator = (
   node: GraphNode,
   ctx: EvaluatorContext
 ): Record<string, RuntimeValue> => {
-  const a = asScalar(ctx.getInput(node.id, 'a'), 0);
-  const b = asScalar(ctx.getInput(node.id, 'b'), 0);
+  const a = getScalarInput(node, ctx, 'a', 0);
+  const b = getScalarInput(node, ctx, 'b', 0);
   return { result: scalar(a + b) };
 };
 
@@ -21,8 +21,8 @@ export const evaluateMultiply: NodeEvaluator = (
   node: GraphNode,
   ctx: EvaluatorContext
 ): Record<string, RuntimeValue> => {
-  const a = asScalar(ctx.getInput(node.id, 'a'), 0);
-  const b = asScalar(ctx.getInput(node.id, 'b'), 1);
+  const a = getScalarInput(node, ctx, 'a', 1);
+  const b = getScalarInput(node, ctx, 'b', 1);
   return { result: scalar(a * b) };
 };
 
@@ -33,7 +33,7 @@ export const evaluateClamp01: NodeEvaluator = (
   node: GraphNode,
   ctx: EvaluatorContext
 ): Record<string, RuntimeValue> => {
-  const value = asScalar(ctx.getInput(node.id, 'value'), 0);
+  const value = getScalarInput(node, ctx, 'value', 0);
   return { result: scalar(Math.max(0, Math.min(1, value))) };
 };
 
@@ -44,11 +44,11 @@ export const evaluateMapRange: NodeEvaluator = (
   node: GraphNode,
   ctx: EvaluatorContext
 ): Record<string, RuntimeValue> => {
-  const value = asScalar(ctx.getInput(node.id, 'value'), 0);
-  const inMin = (node.params.inMin as number) ?? 0;
-  const inMax = (node.params.inMax as number) ?? 1;
-  const outMin = (node.params.outMin as number) ?? 0;
-  const outMax = (node.params.outMax as number) ?? 1;
+  const value = getScalarInput(node, ctx, 'value', 0);
+  const inMin = getScalarInput(node, ctx, 'inMin', 0);
+  const inMax = getScalarInput(node, ctx, 'inMax', 1);
+  const outMin = getScalarInput(node, ctx, 'outMin', 0);
+  const outMax = getScalarInput(node, ctx, 'outMax', 1);
 
   // Normalize to 0-1
   const normalized = inMax !== inMin ? (value - inMin) / (inMax - inMin) : 0;
@@ -69,8 +69,8 @@ export const evaluateSmooth: NodeEvaluator = (
   node: GraphNode,
   ctx: EvaluatorContext
 ): Record<string, RuntimeValue> => {
-  const value = asScalar(ctx.getInput(node.id, 'value'), 0);
-  const smoothing = (node.params.smoothing as number) ?? 0.9;
+  const value = getScalarInput(node, ctx, 'value', 0);
+  const smoothing = getScalarInput(node, ctx, 'smoothing', 0.9);
 
   // Get previous state
   const state = ctx.getNodeState<SmoothState>(node.id) ?? { previousValue: value };

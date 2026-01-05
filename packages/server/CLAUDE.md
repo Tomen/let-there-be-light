@@ -5,7 +5,7 @@ Fastify-based control server for the lighting system.
 ## Purpose
 
 HTTP REST API and WebSocket server for:
-- CRUD operations on fixtures, groups, presets, graphs
+- CRUD operations on fixtures, groups, inputs, graphs
 - Real-time frame streaming to clients
 - Graph compilation and validation
 - Runtime graph evaluation at 60Hz
@@ -56,14 +56,14 @@ Validation steps:
 4. Type-check all port connections
 5. Validate required inputs are connected
 6. Validate node parameters
-7. Extract external dependencies (faders, buttons, presets, groups, fixtures)
+7. Extract external dependencies (faders, buttons, groups, fixtures)
 
 ### Runtime Engine (`src/runtime/`)
 - **engine.ts**: `RuntimeEngine` class with 60Hz tick loop
 - **input-state.ts**: `InputState` for faders and buttons with per-frame trigger detection
 - **evaluators/**: 24 node evaluators organized by category:
   - `inputs.ts` - Time, Fader, Button
-  - `selection.ts` - SelectGroup, SelectFixture, PresetBundle
+  - `selection.ts` - SelectGroup, SelectFixture
   - `math.ts` - Add, Multiply, Clamp01, MapRange, Smooth
   - `effects.ts` - SineLFO, TriangleLFO, SawLFO, Chase, Flash
   - `color.ts` - MixColor, ScaleColor, ColorConstant
@@ -94,7 +94,7 @@ Location: `data/` directory
 - `fixtures.yaml` - Patched fixtures
 - `fixture-models.yaml` - Fixture model templates
 - `groups.yaml` - Fixture groups
-- `presets.yaml` - Color/position/beam presets
+- `inputs.yaml` - Faders and buttons
 - `graphs.yaml` - Effect graphs
 
 Auto-seeded with defaults on first run.
@@ -125,7 +125,7 @@ Custom errors map to HTTP status codes:
 ## Test Coverage
 
 167 tests covering:
-- DataStore (base, fixtures, groups, presets, graphs)
+- DataStore (base, fixtures, groups, inputs, graphs)
 - Graph compiler (topology, types, compiler)
 - Art-Net bridge (packet structure, value conversions)
 

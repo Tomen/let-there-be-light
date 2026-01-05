@@ -180,52 +180,6 @@ Delete a group (does not delete fixtures).
 
 ---
 
-## Presets
-
-### GET /api/presets
-List all presets.
-
-**Response:**
-```json
-{
-  "data": [
-    {
-      "id": "red",
-      "name": "Red",
-      "type": "color",
-      "attributes": { "color": { "r": 1, "g": 0, "b": 0 } },
-      "revision": 1
-    }
-  ]
-}
-```
-
-### GET /api/presets/by-type/:type
-List presets by type. Types: `color`, `position`, `beam`, `full`
-
-### POST /api/presets
-Create a preset.
-
-**Request:**
-```json
-{
-  "name": "Purple",
-  "type": "color",
-  "attributes": { "color": { "r": 0.5, "g": 0, "b": 1 } }
-}
-```
-
-### GET /api/presets/:id
-Get a single preset.
-
-### PUT /api/presets/:id
-Update a preset.
-
-### DELETE /api/presets/:id
-Delete a preset.
-
----
-
 ## Graphs
 
 ### GET /api/graphs
@@ -280,7 +234,6 @@ Compile and validate a graph.
   "dependencies": {
     "faderIds": ["master"],
     "buttonIds": ["flash"],
-    "presetIds": ["red"],
     "groupIds": ["front"],
     "fixtureIds": []
   }
@@ -407,7 +360,7 @@ Delete an input.
 
 ## Shows
 
-Shows are subdirectories in the data folder containing fixtures, groups, presets, and graphs.
+Shows are subdirectories in the data folder containing fixtures, groups, and graphs.
 
 ### GET /api/shows
 List all available shows.

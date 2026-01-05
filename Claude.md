@@ -83,7 +83,7 @@ pnpm run fixture   # Fixture and group control
 ```
 ┌─────────────────────────────────────────────────────────┐
 │  React Client (packages/client)                         │
-│  - Patch, Inputs, Presets, Graphs, Control Room, Runtime│
+│  - Patch, Inputs, Graphs, Control Room, Runtime         │
 │  - Graph Editor (ReactFlow)                             │
 └─────────────────────────────────────────────────────────┘
          │ HTTP REST + WebSocket

@@ -109,13 +109,13 @@ SelectGroup ──────────────────────�
       "params": { "faderId": "master" }
     },
     {
-      "id": "preset",
-      "type": "PresetBundle",
-      "params": { "presetId": "white" }
+      "id": "color",
+      "type": "ColorConstant",
+      "params": { "r": 1, "g": 1, "b": 1 }
     },
     {
       "id": "scale",
-      "type": "ScaleBundle",
+      "type": "ScaleColor",
       "params": {}
     },
     {
@@ -131,7 +131,7 @@ SelectGroup ──────────────────────�
   ],
   "edges": [
     { "id": "e1", "from": { "nodeId": "fader", "port": "value" }, "to": { "nodeId": "scale", "port": "scale" } },
-    { "id": "e2", "from": { "nodeId": "preset", "port": "bundle" }, "to": { "nodeId": "scale", "port": "bundle" } },
+    { "id": "e2", "from": { "nodeId": "color", "port": "color" }, "to": { "nodeId": "scale", "port": "color" } },
     { "id": "e3", "from": { "nodeId": "scale", "port": "result" }, "to": { "nodeId": "output", "port": "bundle" } },
     { "id": "e4", "from": { "nodeId": "group", "port": "selection" }, "to": { "nodeId": "output", "port": "selection" } }
   ]
@@ -190,7 +190,7 @@ SelectGroup ──────────────────────�
 1. **No cycles** - The graph must be a DAG
 2. **Type matching** - Connected ports must have compatible types
 3. **Required inputs** - Required inputs must be connected
-4. **Valid references** - Presets, groups, fixtures must exist
+4. **Valid references** - Groups, fixtures, and inputs must exist
 
 ## Creating via API
 

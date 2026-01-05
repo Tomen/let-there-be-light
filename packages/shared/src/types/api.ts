@@ -1,4 +1,4 @@
-import type { GraphId, NodeId, FixtureId, GroupId, PresetId } from './domain.js';
+import type { GraphId, NodeId, FixtureId, GroupId } from './domain.js';
 
 // Standard API response wrapper
 export interface ApiResponse<T> {
@@ -40,7 +40,6 @@ export interface CompileError {
 export interface GraphDependencies {
   faderIds: string[];
   buttonIds: string[];
-  presetIds: PresetId[];
   groupIds: GroupId[];
   fixtureIds: FixtureId[];
 }

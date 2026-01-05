@@ -1,7 +1,6 @@
 export * from './client'
 export * from './fixtures'
 export * from './groups'
-export * from './presets'
 export * from './graphs'
 export * from './inputs'
 export * from './shows'

@@ -1,6 +1,6 @@
 import type { GraphNode } from '@let-there-be-light/shared';
 import type { EvaluatorContext, RuntimeValue, NodeEvaluator } from './types.js';
-import { scalar, asScalar, asTrigger, asSelection } from './types.js';
+import { scalar, asTrigger, asSelection, getScalarInput } from './types.js';
 
 /**
  * SineLFO node - sine wave oscillator
@@ -13,9 +13,9 @@ export const evaluateSineLFO: NodeEvaluator = (
   node: GraphNode,
   ctx: EvaluatorContext
 ): Record<string, RuntimeValue> => {
-  const frequency = (node.params.frequency as number) ?? 1;
-  const phaseOffset = (node.params.phase as number) ?? 0;
-  const speedInput = asScalar(ctx.getInput(node.id, 'speed'), 1);
+  const frequency = getScalarInput(node, ctx, 'frequency', 1);
+  const phaseOffset = getScalarInput(node, ctx, 'phase', 0);
+  const speedInput = getScalarInput(node, ctx, 'speed', 1);
 
   // Get/initialize state
   const state = ctx.getNodeState<LFOState>(node.id) ?? { phase: phaseOffset };
@@ -37,9 +37,9 @@ export const evaluateTriangleLFO: NodeEvaluator = (
   node: GraphNode,
   ctx: EvaluatorContext
 ): Record<string, RuntimeValue> => {
-  const frequency = (node.params.frequency as number) ?? 1;
-  const phaseOffset = (node.params.phase as number) ?? 0;
-  const speedInput = asScalar(ctx.getInput(node.id, 'speed'), 1);
+  const frequency = getScalarInput(node, ctx, 'frequency', 1);
+  const phaseOffset = getScalarInput(node, ctx, 'phase', 0);
+  const speedInput = getScalarInput(node, ctx, 'speed', 1);
 
   const state = ctx.getNodeState<LFOState>(node.id) ?? { phase: phaseOffset };
 
@@ -60,9 +60,9 @@ export const evaluateSawLFO: NodeEvaluator = (
   node: GraphNode,
   ctx: EvaluatorContext
 ): Record<string, RuntimeValue> => {
-  const frequency = (node.params.frequency as number) ?? 1;
-  const phaseOffset = (node.params.phase as number) ?? 0;
-  const speedInput = asScalar(ctx.getInput(node.id, 'speed'), 1);
+  const frequency = getScalarInput(node, ctx, 'frequency', 1);
+  const phaseOffset = getScalarInput(node, ctx, 'phase', 0);
+  const speedInput = getScalarInput(node, ctx, 'speed', 1);
 
   const state = ctx.getNodeState<LFOState>(node.id) ?? { phase: phaseOffset };
 
@@ -86,8 +86,8 @@ export const evaluateChase: NodeEvaluator = (
   node: GraphNode,
   ctx: EvaluatorContext
 ): Record<string, RuntimeValue> => {
-  const width = (node.params.width as number) ?? 1;
-  const speedInput = asScalar(ctx.getInput(node.id, 'speed'), 1);
+  const width = getScalarInput(node, ctx, 'width', 1);
+  const speedInput = getScalarInput(node, ctx, 'speed', 1);
   const selectionInput = asSelection(ctx.getInput(node.id, 'selection'));
 
   const state = ctx.getNodeState<ChaseState>(node.id) ?? { phase: 0 };
@@ -122,8 +122,8 @@ export const evaluateFlash: NodeEvaluator = (
   node: GraphNode,
   ctx: EvaluatorContext
 ): Record<string, RuntimeValue> => {
-  const attack = (node.params.attack as number) ?? 0;
-  const decay = (node.params.decay as number) ?? 0.5;
+  const attack = getScalarInput(node, ctx, 'attack', 0);
+  const decay = getScalarInput(node, ctx, 'decay', 0.5);
   const triggerInput = asTrigger(ctx.getInput(node.id, 'trigger'));
 
   const state = ctx.getNodeState<FlashState>(node.id) ?? { phase: -1, triggered: false };

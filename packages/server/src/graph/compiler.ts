@@ -167,7 +167,6 @@ export function compileGraph(graph: Graph): CompileResult {
 export function extractDependencies(graph: Graph): GraphDependencies {
   const faderIds: string[] = [];
   const buttonIds: string[] = [];
-  const presetIds: string[] = [];
   const groupIds: string[] = [];
   const fixtureIds: string[] = [];
 
@@ -182,12 +181,6 @@ export function extractDependencies(graph: Graph): GraphDependencies {
       case 'Button':
         if (node.params.buttonId) {
           buttonIds.push(node.params.buttonId as string);
-        }
-        break;
-
-      case 'PresetBundle':
-        if (node.params.presetId) {
-          presetIds.push(node.params.presetId as string);
         }
         break;
 
@@ -208,7 +201,6 @@ export function extractDependencies(graph: Graph): GraphDependencies {
   return {
     faderIds: [...new Set(faderIds)],
     buttonIds: [...new Set(buttonIds)],
-    presetIds: [...new Set(presetIds)],
     groupIds: [...new Set(groupIds)],
     fixtureIds: [...new Set(fixtureIds)],
   };
@@ -221,7 +213,6 @@ function emptyDependencies(): GraphDependencies {
   return {
     faderIds: [],
     buttonIds: [],
-    presetIds: [],
     groupIds: [],
     fixtureIds: [],
   };

@@ -14,7 +14,7 @@ describe('CompileErrorPanel', () => {
     const result: CompileResult = {
       ok: true,
       errors: [],
-      dependencies: { groups: [], presets: [], fixtures: [] },
+      dependencies: { faderIds: [], buttonIds: [], groupIds: [], fixtureIds: [] },
     }
 
     render(<CompileErrorPanel result={result} onFocusNode={vi.fn()} />)
@@ -26,10 +26,10 @@ describe('CompileErrorPanel', () => {
     const result: CompileResult = {
       ok: false,
       errors: [
-        { nodeId: 'node-1', message: 'Missing input', code: 'MISSING_INPUT' },
+        { nodeId: 'node-1', message: 'Missing input', code: 'MISSING_CONNECTION' },
         { nodeId: 'node-2', message: 'Invalid type', code: 'TYPE_MISMATCH' },
       ],
-      dependencies: { groups: [], presets: [], fixtures: [] },
+      dependencies: { faderIds: [], buttonIds: [], groupIds: [], fixtureIds: [] },
     }
 
     render(<CompileErrorPanel result={result} onFocusNode={vi.fn()} />)
@@ -41,9 +41,9 @@ describe('CompileErrorPanel', () => {
     const result: CompileResult = {
       ok: false,
       errors: [
-        { nodeId: 'node-1', message: 'Missing input', code: 'MISSING_INPUT' },
+        { nodeId: 'node-1', message: 'Missing input', code: 'MISSING_CONNECTION' },
       ],
-      dependencies: { groups: [], presets: [], fixtures: [] },
+      dependencies: { faderIds: [], buttonIds: [], groupIds: [], fixtureIds: [] },
     }
 
     render(<CompileErrorPanel result={result} onFocusNode={vi.fn()} />)
@@ -55,9 +55,9 @@ describe('CompileErrorPanel', () => {
     const result: CompileResult = {
       ok: false,
       errors: [
-        { nodeId: 'node-1', message: 'Missing input connection', code: 'MISSING_INPUT' },
+        { nodeId: 'node-1', message: 'Missing input connection', code: 'MISSING_CONNECTION' },
       ],
-      dependencies: { groups: [], presets: [], fixtures: [] },
+      dependencies: { faderIds: [], buttonIds: [], groupIds: [], fixtureIds: [] },
     }
 
     render(<CompileErrorPanel result={result} onFocusNode={vi.fn()} />)
@@ -70,9 +70,9 @@ describe('CompileErrorPanel', () => {
     const result: CompileResult = {
       ok: false,
       errors: [
-        { nodeId: 'node-1', port: 'value', message: 'Missing input', code: 'MISSING_INPUT' },
+        { nodeId: 'node-1', port: 'value', message: 'Missing input', code: 'MISSING_CONNECTION' },
       ],
-      dependencies: { groups: [], presets: [], fixtures: [] },
+      dependencies: { faderIds: [], buttonIds: [], groupIds: [], fixtureIds: [] },
     }
 
     render(<CompileErrorPanel result={result} onFocusNode={vi.fn()} />)
@@ -85,9 +85,9 @@ describe('CompileErrorPanel', () => {
     const result: CompileResult = {
       ok: false,
       errors: [
-        { nodeId: 'node-1', message: 'Missing input', code: 'MISSING_INPUT' },
+        { nodeId: 'node-1', message: 'Missing input', code: 'MISSING_CONNECTION' },
       ],
-      dependencies: { groups: [], presets: [], fixtures: [] },
+      dependencies: { faderIds: [], buttonIds: [], groupIds: [], fixtureIds: [] },
     }
 
     render(<CompileErrorPanel result={result} onFocusNode={onFocusNode} />)

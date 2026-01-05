@@ -2,7 +2,6 @@
 export type {
   FixtureId,
   GroupId,
-  PresetId,
   GraphId,
   NodeId,
   EdgeId,
@@ -14,8 +13,6 @@ export type {
   RGBColor,
   Position,
   AttributeBundle,
-  PresetType,
-  Preset,
   NodePosition,
   GraphNode,
   GraphEdge,
@@ -77,7 +74,10 @@ export type {
 
 export {
   NODE_DEFINITIONS,
+  CONNECTABLE_PORT_TYPES,
   getNodeDefinition,
   getNodesByCategory,
   getCategories,
+  isConnectableType,
+  hasDefault,
 } from './types/nodes.js';

@@ -1,5 +1,5 @@
 import type { GraphNode, GraphEdge, NodeId, PortType } from '@let-there-be-light/shared';
-import { NODE_DEFINITIONS } from '@let-there-be-light/shared';
+import { NODE_DEFINITIONS, isConnectableType, hasDefault } from '@let-there-be-light/shared';
 
 /**
  * Get the output type of a port on a node
@@ -72,41 +72,25 @@ export function typesCompatible(
 /**
  * Get all required inputs for a node type
  * (inputs that don't have defaults and need to be connected)
+ *
+ * Inputs are required if:
+ * 1. They are non-connectable types (Selection, Trigger, Bundle) - these must be connected
+ * 2. They are connectable types (Scalar, Bool, Color, Position) without a default value
  */
 export function getRequiredInputs(nodeType: string): string[] {
   const def = NODE_DEFINITIONS[nodeType as keyof typeof NODE_DEFINITIONS];
   if (!def) return [];
 
-  // For now, consider all defined inputs as optional
-  // The graph can work with default values or unconnected inputs
-  // Required inputs will be those that must be connected for the node to make sense
-
-  const required: string[] = [];
-
-  // Output nodes require their inputs
-  if (nodeType === 'WriteAttributes') {
-    required.push('selection', 'bundle');
-  }
-
-  // Math nodes with two operands
-  if (['Add', 'Multiply'].includes(nodeType)) {
-    required.push('a', 'b');
-  }
-
-  // Mix operations need all inputs
-  if (nodeType === 'MixColor') {
-    required.push('a', 'b', 'mix');
-  }
-
-  // Scale operations need both inputs
-  if (['ScaleColor', 'ScalePosition', 'ScaleBundle'].includes(nodeType)) {
-    // Scale factor can default to 1, but the value to scale is required
-    const scaledInput = nodeType === 'ScaleColor' ? 'color' :
-                        nodeType === 'ScalePosition' ? 'position' : 'bundle';
-    required.push(scaledInput);
-  }
-
-  return required;
+  return Object.entries(def.inputs)
+    .filter(([_, portDef]) => {
+      // Non-connectable types (Selection, Trigger, Bundle) are always required
+      if (!isConnectableType(portDef.type)) {
+        return true;
+      }
+      // Connectable types are only required if they don't have a default
+      return !hasDefault(portDef);
+    })
+    .map(([name]) => name);
 }
 
 /**

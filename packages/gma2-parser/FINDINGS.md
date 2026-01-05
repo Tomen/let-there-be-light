@@ -271,39 +271,131 @@ User-defined groups with fixture members.
 
 ## CLI Tools Reference
 
+### Core Tools
 | Command | Purpose |
 |---------|---------|
-| `pnpm shows <file>` | List shows in file |
-| `pnpm extract <file>` | Extract fixtures to YAML |
 | `pnpm dump <file> <offset> <len>` | Hex dump at offset |
-| `pnpm fixtures <file> analyze` | Analyze fixture records |
+| `pnpm shows <file>` | List shows in file |
+| `pnpm inspect <file>` | Interactive structure exploration |
+| `pnpm extract <file>` | Extract fixtures to YAML |
+
+### Fixture Analysis
+| Command | Purpose |
+|---------|---------|
+| `pnpm fixtures <file>` | Analyze fixture type records |
 | `pnpm search-types <file>` | Search fixture type names |
-| `pnpm search-patch-intel <file>` | Search for known DMX patterns |
-| `pnpm search-patch-8bit <file>` | Search 8-bit address patterns |
-| `pnpm compare-shows <file>` | Compare two shows for differences |
-| `pnpm follow-show-offsets <file>` | Follow show index pointers |
-| `pnpm analyze-show-index <file>` | Analyze show index structure |
-| `pnpm find-dmx-pattern <file>` | Search for DMX patterns |
-| `pnpm analyze-0x8000 <file>` | Analyze patch region |
-| `pnpm extract-patch-table <file>` | Extract patch records |
-| `pnpm decode-3ch-table <file>` | Decode 3-channel table |
-| `pnpm search-fixture-ids <file>` | Search for fixture ID patterns |
-| `pnpm analyze-fixture-dmx <file>` | Analyze fixture DMX encoding |
 | `pnpm find-fixtures-by-name <file>` | Find fixtures by name patterns |
+| `pnpm analyze-fixture-dmx <file>` | Analyze fixture DMX encoding |
+| `pnpm analyze-patched-fixtures <file>` | Analyze patched fixture records (0xbc0000+) |
+
+### Show Analysis
+| Command | Purpose |
+|---------|---------|
+| `pnpm compare-shows <file>` | Compare two shows for differences |
+| `pnpm analyze-show-index <file>` | Analyze show index structure |
+| `pnpm follow-show-offsets <file>` | Follow show index pointers |
+
+### Patch Extraction
+| Command | Purpose |
+|---------|---------|
+| `pnpm extract-full-patch <file>` | Extract 28-byte patch index records |
+| `pnpm decode-3ch-table <file>` | Decode 3-channel address table |
+| `pnpm analyze-0x8000 <file>` | Analyze patch region at 0x8000 |
+
+*Deprecated scripts archived in `src/cli/_archive/`*
+
+## Patched Fixture Records (0xbc0000+)
+
+User-created fixtures (patched instances) are stored separately from fixture types:
+
+### Location
+
+Named fixtures found at offset 0xbc0000+:
+- "Spot MH5 Stage 1", "Spot MH5 Stage 2", etc.
+- "Par Niesche 1", "Par Niesche 2", etc.
+- "Par Disco-Bereich 1", etc.
+
+### Record Structure (approximate 744-byte spacing)
+
+```
+Offset  Size  Field          Notes
+──────────────────────────────────────────────────────
+-32     4     Next pointer   Points to next fixture record
+-28     4     Zeros
+-24     4     Timestamp?     0x6947b595 or similar
+-20     4     Zeros
+-16     4     Flags          0x80010000 constant
+-12     4     Zeros
+-8      4     Zeros
+-4      4     Zeros
+0       4     Name length    e.g., 0x10 (16)
+4       N     Fixture name   "Spot MH5 Stage 1"
+N+4     4     Fixture ID     Incrementing: 0x6f, 0x70, 0x71 (111, 112, 113)
+```
+
+### Key Findings
+
+- **61 patched fixtures found** with names like "Spot MH5 Stage N", "Par Niesche N"
+- **Fixture IDs** increment sequentially (111, 112, 113...)
+- These are **user-created fixtures** referencing fixture types (templates)
+- DMX address is NOT stored directly in this record; it's likely derived from fixture type channel count and a separate address table
+
+## Patch Index Records (0x7f00-0x8900)
+
+28-byte records mapping universe to fixture index:
+
+```
+Offset  Size  Field         Value
+──────────────────────────────────────
+0       2     Constant      0x0064 (100)
+2       2     Constant      0x0018 (24)
+4       6     Zeros
+10      4     Universe      0=U1, 1=U2, 2=U3
+14      4     Fixture Index 1, 2, 3... (NOT DMX address)
+18      10    Zeros
+```
+
+### DMX Address Calculation
+
+The fixture index is NOT the DMX address. DMX address is calculated:
+- **Universe 1** (1-channel fixtures): `DMX = index`
+- **Universe 3** (3-channel fixtures): `DMX = (index - 1) * 3 + 1`
+
+Example for U3:
+| Index | DMX Address |
+|-------|-------------|
+| 1 | 1 |
+| 2 | 4 |
+| 3 | 7 |
+| 4 | 10 |
+
+### Current Findings
+
+- **53 patch index records found** for Universe 2 (U3)
+- Records scattered across 0x7a89 to 0x88f8
+- Universe 0 (U1) records **not found** - may use different format
+
+### Validation Notes (Jan 2026)
+
+- **Fixture names confirmed correct** - "Spot MH5 Stage N", "Par Niesche N", etc.
+- **User reports >100 fixtures on U3** - only 53 records found
+- File contains multiple shows (2014-2025), patch data may differ by version
+- Need to isolate specific show's patch section for complete extraction
 
 ## Extraction Status
 
 | Data Type | Status | Notes |
 |-----------|--------|-------|
-| Show index | ✅ Extracted | 20+ shows with offsets |
-| Fixture types | ✅ Extracted | 12 types found |
+| Show index | ✅ Extracted | 13+ shows with offsets |
+| Fixture types | ✅ Extracted | 12 types (PAR, Moving 1-4, etc.) |
 | Fixture library | ✅ Extracted | 276 types in library |
-| 3-ch address table | ✅ Found | At 0xc00c89, partial data |
-| Patch records | ⏳ Partial | 61 records found, incomplete |
+| 3-ch address table | ✅ Found | At 0xc00c89, 7 valid records |
+| Patch index records | ⏳ Partial | 53 records for U3, U1 format unknown |
+| Patched fixtures | ✅ Found | 61 named fixtures at 0xbc0000+ |
 | Fixture-index map | ✅ Found | At 0x27d0 |
-| DMX addresses | ⏳ Partial | Structure found, full table unclear |
+| DMX addresses | ⏳ Calculated | Derived from fixture index + channel count |
 | Group names | ✅ Extracted | 394 groups found |
-| Group memberships | ⏳ Partial | UTF-16 fixture refs found |
+| Group memberships | ⏳ Partial | Fixture IDs reference patched fixtures |
 | Color presets | ⏳ Partial | Names found |
 | Position presets | ❌ Not found | |
 | Cues/Sequences | ❌ Not found | |
@@ -331,29 +423,33 @@ Data appears to be 4-byte aligned.
 
 1. **Show files contain multiple shows with separate data sections**
    - Each show has two offset pointers (offset1 ~30-70KB, offset2 ~720KB)
-   - Shows can be compared to find patch differences
+   - offset1 points to color palette data
+   - offset2 points to shared show data
 
-2. **Fixture TYPES vs patched fixtures are stored separately**
-   - Types = templates (12 found)
-   - Patched fixtures = instances (~200 expected, stored elsewhere)
+2. **Three-layer fixture architecture**
+   - **Fixture Types** (12 templates): PAR, Moving 1-4, Fresnel, etc. (0x9000-0x44000)
+   - **Fixture Library** (276 types): Manufacturer fixtures at 0x970000+
+   - **Patched Fixtures** (61 instances): User-created fixtures at 0xbc0000+
 
-3. **3-channel address table confirms expected pattern**
-   - Addresses 1, 4, 7, 10... found at 0xc00c89
-   - Matches user intel about Universe 3 configuration
+3. **Patch index records link universes to fixtures**
+   - 28-byte records with universe and fixture index
+   - DMX address calculated: `(index - 1) * channels + 1`
+   - Only Universe 3 records found; Universe 1 may use different format
 
-4. **Patch data appears fragmented**
-   - 61 patch-like records found
-   - Full 100+100 fixture patch not yet located in contiguous table
+4. **Patched fixtures have sequential IDs**
+   - IDs increment: 111, 112, 113... (0x6f, 0x70, 0x71)
+   - Groups reference fixtures by these IDs
+   - Names like "Spot MH5 Stage 1", "Par Niesche 1"
 
-5. **Fixture IDs may use special encoding**
-   - User suggests: Universe 3, Channel 1 → ID 2001
-   - This specific pattern not found in exhaustive searches
+5. **DMX addresses are calculated, not stored directly**
+   - Universe 1: 1-channel fixtures → `DMX = index`
+   - Universe 3: 3-channel fixtures → `DMX = (index - 1) * 3 + 1`
 
 ## Future Investigation
 
-1. **Compare 2022 vs 2025 shows** to isolate patch changes
-2. **Search for the 1-channel sequential table** (1, 2, 3, 4...)
-3. **Decode the full 18-byte 3-channel record structure**
-4. **Find the fixture ID → (universe, address) mapping**
-5. **Investigate offset1 and offset2 pointers per show**
-6. **Look for "Patch" section header or marker**
+1. **Find Universe 1 patch records** - different format from U3?
+2. **Link patched fixtures to patch index records**
+3. **Extract fixture type reference from patched fixtures**
+4. **Build complete fixture → DMX address mapping**
+5. **Extract group → fixture membership from IDs**
+6. **Export to YAML format for Let There Be Light**

@@ -2,6 +2,7 @@ import { useGraphs } from '@/api'
 import { useRuntimeStore } from '@/stores/runtime'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
+import { showInfo, setPendingToggle } from '@/stores/status'
 
 export function GraphsPanel() {
   const { data: graphs = [] } = useGraphs()
@@ -12,6 +13,14 @@ export function GraphsPanel() {
   // Find instance for each graph
   const getInstanceForGraph = (graphId: string) =>
     instances.find((i) => i.graphId === graphId)
+
+  // Handle toggle with status feedback
+  const handleToggle = (graphId: string, graphName: string, enabled: boolean) => {
+    const action = enabled ? 'on' : 'off'
+    showInfo(`Turning ${graphName} ${action}...`)
+    setPendingToggle({ graphId, graphName, targetEnabled: enabled })
+    setInstanceEnabled(graphId, enabled)
+  }
 
   return (
     <div className="space-y-4">
@@ -50,7 +59,7 @@ export function GraphsPanel() {
                 <Switch
                   id={`graph-${graph.id}`}
                   checked={isEnabled}
-                  onCheckedChange={(checked) => setInstanceEnabled(graph.id, checked)}
+                  onCheckedChange={(checked) => handleToggle(graph.id, graph.name, checked)}
                 />
               </div>
             )

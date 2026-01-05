@@ -1,7 +1,6 @@
 // Core identifiers
 export type FixtureId = string;
 export type GroupId = string;
-export type PresetId = string;
 export type GraphId = string;
 export type NodeId = string;
 export type EdgeId = string;
@@ -56,15 +55,6 @@ export interface AttributeBundle {
   pan?: number;
   tilt?: number;
   zoom?: number;
-}
-
-// Preset (named attribute bundle for quick recall)
-export type PresetType = 'color' | 'position' | 'beam' | 'full';
-
-export interface Preset extends Entity {
-  name: string;
-  type: PresetType;
-  attributes: Partial<AttributeBundle>;
 }
 
 // Graph node position in editor

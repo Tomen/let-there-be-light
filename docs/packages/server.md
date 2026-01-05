@@ -39,12 +39,12 @@ data/
   default/              # Default show
     fixtures.yaml
     groups.yaml
-    presets.yaml
+    inputs.yaml
     graphs.yaml
   sunday-service/       # Another show
     fixtures.yaml
     groups.yaml
-    presets.yaml
+    inputs.yaml
     graphs.yaml
 ```
 
@@ -65,13 +65,11 @@ src/
 │   ├── base.ts        # Generic YamlDataStore<T>
 │   ├── fixtures.ts    # Fixture + FixtureModel store
 │   ├── groups.ts      # Group store
-│   ├── presets.ts     # Preset store
 │   ├── graphs.ts      # Graph store
 │   └── index.ts       # Store initialization
 ├── routes/            # REST API endpoints
 │   ├── fixtures.ts
 │   ├── groups.ts
-│   ├── presets.ts
 │   └── graphs.ts
 ├── graph/             # Graph compiler
 │   ├── compiler.ts    # Main compileGraph() function
@@ -193,7 +191,7 @@ engine.onFrame((frame) => {
 | Category | Nodes |
 |----------|-------|
 | Input | Time, Fader, Button |
-| Selection | SelectGroup, SelectFixture, PresetBundle |
+| Selection | SelectGroup, SelectFixture |
 | Math | Add, Multiply, Clamp01, MapRange, Smooth |
 | Effect | SineLFO, TriangleLFO, SawLFO, Chase, Flash |
 | Color | MixColor, ScaleColor, ColorConstant |
@@ -216,7 +214,7 @@ Located in `<project>/data/<show>/` (default: `data/default/`):
 - `fixtures.yaml` - Patched fixtures
 - `fixture-models.yaml` - Fixture model definitions
 - `groups.yaml` - Fixture groups
-- `presets.yaml` - Color/position/beam presets
+- `inputs.yaml` - Faders and buttons
 - `graphs.yaml` - Effect graphs
 
 Seeded with defaults on first run. Data directory is gitignored.

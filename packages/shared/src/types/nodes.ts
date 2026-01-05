@@ -20,10 +20,25 @@ export interface ParamDefinition {
   max?: number;
 }
 
-// Port definition
+// Port definition - can have default values for connectable types (Scalar, Bool, Color, Position)
 export interface PortDefinition {
   type: PortType;
   label?: string;
+  default?: unknown;  // Default value when input is not connected
+  min?: number;       // For Scalar type range
+  max?: number;       // For Scalar type range
+}
+
+// Check if a port has a default value defined
+export function hasDefault(port: PortDefinition): boolean {
+  return 'default' in port && port.default !== undefined;
+}
+
+// Port types that can have configurable defaults
+export const CONNECTABLE_PORT_TYPES: PortType[] = ['Scalar', 'Bool', 'Color', 'Position'];
+
+export function isConnectableType(type: PortType): boolean {
+  return CONNECTABLE_PORT_TYPES.includes(type);
 }
 
 // Node type names
@@ -35,8 +50,6 @@ export type NodeType =
   // Selection
   | 'SelectGroup'
   | 'SelectFixture'
-  // Presets
-  | 'PresetBundle'
   // Math/Shaping
   | 'Add'
   | 'Multiply'
@@ -67,7 +80,7 @@ export type NodeType =
 // Node definition (used by compiler and editor)
 export interface NodeDefinition {
   type: NodeType;
-  category: 'input' | 'selection' | 'preset' | 'math' | 'effect' | 'color' | 'position' | 'bundle' | 'output';
+  category: 'input' | 'selection' | 'math' | 'effect' | 'color' | 'position' | 'bundle' | 'output';
   label: string;
   inputs: Record<string, PortDefinition>;
   outputs: Record<string, PortDefinition>;
@@ -145,22 +158,6 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
   },
 
   // ============================================
-  // Preset Nodes
-  // ============================================
-  PresetBundle: {
-    type: 'PresetBundle',
-    category: 'preset',
-    label: 'Preset',
-    inputs: {},
-    outputs: {
-      bundle: { type: 'Bundle', label: 'Attributes' },
-    },
-    params: {
-      presetId: { type: 'string', label: 'Preset ID' },
-    },
-  },
-
-  // ============================================
   // Math/Shaping Nodes
   // ============================================
   Add: {
@@ -168,8 +165,8 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     category: 'math',
     label: 'Add',
     inputs: {
-      a: { type: 'Scalar', label: 'A' },
-      b: { type: 'Scalar', label: 'B' },
+      a: { type: 'Scalar', label: 'A', default: 0 },
+      b: { type: 'Scalar', label: 'B', default: 0 },
     },
     outputs: {
       result: { type: 'Scalar', label: 'Result' },
@@ -181,8 +178,8 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     category: 'math',
     label: 'Multiply',
     inputs: {
-      a: { type: 'Scalar', label: 'A' },
-      b: { type: 'Scalar', label: 'B' },
+      a: { type: 'Scalar', label: 'A', default: 1 },
+      b: { type: 'Scalar', label: 'B', default: 1 },
     },
     outputs: {
       result: { type: 'Scalar', label: 'Result' },
@@ -194,7 +191,7 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     category: 'math',
     label: 'Clamp 0-1',
     inputs: {
-      value: { type: 'Scalar', label: 'Input' },
+      value: { type: 'Scalar', label: 'Input', default: 0 },
     },
     outputs: {
       result: { type: 'Scalar', label: 'Clamped' },
@@ -206,31 +203,29 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     category: 'math',
     label: 'Map Range',
     inputs: {
-      value: { type: 'Scalar', label: 'Input' },
+      value: { type: 'Scalar', label: 'Input', default: 0 },
+      inMin: { type: 'Scalar', label: 'In Min', default: 0 },
+      inMax: { type: 'Scalar', label: 'In Max', default: 1 },
+      outMin: { type: 'Scalar', label: 'Out Min', default: 0 },
+      outMax: { type: 'Scalar', label: 'Out Max', default: 1 },
     },
     outputs: {
       result: { type: 'Scalar', label: 'Mapped' },
     },
-    params: {
-      inMin: { type: 'number', default: 0, label: 'In Min' },
-      inMax: { type: 'number', default: 1, label: 'In Max' },
-      outMin: { type: 'number', default: 0, label: 'Out Min' },
-      outMax: { type: 'number', default: 1, label: 'Out Max' },
-    },
+    params: {},
   },
   Smooth: {
     type: 'Smooth',
     category: 'math',
     label: 'Smooth',
     inputs: {
-      value: { type: 'Scalar', label: 'Input' },
+      value: { type: 'Scalar', label: 'Input', default: 0 },
+      smoothing: { type: 'Scalar', label: 'Smoothing', default: 0.9, min: 0, max: 1 },
     },
     outputs: {
       result: { type: 'Scalar', label: 'Smoothed' },
     },
-    params: {
-      smoothing: { type: 'number', default: 0.9, min: 0, max: 1, label: 'Smoothing' },
-    },
+    params: {},
   },
 
   // ============================================
@@ -241,45 +236,42 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     category: 'effect',
     label: 'Sine LFO',
     inputs: {
-      speed: { type: 'Scalar', label: 'Speed' },
+      speed: { type: 'Scalar', label: 'Speed', default: 1 },
+      frequency: { type: 'Scalar', label: 'Frequency (Hz)', default: 1, min: 0.01, max: 20 },
+      phase: { type: 'Scalar', label: 'Phase', default: 0, min: 0, max: 1 },
     },
     outputs: {
       value: { type: 'Scalar', label: 'Value' },
     },
-    params: {
-      frequency: { type: 'number', default: 1, min: 0.01, max: 20, label: 'Frequency (Hz)' },
-      phase: { type: 'number', default: 0, min: 0, max: 1, label: 'Phase' },
-    },
+    params: {},
   },
   TriangleLFO: {
     type: 'TriangleLFO',
     category: 'effect',
     label: 'Triangle LFO',
     inputs: {
-      speed: { type: 'Scalar', label: 'Speed' },
+      speed: { type: 'Scalar', label: 'Speed', default: 1 },
+      frequency: { type: 'Scalar', label: 'Frequency (Hz)', default: 1, min: 0.01, max: 20 },
+      phase: { type: 'Scalar', label: 'Phase', default: 0, min: 0, max: 1 },
     },
     outputs: {
       value: { type: 'Scalar', label: 'Value' },
     },
-    params: {
-      frequency: { type: 'number', default: 1, min: 0.01, max: 20, label: 'Frequency (Hz)' },
-      phase: { type: 'number', default: 0, min: 0, max: 1, label: 'Phase' },
-    },
+    params: {},
   },
   SawLFO: {
     type: 'SawLFO',
     category: 'effect',
     label: 'Saw LFO',
     inputs: {
-      speed: { type: 'Scalar', label: 'Speed' },
+      speed: { type: 'Scalar', label: 'Speed', default: 1 },
+      frequency: { type: 'Scalar', label: 'Frequency (Hz)', default: 1, min: 0.01, max: 20 },
+      phase: { type: 'Scalar', label: 'Phase', default: 0, min: 0, max: 1 },
     },
     outputs: {
       value: { type: 'Scalar', label: 'Value' },
     },
-    params: {
-      frequency: { type: 'number', default: 1, min: 0.01, max: 20, label: 'Frequency (Hz)' },
-      phase: { type: 'number', default: 0, min: 0, max: 1, label: 'Phase' },
-    },
+    params: {},
   },
   Chase: {
     type: 'Chase',
@@ -287,14 +279,13 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     label: 'Chase',
     inputs: {
       selection: { type: 'Selection', label: 'Fixtures' },
-      speed: { type: 'Scalar', label: 'Speed' },
+      speed: { type: 'Scalar', label: 'Speed', default: 1 },
+      width: { type: 'Scalar', label: 'Width', default: 1, min: 1, max: 10 },
     },
     outputs: {
       value: { type: 'Scalar', label: 'Value' },
     },
-    params: {
-      width: { type: 'number', default: 1, min: 1, max: 10, label: 'Width' },
-    },
+    params: {},
   },
   Flash: {
     type: 'Flash',
@@ -302,14 +293,13 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     label: 'Flash',
     inputs: {
       trigger: { type: 'Trigger', label: 'Trigger' },
+      attack: { type: 'Scalar', label: 'Attack (s)', default: 0, min: 0, max: 2 },
+      decay: { type: 'Scalar', label: 'Decay (s)', default: 0.5, min: 0, max: 5 },
     },
     outputs: {
       value: { type: 'Scalar', label: 'Value' },
     },
-    params: {
-      attack: { type: 'number', default: 0, min: 0, max: 2, label: 'Attack (s)' },
-      decay: { type: 'number', default: 0.5, min: 0, max: 5, label: 'Decay (s)' },
-    },
+    params: {},
   },
 
   // ============================================
@@ -320,9 +310,9 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     category: 'color',
     label: 'Mix Colors',
     inputs: {
-      a: { type: 'Color', label: 'Color A' },
-      b: { type: 'Color', label: 'Color B' },
-      mix: { type: 'Scalar', label: 'Mix' },
+      a: { type: 'Color', label: 'Color A', default: { r: 0, g: 0, b: 0 } },
+      b: { type: 'Color', label: 'Color B', default: { r: 1, g: 1, b: 1 } },
+      mix: { type: 'Scalar', label: 'Mix', default: 0.5, min: 0, max: 1 },
     },
     outputs: {
       result: { type: 'Color', label: 'Mixed' },
@@ -334,8 +324,8 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     category: 'color',
     label: 'Scale Color',
     inputs: {
-      color: { type: 'Color', label: 'Color' },
-      scale: { type: 'Scalar', label: 'Scale' },
+      color: { type: 'Color', label: 'Color', default: { r: 1, g: 1, b: 1 } },
+      scale: { type: 'Scalar', label: 'Scale', default: 1, min: 0, max: 2 },
     },
     outputs: {
       result: { type: 'Color', label: 'Scaled' },
@@ -346,22 +336,22 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     type: 'ColorConstant',
     category: 'color',
     label: 'Color',
-    inputs: {},
+    inputs: {
+      r: { type: 'Scalar', label: 'Red', default: 1, min: 0, max: 1 },
+      g: { type: 'Scalar', label: 'Green', default: 1, min: 0, max: 1 },
+      b: { type: 'Scalar', label: 'Blue', default: 1, min: 0, max: 1 },
+    },
     outputs: {
       color: { type: 'Color', label: 'Color' },
     },
-    params: {
-      r: { type: 'number', default: 1, min: 0, max: 1, label: 'Red' },
-      g: { type: 'number', default: 1, min: 0, max: 1, label: 'Green' },
-      b: { type: 'number', default: 1, min: 0, max: 1, label: 'Blue' },
-    },
+    params: {},
   },
   ColorToBundle: {
     type: 'ColorToBundle',
     category: 'color',
     label: 'Color to Bundle',
     inputs: {
-      color: { type: 'Color', label: 'Color' },
+      color: { type: 'Color', label: 'Color', default: { r: 1, g: 1, b: 1 } },
     },
     outputs: {
       bundle: { type: 'Bundle', label: 'Bundle' },
@@ -377,9 +367,9 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     category: 'position',
     label: 'Offset Position',
     inputs: {
-      position: { type: 'Position', label: 'Position' },
-      deltaPan: { type: 'Scalar', label: 'Delta Pan' },
-      deltaTilt: { type: 'Scalar', label: 'Delta Tilt' },
+      position: { type: 'Position', label: 'Position', default: { pan: 0, tilt: 0 } },
+      deltaPan: { type: 'Scalar', label: 'Delta Pan', default: 0, min: -1, max: 1 },
+      deltaTilt: { type: 'Scalar', label: 'Delta Tilt', default: 0, min: -1, max: 1 },
     },
     outputs: {
       result: { type: 'Position', label: 'Offset' },
@@ -391,8 +381,8 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     category: 'position',
     label: 'Scale Position',
     inputs: {
-      position: { type: 'Position', label: 'Position' },
-      scale: { type: 'Scalar', label: 'Scale' },
+      position: { type: 'Position', label: 'Position', default: { pan: 0, tilt: 0 } },
+      scale: { type: 'Scalar', label: 'Scale', default: 1, min: 0, max: 2 },
     },
     outputs: {
       result: { type: 'Position', label: 'Scaled' },
@@ -403,14 +393,14 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     type: 'PositionConstant',
     category: 'position',
     label: 'Position',
-    inputs: {},
+    inputs: {
+      pan: { type: 'Scalar', label: 'Pan', default: 0, min: -1, max: 1 },
+      tilt: { type: 'Scalar', label: 'Tilt', default: 0, min: -1, max: 1 },
+    },
     outputs: {
       position: { type: 'Position', label: 'Position' },
     },
-    params: {
-      pan: { type: 'number', default: 0, min: -1, max: 1, label: 'Pan' },
-      tilt: { type: 'number', default: 0, min: -1, max: 1, label: 'Tilt' },
-    },
+    params: {},
   },
 
   // ============================================
@@ -435,7 +425,7 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     label: 'Scale Bundle',
     inputs: {
       bundle: { type: 'Bundle', label: 'Bundle' },
-      scale: { type: 'Scalar', label: 'Scale' },
+      scale: { type: 'Scalar', label: 'Scale', default: 1, min: 0, max: 2 },
     },
     outputs: {
       result: { type: 'Bundle', label: 'Scaled' },
@@ -453,11 +443,10 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     inputs: {
       selection: { type: 'Selection', label: 'Fixtures' },
       bundle: { type: 'Bundle', label: 'Attributes' },
+      priority: { type: 'Scalar', label: 'Priority', default: 0, min: 0, max: 100 },
     },
     outputs: {},
-    params: {
-      priority: { type: 'number', default: 0, min: 0, max: 100, label: 'Priority' },
-    },
+    params: {},
   },
 };
 
@@ -475,5 +464,5 @@ export function getNodesByCategory(category: NodeDefinition['category']): NodeTy
 
 // Get all categories
 export function getCategories(): NodeDefinition['category'][] {
-  return ['input', 'selection', 'preset', 'math', 'effect', 'color', 'position', 'bundle', 'output'];
+  return ['input', 'selection', 'math', 'effect', 'color', 'position', 'bundle', 'output'];
 }

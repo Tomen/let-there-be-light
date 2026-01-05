@@ -47,7 +47,6 @@ describe('Layout', () => {
     renderLayout()
 
     expect(screen.getByRole('link', { name: /patch/i })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /presets/i })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /graphs/i })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /runtime/i })).toBeInTheDocument()
   })
@@ -79,7 +78,6 @@ describe('Layout', () => {
     renderLayout()
 
     expect(screen.getByRole('link', { name: /patch/i })).toHaveAttribute('href', '/patch')
-    expect(screen.getByRole('link', { name: /presets/i })).toHaveAttribute('href', '/presets')
     expect(screen.getByRole('link', { name: /graphs/i })).toHaveAttribute('href', '/graphs')
     expect(screen.getByRole('link', { name: /runtime/i })).toHaveAttribute('href', '/runtime')
   })

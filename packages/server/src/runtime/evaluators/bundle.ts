@@ -1,6 +1,6 @@
 import type { GraphNode, AttributeBundle } from '@let-there-be-light/shared';
 import type { EvaluatorContext, RuntimeValue, NodeEvaluator } from './types.js';
-import { bundle, asBundle, asScalar } from './types.js';
+import { bundle, asBundle, getScalarInput } from './types.js';
 
 /**
  * MergeBundle node - merge two bundles (override takes precedence)
@@ -42,7 +42,7 @@ export const evaluateScaleBundle: NodeEvaluator = (
   ctx: EvaluatorContext
 ): Record<string, RuntimeValue> => {
   const input = asBundle(ctx.getInput(node.id, 'bundle'), {});
-  const scale = asScalar(ctx.getInput(node.id, 'scale'), 1);
+  const scale = getScalarInput(node, ctx, 'scale', 1);
 
   const result: Partial<AttributeBundle> = {};
 
