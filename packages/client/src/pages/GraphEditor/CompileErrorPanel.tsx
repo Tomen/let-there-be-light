@@ -53,11 +53,11 @@ interface ErrorItemProps {
 
 function ErrorItem({ error, onFocus }: ErrorItemProps) {
   return (
-    <button
+    <div
       onClick={onFocus}
       className={cn(
-        'flex w-full items-start gap-2 p-2 text-left text-xs hover:bg-accent',
-        'border-b last:border-b-0'
+        'flex w-full items-start gap-2 p-2 text-left text-xs hover:bg-accent cursor-pointer',
+        'border-b last:border-b-0 select-text'
       )}
     >
       <AlertCircle className="mt-0.5 h-3 w-3 flex-shrink-0 text-destructive" />
@@ -68,6 +68,6 @@ function ErrorItem({ error, onFocus }: ErrorItemProps) {
           {error.port && ` • Port: ${error.port}`}
         </div>
       </div>
-    </button>
+    </div>
   )
 }

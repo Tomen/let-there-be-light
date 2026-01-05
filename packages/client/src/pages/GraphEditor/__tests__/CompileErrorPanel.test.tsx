@@ -92,8 +92,8 @@ describe('CompileErrorPanel', () => {
 
     render(<CompileErrorPanel result={result} onFocusNode={onFocusNode} />)
 
-    const errorButton = screen.getByRole('button')
-    fireEvent.click(errorButton)
+    const errorItem = screen.getByText('Missing input').closest('div[class*="cursor-pointer"]')!
+    fireEvent.click(errorItem)
 
     expect(onFocusNode).toHaveBeenCalledWith('node-1')
   })

@@ -250,6 +250,7 @@ export default function GraphEditorPage() {
                 onNodesChange={handleNodesChange}
                 onEdgesChange={handleEdgesChange}
                 onNodeSelect={setSelectedNodeId}
+                onParamChange={handleParamChange}
                 selectedNodeId={selectedNodeId}
               />
             </div>

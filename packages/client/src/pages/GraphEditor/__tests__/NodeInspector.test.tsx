@@ -8,6 +8,8 @@ import type { GraphNode } from '@let-there-be-light/shared'
 vi.mock('@/api', () => ({
   useFaders: () => ({ data: [], isLoading: false }),
   useButtons: () => ({ data: [], isLoading: false }),
+  useGroups: () => ({ data: [], isLoading: false }),
+  useFixtures: () => ({ data: [], isLoading: false }),
 }))
 
 function createWrapper() {

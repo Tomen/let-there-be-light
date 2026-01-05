@@ -11,6 +11,7 @@ import { NODE_DEFINITIONS } from '@let-there-be-light/shared';
 
 import {
   buildAdjacencyList,
+  buildReverseAdjacencyList,
   detectCycle,
   topologicalSort,
   hasConnection,
@@ -123,8 +124,14 @@ export function compileGraph(graph: Graph): CompileResult {
     }
   }
 
-  // 5. Validate required inputs are connected
+  // 5. Validate required inputs are connected (only for active nodes)
+  // Active nodes are those connected to an output (WriteAttributes)
+  const activeNodes = findActiveNodes(graph.nodes, graph.edges);
+
   for (const node of graph.nodes) {
+    // Skip validation for nodes not connected to any output
+    if (!activeNodes.has(node.id)) continue;
+
     const requiredInputs = getRequiredInputs(node.type);
 
     for (const inputPort of requiredInputs) {
@@ -139,8 +146,11 @@ export function compileGraph(graph: Graph): CompileResult {
     }
   }
 
-  // 6. Validate node parameters
+  // 6. Validate node parameters (only for active nodes)
   for (const node of graph.nodes) {
+    // Skip validation for nodes not connected to any output
+    if (!activeNodes.has(node.id)) continue;
+
     const validation = validateNodeParams(node);
     if (!validation.valid) {
       errors.push({
@@ -216,6 +226,41 @@ function emptyDependencies(): GraphDependencies {
     groupIds: [],
     fixtureIds: [],
   };
+}
+
+/**
+ * Find all nodes that are connected to output nodes (WriteAttributes).
+ * Only these nodes need to have their required inputs validated.
+ */
+function findActiveNodes(
+  nodes: GraphNode[],
+  edges: GraphEdge[]
+): Set<NodeId> {
+  const activeNodes = new Set<NodeId>();
+  const reverseAdj = buildReverseAdjacencyList(nodes, edges);
+
+  // Find all output nodes (WriteAttributes)
+  const outputNodes = nodes.filter((n) => n.type === 'WriteAttributes');
+
+  // BFS backwards from output nodes
+  const queue: NodeId[] = outputNodes.map((n) => n.id);
+
+  while (queue.length > 0) {
+    const nodeId = queue.shift()!;
+    if (activeNodes.has(nodeId)) continue;
+
+    activeNodes.add(nodeId);
+
+    // Add all nodes that feed into this node
+    const inputs = reverseAdj.get(nodeId) || [];
+    for (const inputNodeId of inputs) {
+      if (!activeNodes.has(inputNodeId)) {
+        queue.push(inputNodeId);
+      }
+    }
+  }
+
+  return activeNodes;
 }
 
 /**

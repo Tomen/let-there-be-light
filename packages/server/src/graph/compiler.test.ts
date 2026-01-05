@@ -281,7 +281,8 @@ describe('compileGraph', () => {
   });
 
   describe('parameter validation', () => {
-    it('should reject Fader without faderId', () => {
+    it('should skip validation for standalone nodes not connected to output', () => {
+      // Standalone Fader without faderId should pass - it's not connected to any output
       const graph = createGraph(
         'test',
         [createNode('fader1', 'Fader', {})],
@@ -290,12 +291,44 @@ describe('compileGraph', () => {
 
       const result = compileGraph(graph);
 
-      expect(result.ok).toBe(false);
-      expect(result.errors.some((e) => e.code === 'INVALID_PARAM')).toBe(true);
+      expect(result.ok).toBe(true);
+      expect(result.errors).toHaveLength(0);
     });
 
-    it('should reject invalid param types', () => {
-      // Use Fader with invalid faderId type (number instead of string)
+    it('should reject Fader without faderId when connected to output', () => {
+      // Create a chain: Fader -> Multiply -> MergeBundle -> WriteAttributes
+      const graph = createGraph(
+        'test',
+        [
+          createNode('fader1', 'Fader', {}), // Missing faderId
+          createNode('group1', 'SelectGroup', { groupId: 'all' }),
+          createNode('color1', 'ColorConstant', { color: { r: 1, g: 0, b: 0 } }),
+          createNode('scale1', 'ScaleColor'),
+          createNode('merge1', 'MergeBundle'),
+          createNode('write1', 'WriteAttributes'),
+        ],
+        [
+          // Fader -> ScaleColor (factor)
+          createEdge('fader1', 'value', 'scale1', 'factor'),
+          // ColorConstant -> ScaleColor (color)
+          createEdge('color1', 'color', 'scale1', 'color'),
+          // ScaleColor -> MergeBundle (color)
+          createEdge('scale1', 'result', 'merge1', 'color'),
+          // SelectGroup -> WriteAttributes (selection)
+          createEdge('group1', 'selection', 'write1', 'selection'),
+          // MergeBundle -> WriteAttributes (bundle)
+          createEdge('merge1', 'bundle', 'write1', 'bundle'),
+        ]
+      );
+
+      const result = compileGraph(graph);
+
+      expect(result.ok).toBe(false);
+      expect(result.errors.some((e) => e.code === 'INVALID_PARAM' && e.nodeId === 'fader1')).toBe(true);
+    });
+
+    it('should skip invalid param types for standalone nodes', () => {
+      // Standalone Fader with invalid faderId type should pass - not connected to output
       const graph = createGraph(
         'test',
         [createNode('fader1', 'Fader', { faderId: 123 })],
@@ -304,8 +337,7 @@ describe('compileGraph', () => {
 
       const result = compileGraph(graph);
 
-      expect(result.ok).toBe(false);
-      expect(result.errors.some((e) => e.code === 'INVALID_PARAM')).toBe(true);
+      expect(result.ok).toBe(true);
     });
   });
 

@@ -33,7 +33,7 @@ export function StatusBar() {
     >
       <div className="flex items-center gap-2">
         <Icon className="h-4 w-4 flex-shrink-0" />
-        <span className="text-sm">{displayMessage.message}</span>
+        <span className="text-sm select-text cursor-text">{displayMessage.message}</span>
       </div>
     </div>
   )

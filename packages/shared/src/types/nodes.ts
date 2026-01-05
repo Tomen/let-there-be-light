@@ -47,6 +47,11 @@ export type NodeType =
   | 'Time'
   | 'Fader'
   | 'Button'
+  // Constants
+  | 'Scalar'
+  | 'Bool'
+  | 'ColorConstant'
+  | 'PositionConstant'
   // Selection
   | 'SelectGroup'
   | 'SelectFixture'
@@ -65,12 +70,10 @@ export type NodeType =
   // Color ops
   | 'MixColor'
   | 'ScaleColor'
-  | 'ColorConstant'
   | 'ColorToBundle'
   // Position ops
   | 'OffsetPosition'
   | 'ScalePosition'
-  | 'PositionConstant'
   // Bundle ops
   | 'MergeBundle'
   | 'ScaleBundle'
@@ -80,7 +83,7 @@ export type NodeType =
 // Node definition (used by compiler and editor)
 export interface NodeDefinition {
   type: NodeType;
-  category: 'input' | 'selection' | 'math' | 'effect' | 'color' | 'position' | 'bundle' | 'output';
+  category: 'input' | 'constant' | 'selection' | 'math' | 'effect' | 'color' | 'position' | 'bundle' | 'output';
   label: string;
   inputs: Record<string, PortDefinition>;
   outputs: Record<string, PortDefinition>;
@@ -127,6 +130,61 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     params: {
       buttonId: { type: 'string', label: 'Button ID' },
     },
+  },
+
+  // ============================================
+  // Constant Nodes
+  // ============================================
+  Scalar: {
+    type: 'Scalar',
+    category: 'constant',
+    label: 'Scalar',
+    inputs: {
+      value: { type: 'Scalar', label: 'Value', default: 0, min: 0, max: 1 },
+    },
+    outputs: {
+      value: { type: 'Scalar', label: 'Value' },
+    },
+    params: {},
+  },
+  Bool: {
+    type: 'Bool',
+    category: 'constant',
+    label: 'Bool',
+    inputs: {
+      value: { type: 'Bool', label: 'Value', default: false },
+    },
+    outputs: {
+      value: { type: 'Bool', label: 'Value' },
+    },
+    params: {},
+  },
+  ColorConstant: {
+    type: 'ColorConstant',
+    category: 'constant',
+    label: 'Color',
+    inputs: {
+      r: { type: 'Scalar', label: 'Red', default: 1, min: 0, max: 1 },
+      g: { type: 'Scalar', label: 'Green', default: 1, min: 0, max: 1 },
+      b: { type: 'Scalar', label: 'Blue', default: 1, min: 0, max: 1 },
+    },
+    outputs: {
+      color: { type: 'Color', label: 'Color' },
+    },
+    params: {},
+  },
+  PositionConstant: {
+    type: 'PositionConstant',
+    category: 'constant',
+    label: 'Position',
+    inputs: {
+      pan: { type: 'Scalar', label: 'Pan', default: 0, min: -1, max: 1 },
+      tilt: { type: 'Scalar', label: 'Tilt', default: 0, min: -1, max: 1 },
+    },
+    outputs: {
+      position: { type: 'Position', label: 'Position' },
+    },
+    params: {},
   },
 
   // ============================================
@@ -332,20 +390,6 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     },
     params: {},
   },
-  ColorConstant: {
-    type: 'ColorConstant',
-    category: 'color',
-    label: 'Color',
-    inputs: {
-      r: { type: 'Scalar', label: 'Red', default: 1, min: 0, max: 1 },
-      g: { type: 'Scalar', label: 'Green', default: 1, min: 0, max: 1 },
-      b: { type: 'Scalar', label: 'Blue', default: 1, min: 0, max: 1 },
-    },
-    outputs: {
-      color: { type: 'Color', label: 'Color' },
-    },
-    params: {},
-  },
   ColorToBundle: {
     type: 'ColorToBundle',
     category: 'color',
@@ -386,19 +430,6 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
     },
     outputs: {
       result: { type: 'Position', label: 'Scaled' },
-    },
-    params: {},
-  },
-  PositionConstant: {
-    type: 'PositionConstant',
-    category: 'position',
-    label: 'Position',
-    inputs: {
-      pan: { type: 'Scalar', label: 'Pan', default: 0, min: -1, max: 1 },
-      tilt: { type: 'Scalar', label: 'Tilt', default: 0, min: -1, max: 1 },
-    },
-    outputs: {
-      position: { type: 'Position', label: 'Position' },
     },
     params: {},
   },
@@ -464,5 +495,5 @@ export function getNodesByCategory(category: NodeDefinition['category']): NodeTy
 
 // Get all categories
 export function getCategories(): NodeDefinition['category'][] {
-  return ['input', 'selection', 'math', 'effect', 'color', 'position', 'bundle', 'output'];
+  return ['input', 'constant', 'selection', 'math', 'effect', 'color', 'position', 'bundle', 'output'];
 }

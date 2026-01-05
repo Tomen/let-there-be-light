@@ -20,6 +20,7 @@ import { type NodeType, NODE_DEFINITIONS, type PortType } from '@let-there-be-li
 import type { GraphNode, GraphEdge } from '@let-there-be-light/shared'
 import { useInputs } from '@/api'
 import GraphNodeComponent from './nodes/GraphNodeComponent'
+import { GraphContext } from './GraphContext'
 
 interface GraphCanvasProps {
   nodes: GraphNode[]
@@ -27,6 +28,7 @@ interface GraphCanvasProps {
   onNodesChange: (nodes: GraphNode[]) => void
   onEdgesChange: (edges: GraphEdge[]) => void
   onNodeSelect: (nodeId: string | null) => void
+  onParamChange: (nodeId: string, paramName: string, value: unknown) => void
   selectedNodeId: string | null
 }
 
@@ -103,6 +105,7 @@ export function GraphCanvas({
   onNodesChange,
   onEdgesChange,
   onNodeSelect,
+  onParamChange,
   selectedNodeId,
 }: GraphCanvasProps) {
   // Fetch inputs for name lookup in node previews
@@ -114,6 +117,19 @@ export function GraphCanvas({
     }, {} as Record<string, string>),
     [inputs]
   )
+
+  // Compute connected inputs for context
+  const connectedInputs = useMemo(() => {
+    const set = new Set<string>()
+    edges.forEach((e) => set.add(`${e.to.nodeId}:${e.to.port}`))
+    return set
+  }, [edges])
+
+  // Context value for inline editing
+  const graphContextValue = useMemo(() => ({
+    onParamChange,
+    connectedInputs,
+  }), [onParamChange, connectedInputs])
 
   // Use ReactFlow's built-in state management
   const [rfNodes, setRfNodes, onRfNodesChange] = useNodesState([])
@@ -314,36 +330,38 @@ export function GraphCanvas({
   )
 
   return (
-    <div className="h-full w-full">
-      <ReactFlow
-        nodes={nodesWithSelection}
-        edges={rfEdges}
-        onNodesChange={handleNodesChange}
-        onEdgesChange={handleEdgesChange}
-        onConnect={handleConnect}
-        onNodeClick={handleNodeClick}
-        onPaneClick={handlePaneClick}
-        onDragOver={onDragOver}
-        onDrop={onDrop}
-        nodeTypes={nodeTypes}
-        fitView
-        snapToGrid
-        snapGrid={[15, 15]}
-        deleteKeyCode={['Backspace', 'Delete']}
-        defaultEdgeOptions={{
-          type: 'smoothstep',
-          animated: false,
-        }}
-      >
-        <Background variant={BackgroundVariant.Dots} gap={15} size={1} />
-        <Controls />
-        <MiniMap
-          nodeStrokeWidth={3}
-          zoomable
-          pannable
-          className="!bg-background"
-        />
-      </ReactFlow>
-    </div>
+    <GraphContext.Provider value={graphContextValue}>
+      <div className="h-full w-full">
+        <ReactFlow
+          nodes={nodesWithSelection}
+          edges={rfEdges}
+          onNodesChange={handleNodesChange}
+          onEdgesChange={handleEdgesChange}
+          onConnect={handleConnect}
+          onNodeClick={handleNodeClick}
+          onPaneClick={handlePaneClick}
+          onDragOver={onDragOver}
+          onDrop={onDrop}
+          nodeTypes={nodeTypes}
+          fitView
+          snapToGrid
+          snapGrid={[15, 15]}
+          deleteKeyCode={['Backspace', 'Delete']}
+          defaultEdgeOptions={{
+            type: 'smoothstep',
+            animated: false,
+          }}
+        >
+          <Background variant={BackgroundVariant.Dots} gap={15} size={1} />
+          <Controls />
+          <MiniMap
+            nodeStrokeWidth={3}
+            zoomable
+            pannable
+            className="!bg-background"
+          />
+        </ReactFlow>
+      </div>
+    </GraphContext.Provider>
   )
 }

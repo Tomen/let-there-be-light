@@ -6,6 +6,7 @@ interface NodePaletteProps {
 
 const categoryLabels: Record<string, string> = {
   input: 'Inputs',
+  constant: 'Constants',
   selection: 'Selection',
   math: 'Math',
   effect: 'Effects',

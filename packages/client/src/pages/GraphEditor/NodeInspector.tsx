@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { NODE_DEFINITIONS, type NodeType, type PortDefinition, isConnectableType, hasDefault } from '@let-there-be-light/shared'
 import type { GraphNode, GraphEdge } from '@let-there-be-light/shared'
 import { Label } from '@/components/ui/label'
@@ -10,8 +11,107 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useFaders, useButtons } from '@/api'
+import { useFaders, useButtons, useGroups, useFixtures } from '@/api'
 import { cn } from '@/lib/utils'
+
+// Scalar slider that only commits on release to avoid flickering
+function ScalarSlider({
+  id,
+  value,
+  min,
+  max,
+  step,
+  disabled,
+  onCommit,
+}: {
+  id: string
+  value: number
+  min: number
+  max: number
+  step: number
+  disabled?: boolean
+  onCommit: (value: number) => void
+}) {
+  const [localValue, setLocalValue] = useState(value)
+
+  // Sync local value when external value changes
+  useEffect(() => {
+    setLocalValue(value)
+  }, [value])
+
+  return (
+    <div className={cn('flex items-center gap-2', disabled && 'opacity-50')}>
+      <Slider
+        id={id}
+        min={min}
+        max={max}
+        step={step}
+        value={[localValue]}
+        onValueChange={([v]) => setLocalValue(v)}
+        onValueCommit={([v]) => onCommit(v)}
+        disabled={disabled}
+        className="flex-1"
+      />
+      <span className="w-12 text-right text-xs text-muted-foreground">
+        {localValue.toFixed(2)}
+      </span>
+    </div>
+  )
+}
+
+// Position slider that only commits on release
+function PositionSlider({
+  value,
+  disabled,
+  onCommit,
+}: {
+  value: { pan: number; tilt: number }
+  disabled?: boolean
+  onCommit: (value: { pan: number; tilt: number }) => void
+}) {
+  const [localValue, setLocalValue] = useState(value)
+
+  useEffect(() => {
+    setLocalValue(value)
+  }, [value])
+
+  return (
+    <div className={cn('space-y-2', disabled && 'opacity-50')}>
+      <div className="flex items-center gap-2">
+        <span className="w-8 text-xs text-muted-foreground">Pan</span>
+        <Slider
+          min={0}
+          max={1}
+          step={0.01}
+          value={[localValue.pan]}
+          onValueChange={([v]) => setLocalValue({ ...localValue, pan: v })}
+          onValueCommit={([v]) => onCommit({ ...localValue, pan: v })}
+          disabled={disabled}
+          className="flex-1"
+        />
+        <span className="w-10 text-right text-xs text-muted-foreground">
+          {localValue.pan.toFixed(2)}
+        </span>
+      </div>
+      <div className="flex items-center gap-2">
+        <span className="w-8 text-xs text-muted-foreground">Tilt</span>
+        <Slider
+          min={0}
+          max={1}
+          step={0.01}
+          value={[localValue.tilt]}
+          onValueChange={([v]) => setLocalValue({ ...localValue, tilt: v })}
+          onValueCommit={([v]) => onCommit({ ...localValue, tilt: v })}
+          disabled={disabled}
+          className="flex-1"
+        />
+        <span className="w-10 text-right text-xs text-muted-foreground">
+          {localValue.tilt.toFixed(2)}
+        </span>
+      </div>
+    </div>
+  )
+}
 
 interface NodeInspectorProps {
   node: GraphNode | null
@@ -73,21 +173,15 @@ function renderInputControl(
 
     if (hasRange) {
       return (
-        <div className={cn('flex items-center gap-2', isConnected && 'opacity-50')}>
-          <Slider
-            id={inputName}
-            min={inputDef.min}
-            max={inputDef.max}
-            step={(inputDef.max! - inputDef.min!) / 100}
-            value={[numValue]}
-            onValueChange={([v]) => onChange(inputName, v)}
-            disabled={isConnected}
-            className="flex-1"
-          />
-          <span className="w-12 text-right text-xs text-muted-foreground">
-            {numValue.toFixed(2)}
-          </span>
-        </div>
+        <ScalarSlider
+          id={inputName}
+          value={numValue}
+          min={inputDef.min!}
+          max={inputDef.max!}
+          step={(inputDef.max! - inputDef.min!) / 100}
+          disabled={isConnected}
+          onCommit={(v) => onChange(inputName, v)}
+        />
       )
     }
 
@@ -139,38 +233,11 @@ function renderInputControl(
     const posValue = getPositionValue(value, (inputDef.default as { pan: number; tilt: number }) ?? { pan: 0.5, tilt: 0.5 })
 
     return (
-      <div className={cn('space-y-2', isConnected && 'opacity-50')}>
-        <div className="flex items-center gap-2">
-          <span className="w-8 text-xs text-muted-foreground">Pan</span>
-          <Slider
-            min={0}
-            max={1}
-            step={0.01}
-            value={[posValue.pan]}
-            onValueChange={([v]) => onChange(inputName, { ...posValue, pan: v })}
-            disabled={isConnected}
-            className="flex-1"
-          />
-          <span className="w-10 text-right text-xs text-muted-foreground">
-            {posValue.pan.toFixed(2)}
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-8 text-xs text-muted-foreground">Tilt</span>
-          <Slider
-            min={0}
-            max={1}
-            step={0.01}
-            value={[posValue.tilt]}
-            onValueChange={([v]) => onChange(inputName, { ...posValue, tilt: v })}
-            disabled={isConnected}
-            className="flex-1"
-          />
-          <span className="w-10 text-right text-xs text-muted-foreground">
-            {posValue.tilt.toFixed(2)}
-          </span>
-        </div>
-      </div>
+      <PositionSlider
+        value={posValue}
+        disabled={isConnected}
+        onCommit={(v) => onChange(inputName, v)}
+      />
     )
   }
 
@@ -181,6 +248,8 @@ function renderInputControl(
 export function NodeInspector({ node, edges, onParamChange }: NodeInspectorProps) {
   const { data: faders = [] } = useFaders()
   const { data: buttons = [] } = useButtons()
+  const { data: groups = [] } = useGroups()
+  const { data: fixtures = [] } = useFixtures()
 
   if (!node) {
     return (
@@ -362,26 +431,80 @@ export function NodeInspector({ node, edges, onParamChange }: NodeInspectorProps
                   )
                 }
 
+                // Special handling for groupId
+                if (paramName === 'groupId') {
+                  return (
+                    <div key={paramName} className="space-y-1.5">
+                      <Label htmlFor={paramName} className="text-xs">{label}</Label>
+                      <Select
+                        value={String(value ?? '')}
+                        onValueChange={(v) => onParamChange(node.id, paramName, v)}
+                      >
+                        <SelectTrigger className="h-8 text-sm">
+                          <SelectValue placeholder="Select group" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {groups.length === 0 ? (
+                            <div className="p-2 text-xs text-muted-foreground">
+                              No groups configured
+                            </div>
+                          ) : (
+                            groups.map((group) => (
+                              <SelectItem key={group.id} value={group.id}>
+                                {group.name}
+                              </SelectItem>
+                            ))
+                          )}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )
+                }
+
+                // Special handling for fixtureId
+                if (paramName === 'fixtureId') {
+                  return (
+                    <div key={paramName} className="space-y-1.5">
+                      <Label htmlFor={paramName} className="text-xs">{label}</Label>
+                      <Select
+                        value={String(value ?? '')}
+                        onValueChange={(v) => onParamChange(node.id, paramName, v)}
+                      >
+                        <SelectTrigger className="h-8 text-sm">
+                          <SelectValue placeholder="Select fixture" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {fixtures.length === 0 ? (
+                            <div className="p-2 text-xs text-muted-foreground">
+                              No fixtures configured
+                            </div>
+                          ) : (
+                            fixtures.map((fixture) => (
+                              <SelectItem key={fixture.id} value={fixture.id}>
+                                {fixture.name}
+                              </SelectItem>
+                            ))
+                          )}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )
+                }
+
                 if (paramDef.type === 'number') {
                   const hasRange = paramDef.min !== undefined && paramDef.max !== undefined
                   return (
                     <div key={paramName} className="space-y-1.5">
                       <Label htmlFor={paramName} className="text-xs">{label}</Label>
                       {hasRange ? (
-                        <div className="flex items-center gap-2">
-                          <Slider
-                            id={paramName}
-                            min={paramDef.min}
-                            max={paramDef.max}
-                            step={(paramDef.max! - paramDef.min!) / 100}
-                            value={[Number(value) || paramDef.min!]}
-                            onValueChange={([v]) => onParamChange(node.id, paramName, v)}
-                            className="flex-1"
-                          />
-                          <span className="w-12 text-right text-xs text-muted-foreground">
-                            {(Number(value) || 0).toFixed(2)}
-                          </span>
-                        </div>
+                        <ScalarSlider
+                          id={paramName}
+                          value={Number(value) || paramDef.min!}
+                          min={paramDef.min!}
+                          max={paramDef.max!}
+                          step={(paramDef.max! - paramDef.min!) / 100}
+                          onCommit={(v) => onParamChange(node.id, paramName, v)}
+                        />
                       ) : (
                         <Input
                           id={paramName}

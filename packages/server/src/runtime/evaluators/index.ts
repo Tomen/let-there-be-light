@@ -6,6 +6,7 @@ export * from './types.js';
 
 // Import evaluators
 import { evaluateTime, evaluateFader, evaluateButton } from './inputs.js';
+import { evaluateScalar, evaluateBool } from './constants.js';
 import { evaluateSelectGroup, evaluateSelectFixture } from './selection.js';
 import { evaluateAdd, evaluateMultiply, evaluateClamp01, evaluateMapRange, evaluateSmooth } from './math.js';
 import { evaluateSineLFO, evaluateTriangleLFO, evaluateSawLFO, evaluateChase, evaluateFlash } from './effects.js';
@@ -24,6 +25,12 @@ export const NODE_EVALUATORS: Record<NodeType, NodeEvaluator> = {
   Time: evaluateTime,
   Fader: evaluateFader,
   Button: evaluateButton,
+
+  // Constants
+  Scalar: evaluateScalar,
+  Bool: evaluateBool,
+  ColorConstant: evaluateColorConstant,
+  PositionConstant: evaluatePositionConstant,
 
   // Selection
   SelectGroup: evaluateSelectGroup,
@@ -46,13 +53,11 @@ export const NODE_EVALUATORS: Record<NodeType, NodeEvaluator> = {
   // Color
   MixColor: evaluateMixColor,
   ScaleColor: evaluateScaleColor,
-  ColorConstant: evaluateColorConstant,
   ColorToBundle: evaluateColorToBundle,
 
   // Position
   OffsetPosition: evaluateOffsetPosition,
   ScalePosition: evaluateScalePosition,
-  PositionConstant: evaluatePositionConstant,
 
   // Bundle
   MergeBundle: evaluateMergeBundle,

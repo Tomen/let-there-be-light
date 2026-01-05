@@ -55,26 +55,69 @@ The file contains multiple shows spanning 2014-2025:
 
 ## File Structure Map
 
+### Region Overview (1MB chunks)
+
+```
+Offset Range        Type                  Description
+────────────────────────────────────────────────────────────────────
+0x0000000-0x0100000 mixed                 Header, show index, fixture refs
+0x0100000-0x0200000 mixed                 Show data, cue records
+0x0200000-0x0300000 mixed                 Presets, sequences
+0x0300000-0x0400000 sparse (71% zeros)    Unused/reserved slots
+0x0400000-0x0500000 sparse (77% zeros)    Unused/reserved slots
+0x0500000-0x0600000 sparse                Sparse data
+0x0600000-0x0700000 sparse                Sparse data
+0x0700000-0x0800000 mixed                 Effect/animation data
+0x0800000-0x0900000 mixed                 Effect/animation data
+0x0900000-0x0A00000 text/strings (32%)    Fixture library names
+0x0A00000-0x0B00000 text/strings          More fixture library
+0x0B00000-0x0C00000 binary                Color palettes, images
+0x0C00000-0x0D00000 mixed                 Patched fixtures start
+0x0D00000-0x0E00000 mixed                 Fixture ID:Name references
+0x0E00000-0x1000000 mixed                 Additional fixture data
+0x1000000-0x3000000 mixed                 Cues, executors, macros
+0x3000000-0x30B1600 mixed                 Event logs, end of file
+```
+
+### Detailed Structure
+
 ```
 Offset Range        Content
 ─────────────────────────────────────────────────────
-0x00000000-0x00002000   Header, version info
-0x00002000-0x00002800   Show index (names, offsets, metadata)
-0x00002550             "hillsong_september14" show name
-0x00002620             "C:/ProgramData/MA Lighting..." path
+0x00000000-0x00000008   Magic header "MA DATA\0"
+0x00000008-0x0000000C   Version marker (413c 0903 = 3.9.60)
+0x00000090-0x00002500   Show index entries (60+ shows)
+0x00002500-0x00002600   Active show configuration
+  └─ 0x00002550         Active show name "hillsong_september14"
+  └─ 0x00002620         Show path "C:/ProgramData/MA Lighting..."
 0x000027d0             Fixture index → type mapping table
 0x00007f00-0x00008500   Patch records (64 00 18 00 header)
-0x00008a0a             "MA_FOHSWITCH" node
 0x00008abf             Port 1-13 DMX output config
 0x00008cea             Group01-Group06 (empty slots)
-0x00009000-0x00050000   Fixture type instances
-0x00050000-0x00500000   Show-specific data (cues, effects, macros)
-0x00970000-0x00A00000   Fixture type library (channel definitions)
-0x00A00000-0x00D00000   More fixture types, presets
-0x00c00c89             3-channel address table
-0x00D00000-0x02000000   User groups, sequences, executors
-0x02000000+             Additional data, backups
+0x00009000-0x00050000   Fixture type instances (12 types)
+0x000B4500-0x000B5000   Color gradient palette (shared)
+0x00970000-0x00A00000   Fixture type library (276 manufacturer types)
+0x00BC0000-0x00BD0000   Patched fixture instances (named fixtures)
+  └─ "Spot MH5 Stage 1-10", "Par Niesche 1-10", etc.
+0x00C00C89             3-channel address table
+0x00D6F000-0x00D70000   Fixture ID:Name references
+  └─ "112: Spot MH5 Stage 2", "114: Spot MH5 Stage 4"
+  └─ "211: Wash Stage 1", "212: Wash Stage 2"
+0x030B1600             End of file
 ```
+
+### Show Index Pointer Analysis
+
+The show index entries have "offset" fields that point to shared color palette data, NOT to show-specific data sections:
+
+| Show | Pointer | Points To |
+|------|---------|-----------|
+| basic april 2022 | 0x0B4542 | Color gradient |
+| tommys version | 0x0B487D | Color gradient |
+| 2025-05 | 0x0B49A3 | Color gradient |
+| 2025-07 | 0x0B49E9 | Color gradient |
+
+**Key Insight**: Shows share common data structures. Individual show configurations are likely stored as overlays/modifications to a base configuration, not as separate complete data sets.
 
 ## Show Index Structure (0x2000)
 
@@ -445,6 +488,59 @@ Data appears to be 4-byte aligned.
    - Universe 1: 1-channel fixtures → `DMX = index`
    - Universe 3: 3-channel fixtures → `DMX = (index - 1) * 3 + 1`
 
+## Show Comparison Analysis
+
+### Comparing "tommys version" vs "2025-05"
+
+These two shows reportedly have different patch configurations. Analysis findings:
+
+| Property | tommys version | 2025-05 |
+|----------|----------------|---------|
+| Name offset | 0x22D0 | 0x238D |
+| Size field | 47,249 bytes | 28,751 bytes |
+| Pointer field | 0x0B487D | 0x0B49A3 |
+| Name length | 30 chars | 23 chars |
+
+### Patched Fixture Regions
+
+Two distinct regions contain fixture name references:
+
+**Region 1: 0xBC0000 (Patched Instances)**
+- Contains named fixtures: "Spot MH5 Stage 10", "Par Niesche 1", etc.
+- Record spacing: ~737-1380 bytes
+- This is the PRIMARY patch data region
+
+**Region 2: 0xD6F000 (Fixture ID References)**
+- Contains ID:Name format: "112: Spot MH5 Stage 2", "211: Wash Stage 1"
+- Different structure with version info ("5.0.1", etc.)
+- Purpose: Likely group/selection references, not patch data
+
+### Fixture ID Numbering
+
+Fixture IDs follow a pattern:
+- 111-119: Spot fixtures
+- 211-219: Wash fixtures
+
+This suggests fixture type categories are encoded in the ID numbering.
+
+### Key Finding
+
+The GMA2 file format appears to store ONE active show with all shows sharing:
+- Common fixture library (0x970000+)
+- Common patched fixtures (0xBC0000+)
+- Common color palettes (0x0B4500+)
+
+Individual show "versions" may only differ in:
+- Cue lists
+- Executor assignments
+- Effect parameters
+- Active preset selections
+
+**Implication**: To extract different patches for "tommys version" vs "2025-05", we may need to:
+1. Load each show in GrandMA2
+2. Export from the console when that show is active
+3. Or find the show-specific overlay data that modifies the base patch
+
 ## Future Investigation
 
 1. **Find Universe 1 patch records** - different format from U3?
@@ -453,3 +549,4 @@ Data appears to be 4-byte aligned.
 4. **Build complete fixture → DMX address mapping**
 5. **Extract group → fixture membership from IDs**
 6. **Export to YAML format for Let There Be Light**
+7. **Investigate show-specific overlay storage** - how do different shows modify the base patch?

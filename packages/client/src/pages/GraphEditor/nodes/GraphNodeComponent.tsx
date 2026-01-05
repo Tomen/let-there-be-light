@@ -1,7 +1,9 @@
 import { memo } from 'react'
 import { Handle, Position, type NodeProps, type Node } from '@xyflow/react'
-import { NODE_DEFINITIONS, type NodeType, type PortType } from '@let-there-be-light/shared'
+import { NODE_DEFINITIONS, hasDefault, type NodeType, type PortType } from '@let-there-be-light/shared'
 import { cn } from '@/lib/utils'
+import { useGraphContext } from '../GraphContext'
+import { EditableValue } from './EditableValue'
 
 interface GraphNodeData {
   type: NodeType
@@ -25,6 +27,7 @@ const portColors: Record<PortType, string> = {
 // Category colors for node headers
 const categoryColors: Record<string, string> = {
   input: 'bg-green-600',
+  constant: 'bg-teal-600',
   selection: 'bg-cyan-600',
   preset: 'bg-orange-600',
   math: 'bg-blue-600',
@@ -35,7 +38,8 @@ const categoryColors: Record<string, string> = {
   output: 'bg-red-600',
 }
 
-function GraphNodeComponent({ data, selected }: GraphNodeProps) {
+function GraphNodeComponent({ id, data, selected }: GraphNodeProps) {
+  const { connectedInputs } = useGraphContext()
   const def = NODE_DEFINITIONS[data.type]
   if (!def) {
     return (
@@ -48,6 +52,9 @@ function GraphNodeComponent({ data, selected }: GraphNodeProps) {
   const inputs = Object.entries(def.inputs)
   const outputs = Object.entries(def.outputs)
   const maxPorts = Math.max(inputs.length, outputs.length, 1)
+
+  // Check if an input is connected
+  const isConnected = (inputName: string) => connectedInputs.has(`${id}:${inputName}`)
 
   return (
     <div
@@ -93,8 +100,16 @@ function GraphNodeComponent({ data, selected }: GraphNodeProps) {
                       transform: 'translateY(-50%)',
                     }}
                   />
-                  <span className="pl-2 text-[10px] text-muted-foreground">
+                  <span className="flex items-center gap-1 pl-2 text-[10px] text-muted-foreground">
                     {input[1].label || input[0]}
+                    {hasDefault(input[1]) && !isConnected(input[0]) && (
+                      <EditableValue
+                        nodeId={id}
+                        inputName={input[0]}
+                        inputDef={input[1]}
+                        value={data.params[input[0]] ?? input[1].default}
+                      />
+                    )}
                   </span>
                 </>
               ) : (
