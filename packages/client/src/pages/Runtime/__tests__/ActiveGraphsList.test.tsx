@@ -294,7 +294,7 @@ describe('ActiveGraphsList', () => {
       expect(screen.getByText('No fixtures selected')).toBeInTheDocument()
     })
 
-    it('merges multiple writes for same fixture using highest priority', () => {
+    it('shows each WriteAttributes node separately with its priority', () => {
       const instances: InstanceStatus[] = [
         {
           id: 'graph-1',
@@ -323,9 +323,11 @@ describe('ActiveGraphsList', () => {
 
       render(<ActiveGraphsList />)
 
-      // Should show the higher priority value (100%)
+      // Each WriteAttributes node shows separately with its own values
+      expect(screen.getByText('50%')).toBeInTheDocument()
       expect(screen.getByText('100%')).toBeInTheDocument()
-      expect(screen.queryByText('50%')).not.toBeInTheDocument()
+      expect(screen.getByText('Priority: 0')).toBeInTheDocument()
+      expect(screen.getByText('Priority: 10')).toBeInTheDocument()
     })
   })
 })

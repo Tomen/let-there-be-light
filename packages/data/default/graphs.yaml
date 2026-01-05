@@ -25,7 +25,30 @@
         groupIds:
           - ecfebe8a-a4ba-4b7f-ab67-35d573dede44
           - 165f5a82-5944-42d7-a039-e2e8e4ab90bc
+    - id: SelectGroup-1767580368900
+      type: SelectGroup
+      position:
+        x: 1020
+        'y': 555
+      params:
+        groupIds:
           - 7bdd1085-b9a1-4c1c-b9d4-96addeda17de
+    - id: ColorConstant-1767580377361
+      type: ColorConstant
+      position:
+        x: 1035
+        'y': 705
+      params:
+        r: 0.011764705882352941
+        g: 0.6901960784313725
+        b: 0.054901960784313725
+    - id: WriteAttributes-1767580386740
+      type: WriteAttributes
+      position:
+        x: 1290
+        'y': 570
+      params:
+        priority: 50
   edges:
     - id: xy-edge__SelectGroup-1767579939326selection-WriteAttributes-1767579930787selection
       from:
@@ -41,8 +64,22 @@
       to:
         nodeId: WriteAttributes-1767579930787
         port: bundle
+    - id: xy-edge__SelectGroup-1767580368900selection-WriteAttributes-1767580386740selection
+      from:
+        nodeId: SelectGroup-1767580368900
+        port: selection
+      to:
+        nodeId: WriteAttributes-1767580386740
+        port: selection
+    - id: xy-edge__ColorConstant-1767580377361color-WriteAttributes-1767580386740bundle
+      from:
+        nodeId: ColorConstant-1767580377361
+        port: color
+      to:
+        nodeId: WriteAttributes-1767580386740
+        port: bundle
   id: 1c15d2bf-eba7-459b-8618-6815a8234340
-  revision: 9
+  revision: 20
 - name: Blinkeblinke
   nodes:
     - id: Time-1767580025169
