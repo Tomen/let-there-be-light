@@ -9,7 +9,7 @@ export type PortType =
   | 'Trigger';  // Edge-triggered event (button press)
 
 // Parameter types for node configuration
-export type ParamType = 'string' | 'number' | 'boolean';
+export type ParamType = 'string' | 'number' | 'boolean' | 'string[]';
 
 // Parameter definition
 export interface ParamDefinition {
@@ -193,25 +193,25 @@ export const NODE_DEFINITIONS: Record<NodeType, NodeDefinition> = {
   SelectGroup: {
     type: 'SelectGroup',
     category: 'selection',
-    label: 'Select Group',
+    label: 'Select Groups',
     inputs: {},
     outputs: {
       selection: { type: 'Selection', label: 'Fixtures' },
     },
     params: {
-      groupId: { type: 'string', label: 'Group ID' },
+      groupIds: { type: 'string[]', label: 'Groups' },
     },
   },
   SelectFixture: {
     type: 'SelectFixture',
     category: 'selection',
-    label: 'Select Fixture',
+    label: 'Select Fixtures',
     inputs: {},
     outputs: {
-      selection: { type: 'Selection', label: 'Fixture' },
+      selection: { type: 'Selection', label: 'Fixtures' },
     },
     params: {
-      fixtureId: { type: 'string', label: 'Fixture ID' },
+      fixtureIds: { type: 'string[]', label: 'Fixtures' },
     },
   },
 

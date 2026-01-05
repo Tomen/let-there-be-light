@@ -1,4 +1,4 @@
-import type { Graph, GraphNode, AttributeBundle, NodeId, NodeType } from '@let-there-be-light/shared';
+import type { Graph, GraphNode, AttributeBundle, NodeId, NodeType, WriteOutputInfo } from '@let-there-be-light/shared';
 import { InputState } from './input-state.js';
 import { NODE_EVALUATORS, getWriteOutput, type RuntimeValue, type EvaluatorContext } from './evaluators/index.js';
 import { compileGraph, getCompiledGraph, type CompiledGraph } from '../graph/index.js';
@@ -39,6 +39,7 @@ export class RuntimeEngine {
   private instances = new Map<string, GraphInstance>();
   private inputs = new InputState();
   private listeners: FrameListener[] = [];
+  private writeOutputs = new Map<string, WriteOutputInfo[]>();
 
   private running = false;
   private tickInterval: ReturnType<typeof setInterval> | null = null;
@@ -140,6 +141,7 @@ export class RuntimeEngine {
    */
   unloadGraph(graphId: string): void {
     this.instances.delete(graphId);
+    this.writeOutputs.delete(graphId);
   }
 
   /**
@@ -164,6 +166,7 @@ export class RuntimeEngine {
    */
   unloadAllGraphs(): void {
     this.instances.clear();
+    this.writeOutputs.clear();
     console.log('All graphs unloaded');
   }
 
@@ -210,14 +213,19 @@ export class RuntimeEngine {
 
     // Collect all write outputs
     const writes: Array<{
+      nodeId: string;
       selection: Set<string>;
       bundle: Partial<AttributeBundle>;
       priority: number;
     }> = [];
 
-    // Evaluate each enabled graph
+    // Evaluate each graph
     for (const instance of this.instances.values()) {
-      if (!instance.enabled) continue;
+      if (!instance.enabled) {
+        // Clear write outputs for disabled graphs
+        this.writeOutputs.set(instance.graph.id, []);
+        continue;
+      }
 
       const instanceWrites = this.evaluateGraph(instance, time, deltaTime);
       writes.push(...instanceWrites);
@@ -254,6 +262,7 @@ export class RuntimeEngine {
     time: number,
     deltaTime: number
   ): Array<{
+    nodeId: string;
     selection: Set<string>;
     bundle: Partial<AttributeBundle>;
     priority: number;
@@ -313,6 +322,7 @@ export class RuntimeEngine {
 
     // Collect WriteAttributes outputs
     const writes: Array<{
+      nodeId: string;
       selection: Set<string>;
       bundle: Partial<AttributeBundle>;
       priority: number;
@@ -322,10 +332,21 @@ export class RuntimeEngine {
       if (node.type === 'WriteAttributes') {
         const writeOutput = getWriteOutput(node, ctx);
         if (writeOutput.selection.size > 0) {
-          writes.push(writeOutput);
+          writes.push({
+            nodeId: node.id,
+            ...writeOutput,
+          });
         }
       }
     }
+
+    // Store write outputs for status reporting
+    this.writeOutputs.set(graph.id, writes.map((w) => ({
+      nodeId: w.nodeId,
+      selection: [...w.selection],
+      bundle: w.bundle,
+      priority: w.priority,
+    })));
 
     return writes;
   }
@@ -335,6 +356,7 @@ export class RuntimeEngine {
    */
   private mergeWrites(
     writes: Array<{
+      nodeId: string;
       selection: Set<string>;
       bundle: Partial<AttributeBundle>;
       priority: number;
@@ -398,6 +420,21 @@ export class RuntimeEngine {
       loadedGraphs: this.instances.size,
       enabledGraphs: enabledCount,
     };
+  }
+
+  /**
+   * Get WriteAttributes outputs for a graph
+   */
+  getWriteOutputs(graphId: string): WriteOutputInfo[] {
+    return this.writeOutputs.get(graphId) ?? [];
+  }
+
+  /**
+   * Check if a graph instance is enabled
+   */
+  isGraphEnabled(graphId: string): boolean {
+    const instance = this.instances.get(graphId);
+    return instance?.enabled ?? false;
   }
 }
 

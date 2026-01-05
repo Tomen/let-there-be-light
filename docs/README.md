@@ -15,6 +15,8 @@ A graph-based lighting control system with Art-Net output.
 ### Guides
 - [Getting Started](./guides/getting-started.md) - Quick start guide
 - [Creating Graphs](./guides/creating-graphs.md) - How to build effect graphs
+- [Graph Editor](./guides/graph-editor.md) - Visual graph editor UI guide
+- [Graph Compiler & Runtime](./guides/graph-compiler.md) - Compilation and evaluation details
 
 ### Packages
 - [@let-there-be-light/shared](./packages/shared.md) - Shared TypeScript types

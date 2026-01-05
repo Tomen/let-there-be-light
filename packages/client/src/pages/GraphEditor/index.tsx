@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button'
 import { ArrowLeft, Play, Save } from 'lucide-react'
 import { NodePalette } from './NodePalette'
 import { GraphCanvas } from './GraphCanvas'
-import { NodeInspector } from './NodeInspector'
 import { CompileErrorPanel } from './CompileErrorPanel'
 import { showInfo, showSuccess, showError } from '@/stores/status'
 
@@ -22,9 +21,12 @@ export default function GraphEditorPage() {
   // Local state for editing
   const [localNodes, setLocalNodes] = useState<GraphNode[]>([])
   const [localEdges, setLocalEdges] = useState<GraphEdge[]>([])
+  const [localName, setLocalName] = useState('')
+  const [isEditingName, setIsEditingName] = useState(false)
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
   const [compileResult, setCompileResult] = useState<CompileResult | null>(null)
   const [isDirty, setIsDirty] = useState(false)
+  const nameInputRef = useRef<HTMLInputElement>(null)
 
   // Debounce save
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -34,9 +36,18 @@ export default function GraphEditorPage() {
     if (graph) {
       setLocalNodes(graph.nodes)
       setLocalEdges(graph.edges)
+      setLocalName(graph.name)
       setIsDirty(false)
     }
   }, [graph])
+
+  // Focus name input when editing starts
+  useEffect(() => {
+    if (isEditingName && nameInputRef.current) {
+      nameInputRef.current.focus()
+      nameInputRef.current.select()
+    }
+  }, [isEditingName])
 
   // Handle nodes change
   const handleNodesChange = useCallback((nodes: GraphNode[]) => {
@@ -103,7 +114,7 @@ export default function GraphEditorPage() {
       await updateGraph.mutateAsync({
         id: graphId,
         data: {
-          name: graph.name,
+          name: localName,
           nodes: localNodes,
           edges: localEdges,
         },
@@ -116,7 +127,7 @@ export default function GraphEditorPage() {
       const message = err instanceof Error ? err.message : 'Failed to save graph'
       showError(message)
     }
-  }, [graph, graphId, localNodes, localEdges, updateGraph, refetch])
+  }, [graph, graphId, localName, localNodes, localEdges, updateGraph, refetch])
 
   // Auto-save with debounce
   useEffect(() => {
@@ -135,7 +146,7 @@ export default function GraphEditorPage() {
         clearTimeout(saveTimeoutRef.current)
       }
     }
-  }, [isDirty, localNodes, localEdges, handleSave])
+  }, [isDirty, localName, localNodes, localEdges, handleSave])
 
   // Compile the graph
   const handleCompile = useCallback(async () => {
@@ -171,9 +182,6 @@ export default function GraphEditorPage() {
     }
   }, [graphId, isDirty, handleSave, compileGraph])
 
-  // Get selected node
-  const selectedNode = localNodes.find((n) => n.id === selectedNodeId) ?? null
-
   if (isLoading) {
     return (
       <div className="flex h-[80vh] items-center justify-center">
@@ -208,7 +216,35 @@ export default function GraphEditorPage() {
               <ArrowLeft className="h-4 w-4" />
             </Button>
             <div>
-              <h1 className="text-lg font-semibold">{graph.name}</h1>
+              {isEditingName ? (
+                <input
+                  ref={nameInputRef}
+                  type="text"
+                  value={localName}
+                  onChange={(e) => {
+                    setLocalName(e.target.value)
+                    setIsDirty(true)
+                  }}
+                  onBlur={() => setIsEditingName(false)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      setIsEditingName(false)
+                    } else if (e.key === 'Escape') {
+                      setLocalName(graph.name)
+                      setIsEditingName(false)
+                    }
+                  }}
+                  className="h-7 rounded border border-blue-500 bg-background px-2 text-lg font-semibold outline-none"
+                />
+              ) : (
+                <h1
+                  className="cursor-pointer rounded px-2 text-lg font-semibold hover:bg-muted"
+                  onClick={() => setIsEditingName(true)}
+                  title="Click to edit name"
+                >
+                  {localName}
+                </h1>
+              )}
               <p className="text-xs text-muted-foreground">
                 {localNodes.length} nodes, {localEdges.length} edges
                 {isDirty && ' • Unsaved changes'}
@@ -259,13 +295,6 @@ export default function GraphEditorPage() {
               onFocusNode={handleFocusNode}
             />
           </div>
-
-          {/* Node Inspector */}
-          <NodeInspector
-            node={selectedNode}
-            edges={localEdges}
-            onParamChange={handleParamChange}
-          />
         </div>
       </div>
     </ReactFlowProvider>

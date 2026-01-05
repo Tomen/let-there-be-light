@@ -2,6 +2,11 @@ import { useState, useCallback, useRef, useEffect } from 'react'
 import type { PortDefinition } from '@let-there-be-light/shared'
 import { useGraphContext } from '../GraphContext'
 import { cn } from '@/lib/utils'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 
 interface EditableValueProps {
   nodeId: string
@@ -35,9 +40,23 @@ export function EditableValue({ nodeId, inputName, inputDef, value }: EditableVa
         />
       )
     case 'Color':
-      return <ColorSwatch value={value as { r: number; g: number; b: number } | undefined} />
+      return (
+        <ColorValue
+          nodeId={nodeId}
+          inputName={inputName}
+          value={value as { r: number; g: number; b: number } | undefined}
+          onCommit={onParamChange}
+        />
+      )
     case 'Position':
-      return <PositionDisplay value={value as { pan: number; tilt: number } | undefined} />
+      return (
+        <PositionValue
+          nodeId={nodeId}
+          inputName={inputName}
+          value={value as { pan: number; tilt: number } | undefined}
+          onCommit={onParamChange}
+        />
+      )
     default:
       return null
   }
@@ -172,41 +191,222 @@ function BoolValue({ nodeId, inputName, value, onCommit }: BoolValueProps) {
 }
 
 // ============================================
-// Color Swatch (display only on node)
+// Color Value (click to edit with popover)
 // ============================================
 
-interface ColorSwatchProps {
+interface ColorValueProps {
+  nodeId: string
+  inputName: string
   value: { r: number; g: number; b: number } | undefined
+  onCommit: (nodeId: string, paramName: string, value: unknown) => void
 }
 
-function ColorSwatch({ value }: ColorSwatchProps) {
+function ColorValue({ nodeId, inputName, value, onCommit }: ColorValueProps) {
+  const [isOpen, setIsOpen] = useState(false)
   const color = value ?? { r: 1, g: 1, b: 1 }
   const r = Math.round(color.r * 255)
   const g = Math.round(color.g * 255)
   const b = Math.round(color.b * 255)
 
+  // Convert RGB to hex for the color input
+  const toHex = (c: { r: number; g: number; b: number }) => {
+    const rHex = Math.round(c.r * 255).toString(16).padStart(2, '0')
+    const gHex = Math.round(c.g * 255).toString(16).padStart(2, '0')
+    const bHex = Math.round(c.b * 255).toString(16).padStart(2, '0')
+    return `#${rHex}${gHex}${bHex}`
+  }
+
+  // Convert hex to normalized RGB
+  const fromHex = (hex: string) => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+    if (result) {
+      return {
+        r: parseInt(result[1], 16) / 255,
+        g: parseInt(result[2], 16) / 255,
+        b: parseInt(result[3], 16) / 255,
+      }
+    }
+    return color
+  }
+
+  const handleColorChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newColor = fromHex(e.target.value)
+      onCommit(nodeId, inputName, newColor)
+    },
+    [nodeId, inputName, onCommit, color]
+  )
+
+  const handleComponentChange = useCallback(
+    (component: 'r' | 'g' | 'b', newValue: number) => {
+      const clamped = Math.max(0, Math.min(1, newValue))
+      onCommit(nodeId, inputName, { ...color, [component]: clamped })
+    },
+    [nodeId, inputName, color, onCommit]
+  )
+
   return (
-    <span
-      className="inline-block h-3 w-3 rounded border border-white/50"
-      style={{ backgroundColor: `rgb(${r}, ${g}, ${b})` }}
-    />
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
+      <PopoverTrigger asChild>
+        <span
+          onClick={(e) => e.stopPropagation()}
+          className="inline-block h-3 w-3 cursor-pointer rounded border border-white/50 hover:ring-1 hover:ring-blue-400"
+          style={{ backgroundColor: `rgb(${r}, ${g}, ${b})` }}
+        />
+      </PopoverTrigger>
+      <PopoverContent
+        className="w-48 p-2"
+        align="start"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="space-y-2">
+          {/* Color picker */}
+          <input
+            type="color"
+            value={toHex(color)}
+            onChange={handleColorChange}
+            className="h-8 w-full cursor-pointer rounded border-0"
+          />
+          {/* RGB sliders */}
+          <div className="space-y-1 text-xs">
+            <div className="flex items-center gap-2">
+              <span className="w-6 text-red-400">R</span>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={color.r}
+                onChange={(e) => handleComponentChange('r', parseFloat(e.target.value))}
+                className="flex-1"
+              />
+              <span className="w-8 text-right text-muted-foreground">
+                {(color.r * 255).toFixed(0)}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-6 text-green-400">G</span>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={color.g}
+                onChange={(e) => handleComponentChange('g', parseFloat(e.target.value))}
+                className="flex-1"
+              />
+              <span className="w-8 text-right text-muted-foreground">
+                {(color.g * 255).toFixed(0)}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-6 text-blue-400">B</span>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={color.b}
+                onChange={(e) => handleComponentChange('b', parseFloat(e.target.value))}
+                className="flex-1"
+              />
+              <span className="w-8 text-right text-muted-foreground">
+                {(color.b * 255).toFixed(0)}
+              </span>
+            </div>
+          </div>
+        </div>
+      </PopoverContent>
+    </Popover>
   )
 }
 
 // ============================================
-// Position Display (display only on node)
+// Position Value (click to edit with popover)
 // ============================================
 
-interface PositionDisplayProps {
+interface PositionValueProps {
+  nodeId: string
+  inputName: string
   value: { pan: number; tilt: number } | undefined
+  onCommit: (nodeId: string, paramName: string, value: unknown) => void
 }
 
-function PositionDisplay({ value }: PositionDisplayProps) {
+function PositionValue({ nodeId, inputName, value, onCommit }: PositionValueProps) {
+  const [isOpen, setIsOpen] = useState(false)
   const pos = value ?? { pan: 0, tilt: 0 }
 
+  const handleComponentChange = useCallback(
+    (component: 'pan' | 'tilt', newValue: number) => {
+      const clamped = Math.max(0, Math.min(1, newValue))
+      onCommit(nodeId, inputName, { ...pos, [component]: clamped })
+    },
+    [nodeId, inputName, pos, onCommit]
+  )
+
   return (
-    <span className="text-[9px] text-muted-foreground/70">
-      {pos.pan.toFixed(1)},{pos.tilt.toFixed(1)}
-    </span>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
+      <PopoverTrigger asChild>
+        <span
+          onClick={(e) => e.stopPropagation()}
+          className={cn(
+            'cursor-pointer rounded px-1 text-[9px]',
+            'bg-muted/50 text-muted-foreground/70 hover:bg-muted hover:text-foreground'
+          )}
+        >
+          {pos.pan.toFixed(2)},{pos.tilt.toFixed(2)}
+        </span>
+      </PopoverTrigger>
+      <PopoverContent
+        className="w-48 p-2"
+        align="start"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="space-y-2 text-xs">
+          <div className="flex items-center gap-2">
+            <span className="w-8 text-muted-foreground">Pan</span>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={pos.pan}
+              onChange={(e) => handleComponentChange('pan', parseFloat(e.target.value))}
+              className="flex-1"
+            />
+            <input
+              type="number"
+              min="0"
+              max="1"
+              step="0.01"
+              value={pos.pan.toFixed(2)}
+              onChange={(e) => handleComponentChange('pan', parseFloat(e.target.value))}
+              className="w-12 rounded border bg-background px-1 text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-8 text-muted-foreground">Tilt</span>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={pos.tilt}
+              onChange={(e) => handleComponentChange('tilt', parseFloat(e.target.value))}
+              className="flex-1"
+            />
+            <input
+              type="number"
+              min="0"
+              max="1"
+              step="0.01"
+              value={pos.tilt.toFixed(2)}
+              onChange={(e) => handleComponentChange('tilt', parseFloat(e.target.value))}
+              className="w-12 rounded border bg-background px-1 text-center [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+            />
+          </div>
+        </div>
+      </PopoverContent>
+    </Popover>
   )
 }

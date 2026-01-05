@@ -54,26 +54,30 @@ Reads button state.
 ## Selection Nodes
 
 ### SelectGroup
-Selects fixtures in a group.
+Selects fixtures from one or more groups.
 
 | Params | Type | Description |
 |--------|------|-------------|
-| groupId | string | Group ID |
+| groupIds | string[] | Array of group IDs |
 
 | Outputs | Type | Description |
 |---------|------|-------------|
-| selection | Selection | Fixtures in group |
+| selection | Selection | All fixtures from selected groups (merged) |
+
+**Note:** Multiple groups are merged into a single selection. Duplicate fixtures are automatically deduplicated.
 
 ### SelectFixture
-Selects a single fixture.
+Selects one or more fixtures directly.
 
 | Params | Type | Description |
 |--------|------|-------------|
-| fixtureId | string | Fixture ID |
+| fixtureIds | string[] | Array of fixture IDs |
 
 | Outputs | Type | Description |
 |---------|------|-------------|
-| selection | Selection | Single fixture |
+| selection | Selection | Selected fixtures |
+
+**Note:** Allows selecting multiple fixtures without creating a group.
 
 ---
 

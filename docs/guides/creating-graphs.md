@@ -69,7 +69,7 @@ A pulsing color effect on all fixtures.
       "id": "group",
       "type": "SelectGroup",
       "position": { "x": 300, "y": 300 },
-      "params": { "groupId": "all-wash" }
+      "params": { "groupIds": ["all-wash"] }
     },
     {
       "id": "output",
@@ -121,7 +121,7 @@ SelectGroup ──────────────────────�
     {
       "id": "group",
       "type": "SelectGroup",
-      "params": { "groupId": "all-wash" }
+      "params": { "groupIds": ["all-wash"] }
     },
     {
       "id": "output",
@@ -167,7 +167,7 @@ SelectGroup ──────────────────────�
     {
       "id": "group",
       "type": "SelectGroup",
-      "params": { "groupId": "all-wash" }
+      "params": { "groupIds": ["all-wash"] }
     },
     {
       "id": "output",

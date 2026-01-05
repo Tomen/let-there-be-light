@@ -18,7 +18,7 @@ import {
 import '@xyflow/react/dist/style.css'
 import { type NodeType, NODE_DEFINITIONS, type PortType } from '@let-there-be-light/shared'
 import type { GraphNode, GraphEdge } from '@let-there-be-light/shared'
-import { useInputs } from '@/api'
+import { useInputs, useGroups, useFixtures, useFaders, useButtons } from '@/api'
 import GraphNodeComponent from './nodes/GraphNodeComponent'
 import { GraphContext } from './GraphContext'
 
@@ -118,6 +118,12 @@ export function GraphCanvas({
     [inputs]
   )
 
+  // Fetch data for inline param dropdowns
+  const { data: groups = [] } = useGroups()
+  const { data: fixtures = [] } = useFixtures()
+  const { data: faders = [] } = useFaders()
+  const { data: buttons = [] } = useButtons()
+
   // Compute connected inputs for context
   const connectedInputs = useMemo(() => {
     const set = new Set<string>()
@@ -129,7 +135,11 @@ export function GraphCanvas({
   const graphContextValue = useMemo(() => ({
     onParamChange,
     connectedInputs,
-  }), [onParamChange, connectedInputs])
+    groups,
+    fixtures,
+    faders,
+    buttons,
+  }), [onParamChange, connectedInputs, groups, fixtures, faders, buttons])
 
   // Use ReactFlow's built-in state management
   const [rfNodes, setRfNodes, onRfNodesChange] = useNodesState([])
@@ -350,7 +360,10 @@ export function GraphCanvas({
           defaultEdgeOptions={{
             type: 'smoothstep',
             animated: false,
+            style: { strokeWidth: 2 },
           }}
+          edgesReconnectable
+          edgesFocusable
         >
           <Background variant={BackgroundVariant.Dots} gap={15} size={1} />
           <Controls />

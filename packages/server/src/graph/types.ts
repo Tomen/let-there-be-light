@@ -109,9 +109,10 @@ export function validateNodeParams(
     const value = node.params[paramName];
 
     // If param has no default and no value, it's required
+    // Note: string[] params (groupIds, fixtureIds) are optional - empty array is valid
     if (paramDef.default === undefined && value === undefined) {
-      // Only faderId, buttonId, groupId, fixtureId, presetId are truly required
-      if (['faderId', 'buttonId', 'groupId', 'fixtureId', 'presetId'].includes(paramName)) {
+      // Only single-value ID params are truly required
+      if (['faderId', 'buttonId', 'presetId'].includes(paramName)) {
         return { valid: false, error: `Missing required param: ${paramName}` };
       }
     }
@@ -126,6 +127,11 @@ export function validateNodeParams(
       }
       if (paramDef.type === 'boolean' && typeof value !== 'boolean') {
         return { valid: false, error: `Param ${paramName} must be a boolean` };
+      }
+      if (paramDef.type === 'string[]') {
+        if (!Array.isArray(value) || !value.every((v) => typeof v === 'string')) {
+          return { valid: false, error: `Param ${paramName} must be an array of strings` };
+        }
       }
 
       // Range check for numbers

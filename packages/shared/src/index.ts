@@ -49,6 +49,7 @@ export type {
   SetTickRateMessage,
   SetInstanceEnabledMessage,
   ClientMessage,
+  WriteOutputInfo,
   InstanceStatus,
   RuntimeStatusMessage,
   CompileResultMessage,

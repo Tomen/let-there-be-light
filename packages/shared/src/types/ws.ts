@@ -66,12 +66,24 @@ export type ClientMessage =
 // Server -> Client Messages
 // ============================================
 
+/**
+ * Information about a WriteAttributes node's output
+ */
+export interface WriteOutputInfo {
+  nodeId: string;
+  selection: string[]; // Fixture IDs
+  bundle: Partial<AttributeBundle>;
+  priority: number;
+}
+
 export interface InstanceStatus {
   id: string;
   graphId: GraphId;
   enabled: boolean;
   lastError?: string;
   errorCount?: number;
+  /** Current WriteAttributes outputs for this graph instance */
+  writes?: WriteOutputInfo[];
 }
 
 export interface RuntimeStatusMessage {

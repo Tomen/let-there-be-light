@@ -255,31 +255,48 @@ describe('validateNodeParams', () => {
     expect(result.error).toContain('buttonId');
   });
 
-  it('should require groupId for SelectGroup node', () => {
-    const node = createNode('sel1', 'SelectGroup', {});
+  it('should accept SelectGroup node with empty groupIds', () => {
+    const node = createNode('sel1', 'SelectGroup', { groupIds: [] });
 
     const result = validateNodeParams(node);
 
-    expect(result.valid).toBe(false);
-    expect(result.error).toContain('groupId');
+    expect(result.valid).toBe(true);
   });
 
-  it('should require fixtureId for SelectFixture node', () => {
-    const node = createNode('sel1', 'SelectFixture', {});
+  it('should accept SelectFixture node with empty fixtureIds', () => {
+    const node = createNode('sel1', 'SelectFixture', { fixtureIds: [] });
 
     const result = validateNodeParams(node);
 
-    expect(result.valid).toBe(false);
-    expect(result.error).toContain('fixtureId');
+    expect(result.valid).toBe(true);
   });
 
-  it('should require groupId for SelectGroup node', () => {
-    const node = createNode('group1', 'SelectGroup', {});
+  it('should accept SelectGroup node with groupIds array', () => {
+    const node = createNode('group1', 'SelectGroup', { groupIds: ['group1', 'group2'] });
+
+    const result = validateNodeParams(node);
+
+    expect(result.valid).toBe(true);
+  });
+
+  it('should reject SelectGroup node with invalid groupIds type', () => {
+    const node = createNode('group1', 'SelectGroup', { groupIds: 'not-an-array' });
 
     const result = validateNodeParams(node);
 
     expect(result.valid).toBe(false);
-    expect(result.error).toContain('groupId');
+    expect(result.error).toContain('groupIds');
+    expect(result.error).toContain('array of strings');
+  });
+
+  it('should reject SelectFixture node with invalid fixtureIds type', () => {
+    const node = createNode('fix1', 'SelectFixture', { fixtureIds: 123 });
+
+    const result = validateNodeParams(node);
+
+    expect(result.valid).toBe(false);
+    expect(result.error).toContain('fixtureIds');
+    expect(result.error).toContain('array of strings');
   });
 
   it('should validate param type is string', () => {

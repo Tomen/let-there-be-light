@@ -195,13 +195,19 @@ export function extractDependencies(graph: Graph): GraphDependencies {
         break;
 
       case 'SelectGroup':
-        if (node.params.groupId) {
+        // Support both new array format and old string format
+        if (Array.isArray(node.params.groupIds)) {
+          groupIds.push(...(node.params.groupIds as string[]));
+        } else if (node.params.groupId) {
           groupIds.push(node.params.groupId as string);
         }
         break;
 
       case 'SelectFixture':
-        if (node.params.fixtureId) {
+        // Support both new array format and old string format
+        if (Array.isArray(node.params.fixtureIds)) {
+          fixtureIds.push(...(node.params.fixtureIds as string[]));
+        } else if (node.params.fixtureId) {
           fixtureIds.push(node.params.fixtureId as string);
         }
         break;

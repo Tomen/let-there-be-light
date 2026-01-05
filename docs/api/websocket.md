@@ -116,11 +116,42 @@ Current runtime state. Sent on connect and when status changes.
       "id": "simple-pulse",
       "graphId": "simple-pulse",
       "enabled": true,
-      "lastError": null
+      "lastError": null,
+      "errorCount": 0,
+      "writes": [
+        {
+          "nodeId": "write-1",
+          "selection": ["front-left", "front-right"],
+          "bundle": {
+            "color": { "r": 1, "g": 0, "b": 0 }
+          },
+          "priority": 0
+        }
+      ]
     }
   ]
 }
 ```
+
+#### InstanceStatus Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | Instance identifier |
+| `graphId` | string | Graph ID this instance is running |
+| `enabled` | boolean | Whether the graph is active |
+| `lastError` | string? | Last error message if any |
+| `errorCount` | number? | Number of evaluation errors |
+| `writes` | WriteOutputInfo[]? | Current WriteAttributes outputs |
+
+#### WriteOutputInfo Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `nodeId` | string | ID of the WriteAttributes node |
+| `selection` | string[] | Fixture IDs being written to |
+| `bundle` | AttributeBundle | Attributes being written (intensity, color, pan, tilt, zoom) |
+| `priority` | number | Write priority (higher wins when merged) |
 
 ### compile/result
 Graph compilation result. Sent when a graph is updated.

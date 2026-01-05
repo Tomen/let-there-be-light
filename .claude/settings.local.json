@@ -43,7 +43,8 @@
       "Bash(git mv:*)",
       "Bash(gunzip:*)",
       "Bash(xxd:*)",
-      "Bash(npx tsx:*)"
+      "Bash(npx tsx:*)",
+      "Bash(npx vite build)"
     ]
   }
 }

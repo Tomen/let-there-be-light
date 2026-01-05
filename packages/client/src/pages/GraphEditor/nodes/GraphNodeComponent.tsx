@@ -1,9 +1,10 @@
 import { memo } from 'react'
 import { Handle, Position, type NodeProps, type Node } from '@xyflow/react'
-import { NODE_DEFINITIONS, hasDefault, type NodeType, type PortType } from '@let-there-be-light/shared'
+import { NODE_DEFINITIONS, hasDefault, type NodeType, type PortType, type ParamDefinition } from '@let-there-be-light/shared'
 import { cn } from '@/lib/utils'
 import { useGraphContext } from '../GraphContext'
 import { EditableValue } from './EditableValue'
+import { InlineParamEditor } from './InlineParamEditor'
 
 interface GraphNodeData {
   type: NodeType
@@ -142,39 +143,23 @@ function GraphNodeComponent({ id, data, selected }: GraphNodeProps) {
           )
         })}
 
-        {/* Show key param value preview */}
+        {/* Params section - inline editing */}
         {Object.keys(def.params).length > 0 && (
-          <div className="mt-1 border-t pt-1 text-center">
-            <span className="text-[9px] text-muted-foreground/70">
-              {getParamPreview(data.params, def.params, data.inputNames)}
-            </span>
+          <div className="border-t pt-1">
+            {Object.entries(def.params).map(([paramName, paramDef]) => (
+              <InlineParamEditor
+                key={paramName}
+                nodeId={id}
+                paramName={paramName}
+                paramDef={paramDef as ParamDefinition}
+                value={data.params[paramName]}
+              />
+            ))}
           </div>
         )}
       </div>
     </div>
   )
-}
-
-function getParamPreview(
-  params: Record<string, unknown>,
-  paramDefs: Record<string, { type: string; default?: unknown; label?: string }>,
-  inputNames?: Record<string, string>
-): string {
-  const entries = Object.entries(paramDefs).slice(0, 2)
-  return entries
-    .map(([key, def]) => {
-      const value = params[key] ?? def.default
-      // Show input name for faderId/buttonId
-      if ((key === 'faderId' || key === 'buttonId') && inputNames && typeof value === 'string') {
-        const name = inputNames[value]
-        return name ? name : String(value)
-      }
-      if (typeof value === 'number') {
-        return `${def.label || key}: ${value.toFixed(2)}`
-      }
-      return `${def.label || key}: ${value}`
-    })
-    .join(', ')
 }
 
 export default memo(GraphNodeComponent)

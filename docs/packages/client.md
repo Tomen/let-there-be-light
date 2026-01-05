@@ -299,6 +299,37 @@ Each port has a type that determines connection compatibility:
 - `Selection` - Fixture selection
 - `Trigger` - Edge-triggered event
 
+## Runtime View
+
+The Runtime page (`/runtime`) provides a live monitoring dashboard for the lighting system.
+
+### Components
+
+| Component | Description |
+|-----------|-------------|
+| `RuntimeStatus` | Connection status and tick rate indicator |
+| `ActiveGraphsList` | List of loaded graphs with WriteAttributes outputs |
+| `PreviewPanel` | Real-time fixture value preview |
+
+### Active Graphs List
+
+Shows each loaded graph with its current state:
+- **Enabled graphs**: Green indicator, shows WriteAttributes outputs
+- **Disabled graphs**: Muted indicator
+
+For each enabled graph, WriteAttributes outputs are displayed showing:
+- Fixture count being affected
+- Attributes being written (intensity, color, pan, tilt, zoom)
+- Priority value (if non-zero)
+
+Example display:
+```
+● Rainbow Effect
+  └ 4 fixtures, color
+  └ 2 fixtures, intensity, color (priority: 10)
+○ Chase Pattern (disabled)
+```
+
 ## Future Work
 
 - **Undo/Redo**: Graph editing history

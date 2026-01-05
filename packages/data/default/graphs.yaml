@@ -1,19 +1,5 @@
-- name: Test
+- name: Gratitude
   nodes:
-    - id: Fader-1767567304560
-      type: Fader
-      position:
-        x: -675
-        'y': 120
-      params:
-        faderId: A
-    - id: Button-1767570160498
-      type: Button
-      position:
-        x: -855
-        'y': 15
-      params:
-        buttonId: X
     - id: WriteAttributes-1767570178782
       type: WriteAttributes
       position:
@@ -24,78 +10,51 @@
     - id: SelectGroup-1767570184160
       type: SelectGroup
       position:
-        x: -150
-        'y': -300
+        x: -165
+        'y': -330
       params:
         groupId: front
-    - id: PositionConstant-1767570515996
-      type: PositionConstant
-      position:
-        x: -300
-        'y': 105
-      params:
-        pan: 0
-        tilt: 0
-    - id: Chase-1767570565692
-      type: Chase
-      position:
-        x: -345
-        'y': -285
-      params:
-        width: 1
-        speed: 1
-    - id: ColorToBundle-1767571323452
-      type: ColorToBundle
-      position:
-        x: -420
-        'y': -90
-      params: {}
+        groupIds:
+          - front
+          - back
+          - all-wash
     - id: ColorConstant-1767571342304
       type: ColorConstant
       position:
-        x: -645
-        'y': -210
+        x: -570
+        'y': 135
       params:
-        r: 0.42
+        r: 1
         g: 0
-        b: 0.49
-    - id: MixColor-1767571365483
-      type: MixColor
-      position:
-        x: -255
-        'y': 405
-      params: {}
-    - id: MixColor-1767571367293
-      type: MixColor
-      position:
-        x: -375
-        'y': -420
-      params:
-        b:
-          r: 0.43529411764705883
-          g: 0.3215686274509804
-          b: 0.3215686274509804
-        mix: 0.66
-    - id: PositionConstant-1767571814244
-      type: PositionConstant
-      position:
-        x: -510
-        'y': 30
-      params:
-        pan: 0.54
-        tilt: -0.6
+        b: 0
     - id: Time-1767573556683
       type: Time
       position:
-        x: -615
-        'y': -600
+        x: -915
+        'y': 15
       params: {}
-    - id: Button-1767573974244
-      type: Button
+    - id: SineLFO-1767576102116
+      type: SineLFO
       position:
-        x: -480
-        'y': -750
+        x: -600
+        'y': -30
+      params:
+        speed: 1
+        frequency: 0.3
+    - id: MixColor-1767577420794
+      type: MixColor
+      position:
+        x: -300
+        'y': 75
       params: {}
+    - id: ColorConstant-1767577588338
+      type: ColorConstant
+      position:
+        x: -540
+        'y': 300
+      params:
+        r: 0
+        b: 0
   edges:
     - id: xy-edge__SelectGroup-1767570184160selection-WriteAttributes-1767570178782selection
       from:
@@ -104,19 +63,40 @@
       to:
         nodeId: WriteAttributes-1767570178782
         port: selection
-    - id: xy-edge__ColorConstant-1767571342304color-ColorToBundle-1767571323452color
+    - id: xy-edge__Time-1767573556683t-SineLFO-1767576102116phase
+      from:
+        nodeId: Time-1767573556683
+        port: t
+      to:
+        nodeId: SineLFO-1767576102116
+        port: phase
+    - id: xy-edge__ColorConstant-1767571342304color-MixColor-1767577420794a
       from:
         nodeId: ColorConstant-1767571342304
         port: color
       to:
-        nodeId: ColorToBundle-1767571323452
-        port: color
-    - id: xy-edge__ColorToBundle-1767571323452bundle-WriteAttributes-1767570178782bundle
+        nodeId: MixColor-1767577420794
+        port: a
+    - id: xy-edge__ColorConstant-1767577588338color-MixColor-1767577420794b
       from:
-        nodeId: ColorToBundle-1767571323452
-        port: bundle
+        nodeId: ColorConstant-1767577588338
+        port: color
+      to:
+        nodeId: MixColor-1767577420794
+        port: b
+    - id: xy-edge__MixColor-1767577420794result-WriteAttributes-1767570178782bundle
+      from:
+        nodeId: MixColor-1767577420794
+        port: result
       to:
         nodeId: WriteAttributes-1767570178782
         port: bundle
+    - id: xy-edge__SineLFO-1767576102116value-MixColor-1767577420794mix
+      from:
+        nodeId: SineLFO-1767576102116
+        port: value
+      to:
+        nodeId: MixColor-1767577420794
+        port: mix
   id: 33ea2f4d-6848-4936-94c0-98523be7750f
-  revision: 151
+  revision: 205

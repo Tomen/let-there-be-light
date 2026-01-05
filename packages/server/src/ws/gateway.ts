@@ -44,30 +44,46 @@ function broadcast(message: ServerMessage) {
   }
 }
 
+// Build runtime status message
+function buildStatusMessage(): RuntimeStatusMessage {
+  const engine = getEngine();
+  const stats = engine.getStats();
+
+  const instances: InstanceStatus[] = engine.getLoadedGraphIds().map((id) => ({
+    id,
+    graphId: id,
+    enabled: engine.isGraphEnabled(id),
+    errorCount: 0,
+    writes: engine.getWriteOutputs(id),
+  }));
+
+  return {
+    type: 'runtime/status',
+    tickHz: stats.targetHz,
+    t: stats.frameNumber / stats.targetHz,
+    instances,
+  };
+}
+
 // Send runtime status to a client
 function sendStatus(socket: WsWebSocket) {
   if (socket.readyState !== WS_OPEN) return;
 
   try {
-    const engine = getEngine();
-    const stats = engine.getStats();
-
-    const instances: InstanceStatus[] = engine.getLoadedGraphIds().map((id) => ({
-      id,
-      graphId: id,
-      enabled: true, // TODO: get actual enabled state
-      errorCount: 0,
-    }));
-
-    const status: RuntimeStatusMessage = {
-      type: 'runtime/status',
-      tickHz: stats.targetHz,
-      t: stats.frameNumber / stats.targetHz,
-      instances,
-    };
+    const status = buildStatusMessage();
     socket.send(JSON.stringify(status));
   } catch (err) {
     console.error('Error sending status:', err);
+  }
+}
+
+// Broadcast runtime status to all clients
+function broadcastStatus() {
+  try {
+    const status = buildStatusMessage();
+    broadcast(status);
+  } catch (err) {
+    console.error('Error broadcasting status:', err);
   }
 }
 
@@ -251,6 +267,8 @@ function handleMessage(socket: WsWebSocket, message: ClientMessage) {
     case 'instance/setEnabled':
       engine.setGraphEnabled(message.instanceId, message.enabled);
       console.log(`Instance ${message.instanceId} enabled=${message.enabled}`);
+      // Broadcast updated status to all clients
+      broadcastStatus();
       break;
 
     default:
