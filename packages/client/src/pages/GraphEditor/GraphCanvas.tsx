@@ -282,6 +282,11 @@ export function GraphCanvas({
     onNodeSelect(null)
   }, [onNodeSelect])
 
+  // Handle edge click to deselect nodes
+  const handleEdgeClick = useCallback(() => {
+    onNodeSelect(null)
+  }, [onNodeSelect])
+
   // Handle drop from palette
   const onDragOver = useCallback((event: React.DragEvent) => {
     event.preventDefault()
@@ -349,6 +354,7 @@ export function GraphCanvas({
           onEdgesChange={handleEdgesChange}
           onConnect={handleConnect}
           onNodeClick={handleNodeClick}
+          onEdgeClick={handleEdgeClick}
           onPaneClick={handlePaneClick}
           onDragOver={onDragOver}
           onDrop={onDrop}

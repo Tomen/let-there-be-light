@@ -24,9 +24,9 @@
         x: -570
         'y': 135
       params:
-        r: 1
-        g: 0
-        b: 0
+        r: 0.6784313725490196
+        g: 0.403921568627451
+        b: 0.403921568627451
     - id: Time-1767573556683
       type: Time
       position:
@@ -41,12 +41,6 @@
       params:
         speed: 1
         frequency: 0.3
-    - id: MixColor-1767577420794
-      type: MixColor
-      position:
-        x: -300
-        'y': 75
-      params: {}
     - id: ColorConstant-1767577588338
       type: ColorConstant
       position:
@@ -55,6 +49,25 @@
       params:
         r: 0
         b: 0
+    - id: MixColor-1767577809171
+      type: MixColor
+      position:
+        x: -225
+        'y': 135
+      params: {}
+    - id: Scalar-1767577972774
+      type: Scalar
+      position:
+        x: 250
+        'y': 450
+      params: {}
+    - id: Scalar-1767577975426
+      type: Scalar
+      position:
+        x: -825
+        'y': 180
+      params:
+        value: 1
   edges:
     - id: xy-edge__SelectGroup-1767570184160selection-WriteAttributes-1767570178782selection
       from:
@@ -70,33 +83,40 @@
       to:
         nodeId: SineLFO-1767576102116
         port: phase
-    - id: xy-edge__ColorConstant-1767571342304color-MixColor-1767577420794a
+    - id: xy-edge__ColorConstant-1767571342304color-MixColor-1767577809171a
       from:
         nodeId: ColorConstant-1767571342304
         port: color
       to:
-        nodeId: MixColor-1767577420794
+        nodeId: MixColor-1767577809171
         port: a
-    - id: xy-edge__ColorConstant-1767577588338color-MixColor-1767577420794b
+    - id: xy-edge__ColorConstant-1767577588338color-MixColor-1767577809171b
       from:
         nodeId: ColorConstant-1767577588338
         port: color
       to:
-        nodeId: MixColor-1767577420794
+        nodeId: MixColor-1767577809171
         port: b
-    - id: xy-edge__MixColor-1767577420794result-WriteAttributes-1767570178782bundle
-      from:
-        nodeId: MixColor-1767577420794
-        port: result
-      to:
-        nodeId: WriteAttributes-1767570178782
-        port: bundle
-    - id: xy-edge__SineLFO-1767576102116value-MixColor-1767577420794mix
+    - id: xy-edge__SineLFO-1767576102116value-MixColor-1767577809171mix
       from:
         nodeId: SineLFO-1767576102116
         port: value
       to:
-        nodeId: MixColor-1767577420794
+        nodeId: MixColor-1767577809171
         port: mix
+    - id: xy-edge__MixColor-1767577809171result-WriteAttributes-1767570178782bundle
+      from:
+        nodeId: MixColor-1767577809171
+        port: result
+      to:
+        nodeId: WriteAttributes-1767570178782
+        port: bundle
+    - id: xy-edge__Scalar-1767577975426value-ColorConstant-1767571342304r
+      from:
+        nodeId: Scalar-1767577975426
+        port: value
+      to:
+        nodeId: ColorConstant-1767571342304
+        port: r
   id: 33ea2f4d-6848-4936-94c0-98523be7750f
-  revision: 205
+  revision: 216

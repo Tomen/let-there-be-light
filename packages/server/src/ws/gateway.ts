@@ -30,6 +30,9 @@ const lastFrameByClient = new Map<WsWebSocket, FrameOutput>();
 // Unsubscribe function for engine listener
 let unsubscribeEngine: (() => void) | null = null;
 
+// Periodic status broadcast interval
+let statusBroadcastInterval: ReturnType<typeof setInterval> | null = null;
+
 // Broadcast message to all connected clients
 function broadcast(message: ServerMessage) {
   const data = JSON.stringify(message);
@@ -178,8 +181,15 @@ export const wsGateway: FastifyPluginAsync = async (app) => {
       unsubscribeEngine = engine.onFrame(onEngineFrame);
     }
 
-    // Send initial status
+    // Start periodic status broadcast if this is the first client
+    if (!statusBroadcastInterval && clients.size === 1) {
+      statusBroadcastInterval = setInterval(broadcastStatus, 1000);
+    }
+
+    // Send initial status immediately, then again after first tick completes
     sendStatus(ws);
+    // Send again after 50ms to capture first tick's write outputs
+    setTimeout(() => sendStatus(ws), 50);
 
     // Handle incoming messages
     socket.on('message', (data) => {
@@ -207,6 +217,12 @@ export const wsGateway: FastifyPluginAsync = async (app) => {
       if (clients.size === 0 && unsubscribeEngine) {
         unsubscribeEngine();
         unsubscribeEngine = null;
+      }
+
+      // Stop periodic status broadcast if no more clients
+      if (clients.size === 0 && statusBroadcastInterval) {
+        clearInterval(statusBroadcastInterval);
+        statusBroadcastInterval = null;
       }
     });
 

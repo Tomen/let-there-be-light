@@ -40,7 +40,7 @@ const categoryColors: Record<string, string> = {
 }
 
 function GraphNodeComponent({ id, data, selected }: GraphNodeProps) {
-  const { connectedInputs } = useGraphContext()
+  const { connectedInputs, onParamChange } = useGraphContext()
   const def = NODE_DEFINITIONS[data.type]
   if (!def) {
     return (
@@ -143,8 +143,24 @@ function GraphNodeComponent({ id, data, selected }: GraphNodeProps) {
           )
         })}
 
-        {/* Params section - inline editing */}
-        {Object.keys(def.params).length > 0 && (
+        {/* Color preview for ColorConstant */}
+        {data.type === 'ColorConstant' && (
+          <div className="border-t px-2 py-1.5">
+            <ColorConstantPreview
+              r={typeof data.params.r === 'number' ? data.params.r : 1}
+              g={typeof data.params.g === 'number' ? data.params.g : 1}
+              b={typeof data.params.b === 'number' ? data.params.b : 1}
+              nodeId={id}
+              onParamChange={onParamChange}
+              rConnected={isConnected('r')}
+              gConnected={isConnected('g')}
+              bConnected={isConnected('b')}
+            />
+          </div>
+        )}
+
+        {/* Params section - inline editing (skip for ColorConstant which has custom UI) */}
+        {Object.keys(def.params).length > 0 && data.type !== 'ColorConstant' && (
           <div className="border-t pt-1">
             {Object.entries(def.params).map(([paramName, paramDef]) => (
               <InlineParamEditor
@@ -158,6 +174,77 @@ function GraphNodeComponent({ id, data, selected }: GraphNodeProps) {
           </div>
         )}
       </div>
+    </div>
+  )
+}
+
+// Color constant preview with inline color picker
+interface ColorConstantPreviewProps {
+  r: number
+  g: number
+  b: number
+  nodeId: string
+  onParamChange: (nodeId: string, paramName: string, value: unknown) => void
+  rConnected: boolean
+  gConnected: boolean
+  bConnected: boolean
+}
+
+function ColorConstantPreview({
+  r, g, b, nodeId, onParamChange,
+  rConnected, gConnected, bConnected
+}: ColorConstantPreviewProps) {
+  const rInt = Math.round(r * 255)
+  const gInt = Math.round(g * 255)
+  const bInt = Math.round(b * 255)
+
+  const anyConnected = rConnected || gConnected || bConnected
+
+  const toHex = () => {
+    const rHex = rInt.toString(16).padStart(2, '0')
+    const gHex = gInt.toString(16).padStart(2, '0')
+    const bHex = bInt.toString(16).padStart(2, '0')
+    return `#${rHex}${gHex}${bHex}`
+  }
+
+  const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (anyConnected) return
+    const hex = e.target.value
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+    if (result) {
+      onParamChange(nodeId, 'r', parseInt(result[1], 16) / 255)
+      onParamChange(nodeId, 'g', parseInt(result[2], 16) / 255)
+      onParamChange(nodeId, 'b', parseInt(result[3], 16) / 255)
+    }
+  }
+
+  return (
+    <div
+      className="flex items-center gap-2"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div
+        className={cn(
+          'h-6 w-10 rounded border',
+          anyConnected ? 'border-muted-foreground/30' : 'border-white/50'
+        )}
+        style={{ backgroundColor: `rgb(${rInt}, ${gInt}, ${bInt})` }}
+      >
+        {!anyConnected && (
+          <input
+            type="color"
+            value={toHex()}
+            onChange={handleColorChange}
+            className="h-full w-full cursor-pointer opacity-0"
+          />
+        )}
+      </div>
+      <span className={cn(
+        'text-[10px]',
+        anyConnected ? 'text-muted-foreground/50' : 'text-muted-foreground'
+      )}>
+        {rInt}, {gInt}, {bInt}
+      </span>
     </div>
   )
 }
