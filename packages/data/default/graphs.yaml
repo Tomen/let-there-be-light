@@ -1,122 +1,145 @@
 - name: Gratitude
   nodes:
-    - id: WriteAttributes-1767570178782
+    - id: WriteAttributes-1767579930787
       type: WriteAttributes
       position:
-        x: 105
-        'y': 105
+        x: 1245
+        'y': 255
       params:
-        priority: 75
-    - id: SelectGroup-1767570184160
+        priority: 25
+    - id: ColorConstant-1767579934235
+      type: ColorConstant
+      position:
+        x: 975
+        'y': 315
+      params:
+        r: 1
+        g: 0
+        b: 0
+    - id: SelectGroup-1767579939326
       type: SelectGroup
       position:
-        x: -165
-        'y': -330
-      params:
-        groupId: front
-        groupIds:
-          - front
-          - back
-          - all-wash
-    - id: ColorConstant-1767571342304
-      type: ColorConstant
-      position:
-        x: -570
+        x: 975
         'y': 135
       params:
-        r: 0.6784313725490196
-        g: 0.403921568627451
-        b: 0.403921568627451
-    - id: Time-1767573556683
+        groupIds:
+          - ecfebe8a-a4ba-4b7f-ab67-35d573dede44
+          - 165f5a82-5944-42d7-a039-e2e8e4ab90bc
+          - 7bdd1085-b9a1-4c1c-b9d4-96addeda17de
+  edges:
+    - id: xy-edge__SelectGroup-1767579939326selection-WriteAttributes-1767579930787selection
+      from:
+        nodeId: SelectGroup-1767579939326
+        port: selection
+      to:
+        nodeId: WriteAttributes-1767579930787
+        port: selection
+    - id: xy-edge__ColorConstant-1767579934235color-WriteAttributes-1767579930787bundle
+      from:
+        nodeId: ColorConstant-1767579934235
+        port: color
+      to:
+        nodeId: WriteAttributes-1767579930787
+        port: bundle
+  id: 1c15d2bf-eba7-459b-8618-6815a8234340
+  revision: 9
+- name: Blinkeblinke
+  nodes:
+    - id: Time-1767580025169
       type: Time
       position:
-        x: -915
-        'y': 15
+        x: 120
+        'y': 150
       params: {}
-    - id: SineLFO-1767576102116
+    - id: SineLFO-1767580029761
       type: SineLFO
       position:
-        x: -600
-        'y': -30
-      params:
-        speed: 1
-        frequency: 0.3
-    - id: ColorConstant-1767577588338
-      type: ColorConstant
-      position:
-        x: -540
-        'y': 300
-      params:
-        r: 0
-        b: 0
-    - id: MixColor-1767577809171
-      type: MixColor
-      position:
-        x: -225
+        x: 360
         'y': 135
       params: {}
-    - id: Scalar-1767577972774
-      type: Scalar
+    - id: MixColor-1767580042622
+      type: MixColor
       position:
-        x: 250
-        'y': 450
+        x: 735
+        'y': -15
       params: {}
-    - id: Scalar-1767577975426
-      type: Scalar
+    - id: ColorConstant-1767580054805
+      type: ColorConstant
       position:
-        x: -825
-        'y': 180
+        x: 315
+        'y': -255
       params:
-        value: 1
+        r: 0
+        g: 0.06666666666666667
+        b: 1
+    - id: ColorConstant-1767580058405
+      type: ColorConstant
+      position:
+        x: 120
+        'y': -45
+      params:
+        r: 0.11764705882352941
+        g: 1
+        b: 0
+    - id: WriteAttributes-1767580079482
+      type: WriteAttributes
+      position:
+        x: 1245
+        'y': 15
+      params:
+        priority: 50
+    - id: SelectFixture-1767580088248
+      type: SelectFixture
+      position:
+        x: 1035
+        'y': -165
+      params:
+        fixtureIds:
+          - 71d554d4-5ca2-4686-be16-22f76141aee4
+          - cef549bf-8b7b-4cd9-9d39-a87c7437ec2d
+          - 70aa6d25-cbfb-4423-b31f-03c2f0cfb700
   edges:
-    - id: xy-edge__SelectGroup-1767570184160selection-WriteAttributes-1767570178782selection
+    - id: xy-edge__Time-1767580025169t-SineLFO-1767580029761phase
       from:
-        nodeId: SelectGroup-1767570184160
-        port: selection
-      to:
-        nodeId: WriteAttributes-1767570178782
-        port: selection
-    - id: xy-edge__Time-1767573556683t-SineLFO-1767576102116phase
-      from:
-        nodeId: Time-1767573556683
+        nodeId: Time-1767580025169
         port: t
       to:
-        nodeId: SineLFO-1767576102116
+        nodeId: SineLFO-1767580029761
         port: phase
-    - id: xy-edge__ColorConstant-1767571342304color-MixColor-1767577809171a
+    - id: xy-edge__SineLFO-1767580029761value-MixColor-1767580042622mix
       from:
-        nodeId: ColorConstant-1767571342304
-        port: color
-      to:
-        nodeId: MixColor-1767577809171
-        port: a
-    - id: xy-edge__ColorConstant-1767577588338color-MixColor-1767577809171b
-      from:
-        nodeId: ColorConstant-1767577588338
-        port: color
-      to:
-        nodeId: MixColor-1767577809171
-        port: b
-    - id: xy-edge__SineLFO-1767576102116value-MixColor-1767577809171mix
-      from:
-        nodeId: SineLFO-1767576102116
+        nodeId: SineLFO-1767580029761
         port: value
       to:
-        nodeId: MixColor-1767577809171
+        nodeId: MixColor-1767580042622
         port: mix
-    - id: xy-edge__MixColor-1767577809171result-WriteAttributes-1767570178782bundle
+    - id: xy-edge__ColorConstant-1767580058405color-MixColor-1767580042622b
       from:
-        nodeId: MixColor-1767577809171
+        nodeId: ColorConstant-1767580058405
+        port: color
+      to:
+        nodeId: MixColor-1767580042622
+        port: b
+    - id: xy-edge__ColorConstant-1767580054805color-MixColor-1767580042622a
+      from:
+        nodeId: ColorConstant-1767580054805
+        port: color
+      to:
+        nodeId: MixColor-1767580042622
+        port: a
+    - id: xy-edge__MixColor-1767580042622result-WriteAttributes-1767580079482bundle
+      from:
+        nodeId: MixColor-1767580042622
         port: result
       to:
-        nodeId: WriteAttributes-1767570178782
+        nodeId: WriteAttributes-1767580079482
         port: bundle
-    - id: xy-edge__Scalar-1767577975426value-ColorConstant-1767571342304r
+    - id: xy-edge__SelectFixture-1767580088248selection-WriteAttributes-1767580079482selection
       from:
-        nodeId: Scalar-1767577975426
-        port: value
+        nodeId: SelectFixture-1767580088248
+        port: selection
       to:
-        nodeId: ColorConstant-1767571342304
-        port: r
-  id: 33ea2f4d-6848-4936-94c0-98523be7750f
-  revision: 216
+        nodeId: WriteAttributes-1767580079482
+        port: selection
+  id: ec7180b6-8c60-4e3e-8d1a-f217ff9379d7
+  revision: 22

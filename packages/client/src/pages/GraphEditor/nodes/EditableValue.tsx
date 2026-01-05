@@ -25,8 +25,8 @@ export function EditableValue({ nodeId, inputName, inputDef, value }: EditableVa
           nodeId={nodeId}
           inputName={inputName}
           value={typeof value === 'number' ? value : (inputDef.default as number) ?? 0}
-          min={inputDef.min ?? 0}
-          max={inputDef.max ?? 1}
+          min={inputDef.min}
+          max={inputDef.max}
           onCommit={onParamChange}
         />
       )
@@ -70,8 +70,8 @@ interface ScalarValueProps {
   nodeId: string
   inputName: string
   value: number
-  min: number
-  max: number
+  min?: number
+  max?: number
   onCommit: (nodeId: string, paramName: string, value: unknown) => void
 }
 
@@ -103,8 +103,11 @@ function ScalarValue({ nodeId, inputName, value, min, max, onCommit }: ScalarVal
   const handleCommit = useCallback(() => {
     const numValue = parseFloat(localValue)
     if (!isNaN(numValue)) {
-      const clamped = Math.max(min, Math.min(max, numValue))
-      onCommit(nodeId, inputName, clamped)
+      // Only clamp if both min and max are defined
+      const finalValue = (min !== undefined && max !== undefined)
+        ? Math.max(min, Math.min(max, numValue))
+        : numValue
+      onCommit(nodeId, inputName, finalValue)
     }
     setIsEditing(false)
   }, [localValue, min, max, nodeId, inputName, onCommit])
@@ -134,8 +137,8 @@ function ScalarValue({ nodeId, inputName, value, min, max, onCommit }: ScalarVal
         onBlur={handleBlur}
         onClick={(e) => e.stopPropagation()}
         step={0.01}
-        min={min}
-        max={max}
+        {...(min !== undefined && { min })}
+        {...(max !== undefined && { max })}
         className="w-10 rounded border border-blue-500 bg-background px-1 text-[10px] text-foreground outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
       />
     )

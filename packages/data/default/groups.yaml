@@ -1,20 +1,18 @@
-- id: front
-  name: Front
+- name: Par Left
   fixtureIds:
-    - front-left
-    - front-right
+    - 70aa6d25-cbfb-4423-b31f-03c2f0cfb700
+    - cef549bf-8b7b-4cd9-9d39-a87c7437ec2d
+  id: ecfebe8a-a4ba-4b7f-ab67-35d573dede44
   revision: 1
-- id: back
-  name: Back
+- name: Par Right
   fixtureIds:
-    - back-left
-    - back-right
+    - d729a181-45c1-42f5-a7b1-948ff8630952
+    - e57ff5af-194e-421f-bbfd-aa7ee08ba455
+  id: 165f5a82-5944-42d7-a039-e2e8e4ab90bc
   revision: 1
-- id: all-wash
-  name: All Wash
+- name: Stage Wash
   fixtureIds:
-    - front-left
-    - front-right
-    - back-left
-    - back-right
+    - 7bc1ca03-afa1-42ad-8f70-9503d193bd30
+    - 71d554d4-5ca2-4686-be16-22f76141aee4
+  id: 7bdd1085-b9a1-4c1c-b9d4-96addeda17de
   revision: 1

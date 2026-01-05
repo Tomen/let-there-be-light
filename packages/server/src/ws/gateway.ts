@@ -182,8 +182,9 @@ export const wsGateway: FastifyPluginAsync = async (app) => {
     }
 
     // Start periodic status broadcast if this is the first client
+    // 100ms = 10Hz, smooth enough for animated values without overwhelming bandwidth
     if (!statusBroadcastInterval && clients.size === 1) {
-      statusBroadcastInterval = setInterval(broadcastStatus, 1000);
+      statusBroadcastInterval = setInterval(broadcastStatus, 100);
     }
 
     // Send initial status immediately, then again after first tick completes

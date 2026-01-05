@@ -125,6 +125,21 @@ For comprehensive documentation, see the `docs/` folder:
 | client (integration) | 71 |
 | **Total** | **350** |
 
+## UI Guidelines
+
+**Responsiveness:** All UI interactions must provide immediate feedback:
+
+1. **Validation feedback** - Show inline errors when form fields are invalid (e.g., required fields empty, invalid values). Never silently ignore a button click.
+2. **Loading states** - Show spinners/skeleton loaders while waiting for server responses. Disable buttons and show "Loading...", "Creating...", "Saving..." text.
+3. **Optimistic updates** - For fast operations, update UI immediately and revert on error.
+4. **Error handling** - Display toast notifications or inline errors when operations fail. Never fail silently.
+5. **Success feedback** - Confirm successful operations with toasts (e.g., "Fixture created", "Graph saved").
+
+**Examples:**
+- Button with loading: `disabled={mutation.isPending}` + text change to "Creating..."
+- Required field: Show red border and "This field is required" message
+- Server error: `showError(error.message)` toast notification
+
 ## Development Status
 
 **Complete:**

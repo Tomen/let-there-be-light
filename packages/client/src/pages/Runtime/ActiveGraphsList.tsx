@@ -111,11 +111,21 @@ function WriteOutputsTable({ writes }: { writes: WriteOutputInfo[] }) {
 function GraphInstance({ instance, graphName }: { instance: InstanceStatus; graphName: string }) {
   const hasWrites = instance.writes && instance.writes.length > 0
 
+  // Get the highest priority from all writes (or undefined if no writes)
+  const maxPriority = hasWrites
+    ? Math.max(...instance.writes!.map((w) => w.priority))
+    : undefined
+
   return (
     <div className="rounded-lg border p-3">
       <div className="flex items-center gap-2 text-sm">
         <span className="inline-flex h-2 w-2 rounded-full bg-green-500" />
         <span className="font-medium">{graphName}</span>
+        {maxPriority !== undefined && (
+          <span className="text-xs text-muted-foreground">
+            (priority: {maxPriority})
+          </span>
+        )}
         {instance.errorCount ? (
           <span className="text-xs text-red-500">
             ({instance.errorCount} errors)

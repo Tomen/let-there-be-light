@@ -145,12 +145,48 @@ export class RuntimeEngine {
   }
 
   /**
+   * Reload a graph instance (preserves enabled state)
+   * Call this after a graph is updated via API
+   */
+  reloadGraph(graphId: string): boolean {
+    const existingInstance = this.instances.get(graphId);
+    const wasEnabled = existingInstance?.enabled ?? true;
+
+    // Unload existing
+    this.unloadGraph(graphId);
+
+    // Reload from datastore
+    const loaded = this.loadGraph(graphId);
+    if (loaded && !wasEnabled) {
+      // Restore disabled state
+      this.setGraphEnabled(graphId, false);
+    }
+
+    console.log(`Graph ${graphId} reloaded, enabled=${wasEnabled}`);
+    return loaded;
+  }
+
+  /**
    * Enable/disable a graph instance
+   * If the graph isn't loaded yet, loads it first
    */
   setGraphEnabled(graphId: string, enabled: boolean): void {
-    const instance = this.instances.get(graphId);
+    let instance = this.instances.get(graphId);
+
+    // If graph isn't loaded, try to load it
+    if (!instance) {
+      const loaded = this.loadGraph(graphId);
+      if (loaded) {
+        instance = this.instances.get(graphId);
+      }
+    }
+
     if (instance) {
       instance.enabled = enabled;
+      // Clear write outputs if disabling
+      if (!enabled) {
+        this.writeOutputs.set(graphId, []);
+      }
     }
   }
 

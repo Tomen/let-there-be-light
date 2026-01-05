@@ -1,24 +1,36 @@
-- id: front-left
-  name: Front Left
-  modelId: generic-rgbw
+- name: Wash Stage 1
+  modelId: generic-rgb
   universe: 0
   startChannel: 1
+  id: 7bc1ca03-afa1-42ad-8f70-9503d193bd30
   revision: 1
-- id: front-right
-  name: Front Right
-  modelId: generic-rgbw
+- name: Wash Stage 2
+  modelId: generic-rgb
   universe: 0
-  startChannel: 5
+  startChannel: 1
+  id: 71d554d4-5ca2-4686-be16-22f76141aee4
   revision: 1
-- id: back-left
-  name: Back Left
-  modelId: generic-rgbw
+- name: Par Left 1
+  modelId: generic-rgb
   universe: 0
-  startChannel: 9
+  startChannel: 1
+  id: 70aa6d25-cbfb-4423-b31f-03c2f0cfb700
   revision: 1
-- id: back-right
-  name: Back Right
-  modelId: generic-rgbw
+- name: Par Left 2
+  modelId: generic-rgb
   universe: 0
-  startChannel: 13
+  startChannel: 1
+  id: cef549bf-8b7b-4cd9-9d39-a87c7437ec2d
+  revision: 1
+- name: Par Right 1
+  modelId: generic-rgb
+  universe: 0
+  startChannel: 1
+  id: d729a181-45c1-42f5-a7b1-948ff8630952
+  revision: 1
+- name: Par Right 2
+  modelId: generic-rgb
+  universe: 0
+  startChannel: 1
+  id: e57ff5af-194e-421f-bbfd-aa7ee08ba455
   revision: 1
